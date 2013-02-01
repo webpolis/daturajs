@@ -32,7 +32,7 @@ exports.production = {
 
 exports.routes = [
 {
-    url: '/home',
+    url: ['/','/home'],
     action: 'static/home', // format is path:controller_no_suffix/action
     method:'get'
 },

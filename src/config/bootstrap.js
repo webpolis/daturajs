@@ -45,6 +45,8 @@ exports.init = function(app, express, rest){
     // initialize routes
     config.routes.forEach(function(route){
         if(typeof route.url !== 'undefined' && typeof route.action !== 'undefined'){
+            var path = route.url instanceof Array ? route.url:[route.url];
+            
             route.method = route.methods || 'get';
             var c = route.action.split('/')[0] || null;
             var a = route.action.split('/')[1] || null;
@@ -53,11 +55,13 @@ exports.init = function(app, express, rest){
             if(c!==null){
                 switch(route.method){
                     case 'get':
-                        if(!isRest){
-                            app.get(route.url, a!== null?controllers[c+'Controller']()[a]:controllers[c+'Controller']());
-                        }else{
-                            rest.get(route.url, a!== null?restControllers[c+'Controller']()[a]:restControllers[c+'Controller']());
-                        }
+                        path.forEach(function(url){
+                            if(!isRest){
+                                app.get(url, a!== null?controllers[c+'Controller']()[a]:controllers[c+'Controller']());
+                            }else{
+                                rest.get(url, a!== null?restControllers[c+'Controller']()[a]:restControllers[c+'Controller']());
+                            }
+                        });
                         break;
                 }
             }
