@@ -1,6 +1,0 @@
-POST-CHECKOUT TASKS
-
-# to preserve local settings
-cp protected/config/main.php.dist protected/config/main.php
-cp protected/config/console.php.dist protected/config/console.php
-cp protected/config/test.php.dist protected/config/test.php
