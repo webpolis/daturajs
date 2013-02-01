@@ -10,9 +10,6 @@ var controllers = require('../controllers')
 ,restControllers = require('../controllers/rest')
 ,path = require('path'), config = require('./main');
 
-/**
- * 
- */
 exports.init = function(app, express, rest){
     console.log('Bootstrapping...');
     
@@ -26,15 +23,16 @@ exports.init = function(app, express, rest){
         app.use(express.logger('dev'));
         app.use(express.bodyParser());
         app.use(express.methodOverride());
-        app.use(express.cookieParser(config.dev.secretKey));
+        app.use(express.cookieParser(config.development.secretKey));
         app.use(express.session());
         app.use(app.router);
-        
+
         // load less-middleware
         app.use(require('less-middleware')({
-            src: __dirname + '/src/assets/less',
-            dest:__dirname+'/public/css',
-            compress:true
+            src: __dirname + '/../src/assets/less',
+            dest:__dirname+'/../../public/css',
+            compress:true,
+            prefix: '/stylesheets'
         }));
         
         // allow http access to /public
@@ -45,7 +43,7 @@ exports.init = function(app, express, rest){
     rest.listen(app.get('portRest'));
     
     // initialize routes
-    config.dev.routes.forEach(function(route){
+    config.routes.forEach(function(route){
         if(typeof route.url !== 'undefined' && typeof route.action !== 'undefined'){
             route.method = route.methods || 'get';
             var c = route.action.split('/')[0] || null;
