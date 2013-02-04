@@ -8,7 +8,18 @@
 
 var controllers = require('../controllers')
 ,restControllers = require('../controllers/rest')
-,path = require('path'), config = require('./main');
+,path = require('path')
+,config = require('./main');
+
+/**
+ * The following is a list of path strings widely accessed by this application.
+ */
+var pathDefinition = {
+    'public':path.resolve(__dirname+'/../../public'),
+    'assets':path.resolve(__dirname+'/../assets')
+};
+
+exports.pathDefinition = pathDefinition;
 
 exports.init = function(app, express, rest){
     console.log('Bootstrapping...');
@@ -19,6 +30,7 @@ exports.init = function(app, express, rest){
         app.set('portRest', process.env.APP_UNCOMMON_REST_PORT || process.argv[3] || 3339);
         app.set('views', __dirname + '/src/views');
         app.set('view engine', 'ejs');
+        app.use(express.compress());
         app.use(express.favicon());
         app.use(express.logger('dev'));
         app.use(express.bodyParser());
@@ -29,14 +41,14 @@ exports.init = function(app, express, rest){
 
         // load less-middleware
         app.use(require('less-middleware')({
-            src: __dirname + '/../src/assets/less',
-            dest:__dirname+'/../../public/css',
+            src:pathDefinition['assets']+'/less',
+            dest:pathDefinition['public']+'/css',
             compress:true,
-            prefix: '/stylesheets'
+            prefix: '/css'
         }));
         
         // allow http access to /public
-        app.use(express.static(path.join(__dirname, 'public')));
+        app.use(express.static(pathDefinition['public']));
     });
     
     // rest instance startup
