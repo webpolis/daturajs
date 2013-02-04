@@ -5,6 +5,11 @@ exports.main = [
     method:'get'
 },
 {
+    url: '/home2',
+    action: 'static', // format is path:controller_no_suffix/action
+    method:'get'
+},
+{
     url: '/rest/account',
     action: 'account/index',
     method:'get',
