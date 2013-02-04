@@ -1,4 +1,4 @@
-exports.development = {
+var _dev = {
     appName : 'Uncommon Project Dev',
     
     // secret key, for session id generator
@@ -7,39 +7,12 @@ exports.development = {
     // db configuration
     db:{
         driver:'postgres',
-        host:'',
-        user:'',
-        password:'',
+        host:'localhost',
+        username:'resteasy',
+        password:'resteasy',
+        database:'resteasy',
         port:1433
     }
 }
 
-exports.production = {
-    appName : 'Uncommon Project Dev',
-    
-    // secret key, for session id generator
-    secretKey:'secret',
-    
-    // db configuration
-    db:{
-        driver:'postgres',
-        host:'',
-        user:'',
-        password:'',
-        port:1433
-    }
-}
-
-exports.routes = [
-{
-    url: ['/','/home'],
-    action: 'static/home', // format is path:controller_no_suffix/action
-    method:'get'
-},
-{
-    url: '/rest/test',
-    action: 'test/index',
-    method:'get',
-    isRest:true // rest controllers will be placed in controllers/rest
-}
-]
+exports.main = _dev || _prod || null;

@@ -6,9 +6,9 @@
  * @author Nicolas Iglesias <nicolas@clevertech.biz>
  */
 
-var controllers = require('../controllers')
-,restControllers = require('../controllers/rest')
+var models = require('../models')
 ,path = require('path')
+,routes = require('./routes')
 ,config = require('./main');
 
 /**
@@ -35,7 +35,7 @@ exports.init = function(app, express, rest){
         app.use(express.logger('dev'));
         app.use(express.bodyParser());
         app.use(express.methodOverride());
-        app.use(express.cookieParser(config.development.secretKey));
+        app.use(express.cookieParser(config.main.secretKey));
         app.use(express.session());
         app.use(app.router);
 
@@ -54,29 +54,52 @@ exports.init = function(app, express, rest){
     // rest instance startup
     rest.listen(app.get('portRest'));
     
-    // initialize routes
-    config.routes.forEach(function(route){
-        if(typeof route.url !== 'undefined' && typeof route.action !== 'undefined'){
-            var path = route.url instanceof Array ? route.url:[route.url];
+    // The following is injected to all controllers.
+    var _shared = {
+        models:models,
+        utils:null
+    }
+    
+    // synchronously initialize controllers
+    var restControllers = require('../controllers/rest');
+    var controllers = require('../controllers');
+    
+    restControllers.init(function(){
+        controllers.init(function(){
+            // initialize routes and prepare for listening requests
+            routes.main.forEach(function(route){
+                if(typeof route.url !== 'undefined' && typeof route.action !== 'undefined'){
+                    var path = route.url instanceof Array ? route.url:[route.url];
             
-            route.method = route.methods || 'get';
-            var c = route.action.split('/')[0] || null;
-            var a = route.action.split('/')[1] || null;
-            var isRest = route.isRest || false;
+                    route.method = route.methods || 'get';
+                    var c = route.action.split('/')[0] || null;
+                    var a = route.action.split('/')[1] || null;
+                    var isRest = route.isRest || false;
             
-            if(c!==null){
-                switch(route.method){
-                    case 'get':
-                        path.forEach(function(url){
-                            if(!isRest){
-                                app.get(url, a!== null?controllers[c+'Controller']()[a]:controllers[c+'Controller']());
-                            }else{
-                                rest.get(url, a!== null?restControllers[c+'Controller']()[a]:restControllers[c+'Controller']());
-                            }
-                        });
-                        break;
+                    if(c!==null){
+                        switch(route.method){
+                            case 'get':
+                                path.forEach(function(url){
+                                    try{
+                                        var cc = null;
+
+                                        if(!isRest){
+                                            cc = lib.core.controllers.main[c+'Controller'](_shared);
+                                            app.get(url, a!== null?cc[a]:lib.core.controllers.main[c+'Controller']());
+                                        }else{
+                                            cc = lib.core.controllers.rest[c+'Controller'](_shared);
+                                            rest.get(url, a!== null?cc[a]:lib.core.controllers.rest[c+'Controller']());
+                                        }
+                                    }catch(e){
+                                        console.log('[error] '+e.message);
+                                    }
+                                });
+                                break;
+                        }
+                    }
                 }
-            }
-        }
+            });
+        });
     });
+
 }

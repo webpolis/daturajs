@@ -1,1 +1,4 @@
-h1. Uncommon Schools Project
+## Install
+```sh
+npm install
+```
