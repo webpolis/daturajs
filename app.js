@@ -7,7 +7,7 @@
  */
 var express = require('express')
 , http = require('http')
-, bootstrap = require('./src/config/bootstrap.js')
+, bootstrap = require('./lib/bootstrap.js')
 , restify = require('restify');
 
 var app = express();
