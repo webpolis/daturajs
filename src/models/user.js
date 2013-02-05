@@ -1,5 +1,5 @@
 module.exports = function (db, cb) {
-    db.define('account', {
+    db.define('user', {
         username : String,
         password : String
     });

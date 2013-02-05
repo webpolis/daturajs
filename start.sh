@@ -4,7 +4,7 @@ if [ -z "${APP_UNCOMMON_REST_PORT}" ]; then export APP_UNCOMMON_REST_PORT=3339; 
 
 if [ -e "/usr/local/bin/nodemon" ];
     then
-        nodemon ./app.js
+        nodemon --debug ./app.js
     else
         node ./app.js
 fi
