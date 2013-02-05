@@ -1,7 +1,11 @@
-module.exports = function(_){
+module.exports = function(){
     var staticController = {
         home : function (req,res){
-            res.render(__dirname+'/../views/static/home');
+            var model = this.$$.models.account;
+            
+            this.$$.render('home',{
+                appName:this.$$.params.appName
+            });
         }
     };
     

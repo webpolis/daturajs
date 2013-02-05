@@ -1,8 +1,11 @@
-module.exports = function(_){
+module.exports = function(){
     var accountController = {
         index : function (req,res, nxt){
-            //var model = _.models['account']; // instantiate model
-            res.send(true);
+            var model = this.$$.models.account;
+            
+            this.$$.send(200,{
+                appName:this.$$.params.appName
+            });
         }
     };
     
