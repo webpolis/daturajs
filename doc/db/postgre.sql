@@ -74,10 +74,10 @@ SET default_with_oids = false;
 
 --
 -- TOC entry 181 (class 1259 OID 18463)
--- Name: account; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: accounts; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
-CREATE TABLE account (
+CREATE TABLE accounts (
     id integer NOT NULL,
     account_code character varying(150) DEFAULT NULL::character varying,
     segment_id integer,
@@ -112,7 +112,7 @@ CREATE TABLE account (
 );
 
 
-ALTER TABLE public.account OWNER TO resteasy;
+ALTER TABLE public.accounts OWNER TO resteasy;
 
 --
 -- TOC entry 183 (class 1259 OID 18508)
@@ -254,10 +254,10 @@ ALTER TABLE public.acm_tasks OWNER TO resteasy;
 
 --
 -- TOC entry 169 (class 1259 OID 18307)
--- Name: admin; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: admins; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
-CREATE TABLE admin (
+CREATE TABLE admins (
     id integer NOT NULL,
     name character varying(100) DEFAULT NULL::character varying,
     username character varying(100) DEFAULT NULL::character varying,
@@ -265,7 +265,7 @@ CREATE TABLE admin (
 );
 
 
-ALTER TABLE public.admin OWNER TO resteasy;
+ALTER TABLE public.admins OWNER TO resteasy;
 
 --
 -- TOC entry 189 (class 1259 OID 18582)
@@ -978,7 +978,7 @@ ALTER TABLE ONLY account_permissions
 -- Name: account_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
-ALTER TABLE ONLY account
+ALTER TABLE ONLY accounts
     ADD CONSTRAINT account_pkey PRIMARY KEY (id);
 
 
@@ -1059,7 +1059,7 @@ ALTER TABLE ONLY acm_tasks
 -- Name: admin_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
-ALTER TABLE ONLY admin
+ALTER TABLE ONLY admins
     ADD CONSTRAINT admin_pkey PRIMARY KEY (id);
 
 
@@ -1356,7 +1356,7 @@ ALTER TABLE ONLY account_permissions
 -- Name: fk_account_ref_accounting_segments; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY account
+ALTER TABLE ONLY accounts
     ADD CONSTRAINT fk_account_ref_accounting_segments FOREIGN KEY (accounting_segment_id) REFERENCES accounting_segments(id);
 
 
@@ -1365,7 +1365,7 @@ ALTER TABLE ONLY account
 -- Name: fk_account_ref_clients; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY account
+ALTER TABLE ONLY accounts
     ADD CONSTRAINT fk_account_ref_clients FOREIGN KEY (client_id) REFERENCES clients(id);
 
 
@@ -1420,7 +1420,7 @@ ALTER TABLE ONLY acm_admin_groups
 --
 
 ALTER TABLE ONLY acm_admin_groups
-    ADD CONSTRAINT fk_acm_admin_groups_ref_admin FOREIGN KEY (admin_id) REFERENCES admin(id);
+    ADD CONSTRAINT fk_acm_admin_groups_ref_admin FOREIGN KEY (admin_id) REFERENCES admins(id);
 
 
 --

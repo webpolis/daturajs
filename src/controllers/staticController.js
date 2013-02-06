@@ -1,8 +1,8 @@
 module.exports = function(){
     var staticController = {
         home : function (req,res){
-            var model = this.$$.models.account;
-            model.find(function(models){
+            var model = this.$$.models.user;
+            model.findAll().success(function(models){
                 console.log(models); 
             });
             

@@ -14,7 +14,7 @@ var _dev = {
         username:'resteasy',
         password:'resteasy',
         database:'resteasy',
-        port:1433
+        port:5432
     }
 }
 
