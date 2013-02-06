@@ -16,5 +16,9 @@ module.exports = function(seq, dataTypes) {
 		"description" : {
 			type : dataTypes.STRING, allowNull : true, max : 250
 		},
+	},{
+		instanceMethods : {
+		// place your custom model methods below.
+		}
 	});
 }

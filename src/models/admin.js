@@ -19,5 +19,9 @@ module.exports = function(seq, dataTypes) {
 		"password" : {
 			type : dataTypes.STRING, allowNull : true, max : 100
 		},
+	},{
+		instanceMethods : {
+		// place your custom model methods below.
+		}
 	});
 }

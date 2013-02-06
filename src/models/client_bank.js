@@ -55,5 +55,9 @@ module.exports = function(seq, dataTypes) {
 		"client_id" : {
 			type : dataTypes.INTEGER, allowNull : false
 		},
+	},{
+		instanceMethods : {
+		// place your custom model methods below.
+		}
 	});
 }

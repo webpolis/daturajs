@@ -16,5 +16,9 @@ module.exports = function(seq, dataTypes) {
 		"invoice_type_code" : {
 			type : dataTypes.STRING, allowNull : true, max : 50
 		},
+	},{
+		instanceMethods : {
+		// place your custom model methods below.
+		}
 	});
 }

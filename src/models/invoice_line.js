@@ -40,5 +40,9 @@ module.exports = function(seq, dataTypes) {
 		"invoice_id" : {
 			type : dataTypes.INTEGER, allowNull : false
 		},
+	},{
+		instanceMethods : {
+		// place your custom model methods below.
+		}
 	});
 }

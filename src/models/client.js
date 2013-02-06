@@ -124,5 +124,9 @@ module.exports = function(seq, dataTypes) {
 		"accounting_system_type_id" : {
 			type : dataTypes.INTEGER, allowNull : false
 		},
+	},{
+		instanceMethods : {
+		// place your custom model methods below.
+		}
 	});
 }

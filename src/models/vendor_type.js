@@ -16,5 +16,9 @@ module.exports = function(seq, dataTypes) {
 		"is_company" : {
 			type : dataTypes.BOOLEAN, allowNull : true
 		},
+	},{
+		instanceMethods : {
+		// place your custom model methods below.
+		}
 	});
 }

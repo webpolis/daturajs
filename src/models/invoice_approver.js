@@ -37,5 +37,9 @@ module.exports = function(seq, dataTypes) {
 		"user_id" : {
 			type : dataTypes.INTEGER, allowNull : false
 		},
+	},{
+		instanceMethods : {
+		// place your custom model methods below.
+		}
 	});
 }

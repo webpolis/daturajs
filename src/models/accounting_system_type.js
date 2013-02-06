@@ -16,5 +16,9 @@ module.exports = function(seq, dataTypes) {
 		"display_order" : {
 			type : dataTypes.INTEGER, allowNull : true
 		},
+	},{
+		instanceMethods : {
+		// place your custom model methods below.
+		}
 	});
 }

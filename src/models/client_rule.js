@@ -43,5 +43,9 @@ module.exports = function(seq, dataTypes) {
 		"default_rule_id" : {
 			type : dataTypes.INTEGER, allowNull : false
 		},
+	},{
+		instanceMethods : {
+		// place your custom model methods below.
+		}
 	});
 }

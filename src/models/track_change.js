@@ -25,5 +25,9 @@ module.exports = function(seq, dataTypes) {
 		"record_type_id" : {
 			type : dataTypes.INTEGER, allowNull : false
 		},
+	},{
+		instanceMethods : {
+		// place your custom model methods below.
+		}
 	});
 }

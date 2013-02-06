@@ -25,5 +25,9 @@ module.exports = function(seq, dataTypes) {
 		"is_visible" : {
 			type : dataTypes.BOOLEAN, allowNull : true
 		},
+	},{
+		instanceMethods : {
+		// place your custom model methods below.
+		}
 	});
 }

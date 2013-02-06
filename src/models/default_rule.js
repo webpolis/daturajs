@@ -25,5 +25,9 @@ module.exports = function(seq, dataTypes) {
 		"comment" : {
 			type : dataTypes.STRING, allowNull : true, max : 1000
 		},
+	},{
+		instanceMethods : {
+		// place your custom model methods below.
+		}
 	});
 }

@@ -22,5 +22,9 @@ module.exports = function(seq, dataTypes) {
 		"definition" : {
 			type : undefined, allowNull : true
 		},
+	},{
+		instanceMethods : {
+		// place your custom model methods below.
+		}
 	});
 }
