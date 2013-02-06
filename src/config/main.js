@@ -1,7 +1,7 @@
 var _dev = {
     // params are publicly accessible from a controller via this.$$.config.paramName
     params:{
-        appName : 'Uncommon Project Dev'
+        appName : 'charterAP'
     },
     
     // secret key, for session id generator

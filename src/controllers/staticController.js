@@ -6,7 +6,10 @@ module.exports = function(){
                 console.log(models); 
             });
             
-            this.$$.render('home',{
+            this.$$.render({
+                view:'home',
+                layout:'main'
+            },{
                 appName:this.$$.params.appName
             });
         }
