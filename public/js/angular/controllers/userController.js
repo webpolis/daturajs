@@ -12,7 +12,6 @@ function userController($scope, $resource, $timeout){
         $scope._res.login({
             action:'login'
         },function(ret){
-            console.log(ret);
         });
     }
 }
