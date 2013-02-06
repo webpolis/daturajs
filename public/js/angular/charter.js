@@ -1,6 +1,9 @@
 var charter = angular.module('charter',['ngResource','ui']);
 
-charter.filter('translate', function() {
+/**
+ * Translate
+ */
+charter.filter('t', function() {
     return function(t) {
         return t;
     };

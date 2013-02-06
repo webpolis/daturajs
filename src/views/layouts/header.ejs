@@ -2,18 +2,18 @@
 <div class="navbar span9">
     <div class="navbar-inner">
         <ul class="nav">
-            <li class="active"><a href="#">{{ 'Home' | translate }}</a></li>
-            <li><a href="#">{{ 'Support' | translate }}</a></li>
-            <li><a href="#">{{ 'About' | translate }}</a></li>
+            <li class="active"><a href="/">{{ 'Home' | t }}</a></li>
+            <li><a href="#">{{ 'Support' | t }}</a></li>
+            <li><a href="#">{{ 'About' | t }}</a></li>
         </ul>
         <div class="btn-group pull-right">
             <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                {{ 'Account' | translate }}
+                {{ 'Account' | t }}
                 <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
-                <li><a href="#">{{ 'Login' | translate }}</a></li>
-                <li><a href="#">{{ 'Register' | translate }}</a></li>
+                <li><a href="/user/login">{{ 'Login' | t }}</a></li>
+                <li><a href="/user/register">{{ 'Register' | t }}</a></li>
             </ul>
         </div>
     </div>

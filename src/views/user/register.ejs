@@ -1,11 +1,13 @@
-<form ng-controller="userController" ng-submit="login()">
+<form>
     <fieldset>
-        <legend>{{ 'Sign in' | t }}</legend>
+        <legend>{{ 'Register' | t }}</legend>
         <label>{{ 'Email address' | t }}</label>
         <input type="text" placeholder="{{'email...' | t}}" />
         <label>{{ 'Password' | t }}</label>
         <input type="password" placeholder="{{'password...' | t}}"/>
+        <label>{{ 'Confirm password' | t }}</label>
+        <input type="password" placeholder="{{'confirm...' | t}}"/>
         <br />
-        <button type="submit" class="btn">{{ 'Login' | t }}</button>
+        <button type="submit" class="btn">{{ 'Register' | t }}</button>
     </fieldset>
 </form>

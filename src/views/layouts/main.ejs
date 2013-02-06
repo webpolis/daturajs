@@ -12,6 +12,7 @@
         <script src="/js/jquery.min.js"></script>
         <script src="/js/bootstrap.min.js"></script>
         <script src="/js/angular/charter.js"></script>
+        <script src="/js/angular/controllers/userController.js"></script>
         <!--[if lte IE 8]>
             <script src="/js/angular-ui-ieshiv.js"></script>
         <![endif]-->
@@ -25,9 +26,7 @@
             </div>
             <div class="row-fluid body-row">
                 <div class="sidebar span3">
-                    <div class="menu">
-                        <%- include ../user/login %>
-                    </div>
+                    <%- include ../elements/sidebarLeft %>
                 </div>
                 <div class="body span9">
                     <%- body %>

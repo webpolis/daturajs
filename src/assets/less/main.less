@@ -6,8 +6,8 @@
     padding:0;
     margin:0
 }
-.pad{
-    padding:.5em;
+.pad(@padding:.5em){
+    padding:@padding;
 }
 .clear{
     display:block;clear:both;
@@ -18,6 +18,10 @@ body{
 .body-row{
     background-color:#fff;
     min-height:400px;
+    .pad;
+    .body{
+        .pad(1em);
+    }
 }
 .header {
     .pad;
