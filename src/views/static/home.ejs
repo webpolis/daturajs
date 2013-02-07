@@ -1,6 +1,10 @@
 <div class="alert alert-info">
+    <%if (!user){%>
     {{ 'Please' | t}}
     <a href="/user/login">{{'sign in' | t}}</a>
     {{ 'or' | t}}
     <a href="/user/register">{{'register' | t}}</a>.
+    <%}else{%>
+    {{ 'Welcome back' | t}}, <%= user.username %>.
+    <%}%>
 </div>

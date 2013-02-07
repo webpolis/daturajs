@@ -1,12 +1,14 @@
-<form>
+<form ng-controller="userController" ng-submit="register()">
     <fieldset>
         <legend>{{ 'Register' | t }}</legend>
+        <label>{{ 'Username' | t }}</label>
+        <input type="text" required ng-model="user.username" placeholder="{{'choose your username...' | t}}" />
         <label>{{ 'Email address' | t }}</label>
-        <input type="text" placeholder="{{'email...' | t}}" />
+        <input type="text" required ng-model="user.email" placeholder="{{'email...' | t}}" />
         <label>{{ 'Password' | t }}</label>
-        <input type="password" placeholder="{{'password...' | t}}"/>
+        <input type="password" required ng-model="user.password" placeholder="{{'password...' | t}}"/>
         <label>{{ 'Confirm password' | t }}</label>
-        <input type="password" placeholder="{{'confirm...' | t}}"/>
+        <input type="password" required ng-model="user.confirm" placeholder="{{'confirm...' | t}}"/>
         <br />
         <button type="submit" class="btn">{{ 'Register' | t }}</button>
     </fieldset>

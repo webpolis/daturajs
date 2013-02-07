@@ -12,8 +12,12 @@
                 <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
+                <%if (!user) {%>
                 <li><a href="/user/login">{{ 'Login' | t }}</a></li>
                 <li><a href="/user/register">{{ 'Register' | t }}</a></li>
+                <%}else{%>
+                <li><a href="/user/logout">{{ 'Logout' | t }}</a></li>
+                <%}%>
             </ul>
         </div>
     </div>

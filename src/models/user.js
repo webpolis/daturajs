@@ -74,25 +74,25 @@ module.exports = function(seq, dataTypes) {
 			type : dataTypes.INTEGER, allowNull : true
 		},
 		"user_role_id" : {
-			type : dataTypes.INTEGER, allowNull : false
+			type : dataTypes.INTEGER, allowNull : true
 		},
 		"department_id" : {
-			type : dataTypes.INTEGER, allowNull : false
+			type : dataTypes.INTEGER, allowNull : true
 		},
 		"client_id" : {
-			type : dataTypes.INTEGER, allowNull : false
+			type : dataTypes.INTEGER, allowNull : true
 		},
 		"supervisor_id" : {
-			type : dataTypes.INTEGER, allowNull : false
+			type : dataTypes.INTEGER, allowNull : true
 		},
 		"vendor_id" : {
-			type : dataTypes.INTEGER, allowNull : false
+			type : dataTypes.INTEGER, allowNull : true
 		},
 		"state_id" : {
-			type : dataTypes.INTEGER, allowNull : false
+			type : dataTypes.INTEGER, allowNull : true
 		},
 		"country_id" : {
-			type : dataTypes.INTEGER, allowNull : false
+			type : dataTypes.INTEGER, allowNull : true
 		},
 	},{
 		instanceMethods : {

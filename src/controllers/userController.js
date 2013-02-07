@@ -5,6 +5,10 @@ module.exports = function(){
         },
         register : function (req,res){
             this.$$.render('register');
+        },
+        logout : function(req,res, nxt){
+            this.$$.app.disable('user');
+            res.redirect('/');
         }
     };
     
