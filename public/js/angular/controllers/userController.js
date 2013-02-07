@@ -1,6 +1,6 @@
 function userController($scope, $resource, $window){
     $scope.user = {};
-    $scope._res = $resource('http://localhost\\:3339/rest/user/:action',{
+    $scope._res = $resource('http://'+$window.location.hostname+'\\:3339/rest/user/:action',{
         'action' : '@action'
     },{
         login:{
