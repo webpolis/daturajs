@@ -107,7 +107,7 @@ module.exports = function(seq, dataTypes) {
 			type : dataTypes.STRING, allowNull : true, max : 250
 		},
 		"mile_rate" : {
-			type : dataTypes.FLOAT, allowNull : false, max : 1179650
+			type : dataTypes.FLOAT, allowNull : true, max : 1179650
 		},
 		"subscription_id" : {
 			type : dataTypes.INTEGER, allowNull : true
@@ -122,7 +122,7 @@ module.exports = function(seq, dataTypes) {
 			type : dataTypes.INTEGER, allowNull : false
 		},
 		"accounting_system_type_id" : {
-			type : dataTypes.INTEGER, allowNull : false
+			type : dataTypes.INTEGER, allowNull : true
 		},
 	},{
 		instanceMethods : {

@@ -6,7 +6,17 @@ module.exports = function(){
         },
         register : function (req,res){
             this.$$.app.set('title','Register');
-            this.$$.render('register');
+            
+            var user = this.$$.models['user'];
+            var attrs = Object.keys(user.rawAttributes);
+            var state = this.$$.models['state'];
+            
+            _$$ = this.$$;
+            state.findAll().success(function(states){
+                _$$.render('register',{
+                    states: states
+                });
+            });
         }
     };
     

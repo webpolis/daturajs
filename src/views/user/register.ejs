@@ -1,15 +1,64 @@
 <form ng-controller="userController" ng-submit="register()">
     <fieldset>
-        <legend>{{ 'Register' | t }}</legend>
-        <label>{{ 'Username' | t }}</label>
-        <input type="text" required ng-model="user.username" placeholder="{{'choose your username...' | t}}" />
-        <label>{{ 'Email address' | t }}</label>
-        <input type="text" required ng-model="user.email" placeholder="{{'email...' | t}}" />
-        <label>{{ 'Password' | t }}</label>
-        <input type="password" required ng-model="user.password" placeholder="{{'password...' | t}}"/>
-        <label>{{ 'Confirm password' | t }}</label>
-        <input type="password" required ng-model="user.confirm" placeholder="{{'confirm...' | t}}"/>
-        <br />
-        <button type="submit" class="btn">{{ 'Register' | t }}</button>
+        <%- html.tag('legend','Client Information')%>
+        <div class="row-fluid">
+            <div class="span6">
+                <%- html.label('Name')%>
+                <%- html.input('client','client_name', {angular:true, 'ng-required':true, 'class':'input-xlarge'})%>
+                <%- html.label('Address')%>
+                <%- html.input('client','address', {angular:true, 'ng-required': false, 'class':'input-xlarge'})%>
+                <%- html.label('Address #2')%>
+                <%- html.input('client','address2', {angular:true, 'ng-required': false, 'class':'input-xlarge'})%>
+                <%- html.label('City')%>
+                <%- html.input('client','city', {angular:true, 'ng-required': false, 'class':'input-xlarge'})%>
+            </div>
+            <div class="span6">
+                <%- html.label('Postal Code')%>
+                <%- html.input('client','postal_code', {angular:true, 'ng-required': false, 'class':'input-xlarge'})%>
+                <%- html.label('Phone')%>
+                <%- html.input('client','phone', {angular:true, 'ng-required': false, 'class':'input-xlarge'})%>
+                <%- html.label('Fax')%>
+                <%- html.input('client','fax', {angular:true, 'ng-required': false, 'class':'input-xlarge'})%>
+                <%- html.label('State')%>
+                <%- html.select('client','state_id', {angular:true, 'ng-required': true, data:states, dataLabel:'state_name'})%>
+            </div>
+        </div>
+        <%- html.tag('legend','Billing Information')%>
+        <div class="row-fluid">
+            <div class="span6">
+                <%- html.input('client','same_address', {type:'checkbox',angular:true, 'ng-required': false,'class':'pull-left'})%>
+                <%- html.label('Same as above',{'style':'display:inline-block;margin-left:3px','class':'pull-left'})%>
+                <%- html.label('Address',{'class':'clear'})%>
+                <%- html.input('client','billing_address', {angular:true, 'ng-required': false, 'class':'input-xlarge'})%>
+                <%- html.label('Address #2')%>
+                <%- html.input('client','billing_address2', {angular:true, 'ng-required': false, 'class':'input-xlarge'})%>
+            </div>
+            <div class="span6">
+                <%- html.label('City')%>
+                <%- html.input('client','billing_city', {angular:true, 'ng-required': false, 'class':'input-xlarge'})%>
+                <%- html.label('State')%>
+                <%- html.select('client','billing_state_id', {angular:true, 'ng-required': true, data:states, dataLabel:'state_name'})%>
+            </div>
+        </div>
+        <%- html.tag('legend','Administrator')%>
+        <div class="row-fluid">
+            <div class="span6">
+                <%- html.label('First name')%>
+                <%- html.input('user','first_name', {angular:true, 'ng-required': false})%>
+                <%- html.label('Username')%>
+                <%- html.input('user','username', {angular:true, 'ng-required':true})%>
+                <%- html.label('Email address')%>
+                <%- html.input('user','email', {angular:true, 'ng-required':true})%>
+            </div>
+            <div class="span6">
+                <%- html.label('Last name')%>
+                <%- html.input('user','last_name', {angular:true, 'ng-required': false})%>
+                <%- html.label('Password')%>
+                <%- html.input('user','password', {angular:true, type: 'password', 'ng-required':true})%>
+                <%- html.label('Confirm password')%>
+                <%- html.input('user','confirm', {angular:true, type: 'password', 'ng-required':true})%>
+            </div>
+            <div class="clear"><%- html.tag('button','Submit',{'class':'btn',type:'submit'})%></div>
+        </div>
     </fieldset>
 </form>

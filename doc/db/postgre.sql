@@ -413,7 +413,7 @@ CREATE TABLE clients (
     with_setup_fee character varying(50) DEFAULT NULL::character varying,
     state_id integer NOT NULL,
     country_id integer NOT NULL,
-    accounting_system_type_id integer NOT NULL
+    accounting_system_type_id integer
 );
 
 
@@ -875,8 +875,8 @@ CREATE TABLE users (
     user_role_id integer NOT NULL,
     department_id integer NOT NULL,
     client_id integer NOT NULL,
-    supervisor_id integer NOT NULL,
-    vendor_id integer NOT NULL,
+    supervisor_id integer,
+    vendor_id integer,
     state_id integer NOT NULL,
     country_id integer NOT NULL
 );

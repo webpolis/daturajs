@@ -12,11 +12,12 @@
         "less-middleware" : "*",
         "pg":"*",
         "sequelize":"*",
-        "orm":"*",
         "restify":"*",
         "passport":"*",
         "passport-local":"*",
-        "inflector":"*"
+        "inflector":"*",
+        "cheerio":"*",
+        "i18n" : "*"
     },
     "author" : {
         "name" : "Nicolas Iglesias",

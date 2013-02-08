@@ -20,13 +20,13 @@ module.exports = function(seq, dataTypes) {
 			type : dataTypes.STRING, allowNull : true, max : 200
 		},
 		"username" : {
-			type : dataTypes.STRING, allowNull : true, max : 200
+			type : dataTypes.STRING, allowNull : false, max : 200
 		},
 		"email" : {
-			type : dataTypes.STRING, allowNull : true, max : 350
+			type : dataTypes.STRING, allowNull : false, max : 350
 		},
 		"password" : {
-			type : dataTypes.STRING, allowNull : true, max : 200
+			type : dataTypes.STRING, allowNull : false, max : 200
 		},
 		"is_active" : {
 			type : dataTypes.BOOLEAN, allowNull : true

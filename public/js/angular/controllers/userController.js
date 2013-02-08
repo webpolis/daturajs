@@ -1,5 +1,5 @@
 function userController($scope, $resource, $window){
-    $scope.user = {};
+    $scope.user = {}, $scope.client = {};
     $scope.loginFailed = false;
     $scope._res = $resource('http://'+$window.location.hostname+'\\::port/:parent/:controller/:action',{
         'action' : '@action'
@@ -8,7 +8,8 @@ function userController($scope, $resource, $window){
             method:'POST',
             params:{
                 controller:'auth',
-                action:'login'            }
+                action:'login'
+            }
         },
         register:{
             method:'PUT',
