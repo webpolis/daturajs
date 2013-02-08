@@ -8,9 +8,7 @@ function userController($scope, $resource, $window){
             method:'POST',
             params:{
                 controller:'auth',
-                action:'login',
-                port:3333
-            }
+                action:'login'            }
         },
         register:{
             method:'PUT',

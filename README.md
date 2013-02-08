@@ -47,7 +47,7 @@ The current state of the project reflects the following structure:
     |   `-- rest            <=== If you need a REST API, this is the place to go.
     |-- models              <=== ORM specific models. 
     `-- views               <=== This framework use the 'ejs' template system.
-                            Support for added is planned for the future.
+                            Support for new engines is planned for the future.
         |-- elements        <=== Atomic elements to be included in your views.
         |-- layouts         <=== The templates for your views.
         |-- static          <=== Static pages should reside here.
