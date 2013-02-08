@@ -78,7 +78,7 @@ SET default_with_oids = false;
 --
 
 CREATE TABLE accounts (
-    id integer NOT NULL,
+    id serial NOT NULL,
     account_code character varying(150) DEFAULT NULL::character varying,
     segment_id integer,
     account_title character varying(500) DEFAULT NULL::character varying,
@@ -120,7 +120,7 @@ ALTER TABLE public.accounts OWNER TO resteasy;
 --
 
 CREATE TABLE account_permissions (
-    id integer NOT NULL,
+    id serial NOT NULL,
     account_id integer NOT NULL,
     department_id integer NOT NULL
 );
@@ -134,7 +134,7 @@ ALTER TABLE public.account_permissions OWNER TO resteasy;
 --
 
 CREATE TABLE accounting_segment_permissions (
-    id integer NOT NULL,
+    id serial NOT NULL,
     is_shown boolean,
     account_id integer,
     accounting_segment_id integer NOT NULL,
@@ -150,7 +150,7 @@ ALTER TABLE public.accounting_segment_permissions OWNER TO resteasy;
 --
 
 CREATE TABLE accounting_segments (
-    id integer NOT NULL,
+    id serial NOT NULL,
     segment_title character varying(50) DEFAULT NULL::character varying,
     description character varying(500) DEFAULT NULL::character varying,
     segment_auth_limit numeric(18,2) DEFAULT NULL::numeric,
@@ -173,7 +173,7 @@ ALTER TABLE public.accounting_segments OWNER TO resteasy;
 --
 
 CREATE TABLE accounting_system_files (
-    id integer NOT NULL,
+    id serial NOT NULL,
     accounting_system_session_id character varying(50) DEFAULT NULL::character varying,
     accounting_system_file character varying(50) DEFAULT NULL::character varying,
     export_date timestamp without time zone,
@@ -190,7 +190,7 @@ ALTER TABLE public.accounting_system_files OWNER TO resteasy;
 --
 
 CREATE TABLE accounting_system_types (
-    id integer NOT NULL,
+    id serial NOT NULL,
     accounting_system_type_name character varying(50) DEFAULT NULL::character varying,
     display_order integer
 );
@@ -204,7 +204,7 @@ ALTER TABLE public.accounting_system_types OWNER TO resteasy;
 --
 
 CREATE TABLE acm_admin_groups (
-    id integer NOT NULL,
+    id serial NOT NULL,
     admin_id integer NOT NULL,
     acm_groups_id integer NOT NULL
 );
@@ -218,7 +218,7 @@ ALTER TABLE public.acm_admin_groups OWNER TO resteasy;
 --
 
 CREATE TABLE acm_group_tasks (
-    id integer NOT NULL,
+    id serial NOT NULL,
     acm_groups_id integer NOT NULL,
     acm_tasks_id integer NOT NULL
 );
@@ -232,7 +232,7 @@ ALTER TABLE public.acm_group_tasks OWNER TO resteasy;
 --
 
 CREATE TABLE acm_groups (
-    id integer NOT NULL,
+    id serial NOT NULL,
     name character varying(50) DEFAULT NULL::character varying
 );
 
@@ -245,7 +245,7 @@ ALTER TABLE public.acm_groups OWNER TO resteasy;
 --
 
 CREATE TABLE acm_tasks (
-    id integer NOT NULL,
+    id serial NOT NULL,
     name character varying(50) DEFAULT NULL::character varying
 );
 
@@ -258,7 +258,7 @@ ALTER TABLE public.acm_tasks OWNER TO resteasy;
 --
 
 CREATE TABLE admins (
-    id integer NOT NULL,
+    id serial NOT NULL,
     name character varying(100) DEFAULT NULL::character varying,
     username character varying(100) DEFAULT NULL::character varying,
     password character varying(100) DEFAULT NULL::character varying
@@ -273,7 +273,7 @@ ALTER TABLE public.admins OWNER TO resteasy;
 --
 
 CREATE TABLE client_banks (
-    id integer NOT NULL,
+    id serial NOT NULL,
     bank_name character varying(250) DEFAULT NULL::character varying,
     default_bank_id integer,
     description character varying(1000) DEFAULT NULL::character varying,
@@ -300,7 +300,7 @@ ALTER TABLE public.client_banks OWNER TO resteasy;
 --
 
 CREATE TABLE client_mile_rates (
-    id integer NOT NULL,
+    id serial NOT NULL,
     mile numeric(18,2) DEFAULT 0.00 NOT NULL,
     rate numeric(18,2) DEFAULT 0.00 NOT NULL,
     client_id integer NOT NULL
@@ -315,7 +315,7 @@ ALTER TABLE public.client_mile_rates OWNER TO resteasy;
 --
 
 CREATE TABLE client_rule_approvers (
-    id integer NOT NULL,
+    id serial NOT NULL,
     created_date timestamp without time zone,
     created_by_id integer,
     client_rule_id integer NOT NULL,
@@ -331,7 +331,7 @@ ALTER TABLE public.client_rule_approvers OWNER TO resteasy;
 --
 
 CREATE TABLE client_rules (
-    id integer NOT NULL,
+    id serial NOT NULL,
     default_auth_limit numeric(18,2) DEFAULT NULL::numeric,
     is_active boolean,
     priority integer,
@@ -354,7 +354,7 @@ ALTER TABLE public.client_rules OWNER TO resteasy;
 --
 
 CREATE TABLE client_segment_rules (
-    id integer NOT NULL,
+    id serial NOT NULL,
     account_code_list character varying(500) DEFAULT NULL::character varying,
     approvers_list character varying(500) DEFAULT NULL::character varying,
     operator character varying(50) DEFAULT NULL::character varying,
@@ -375,7 +375,7 @@ ALTER TABLE public.client_segment_rules OWNER TO resteasy;
 --
 
 CREATE TABLE clients (
-    id integer NOT NULL,
+    id serial NOT NULL,
     client_name character varying(250) DEFAULT NULL::character varying,
     address character varying(250) DEFAULT NULL::character varying,
     address2 character varying(250) DEFAULT NULL::character varying,
@@ -425,7 +425,7 @@ ALTER TABLE public.clients OWNER TO resteasy;
 --
 
 CREATE TABLE countries (
-    id integer NOT NULL,
+    id serial NOT NULL,
     country_code character varying(100) DEFAULT NULL::character varying,
     country_name character varying(150) DEFAULT NULL::character varying,
     country_name_short character varying(100) DEFAULT NULL::character varying,
@@ -442,7 +442,7 @@ ALTER TABLE public.countries OWNER TO resteasy;
 --
 
 CREATE TABLE default_rules (
-    id integer NOT NULL,
+    id serial NOT NULL,
     default_rule_type character varying(150) DEFAULT NULL::character varying,
     default_rule_name character varying(500) DEFAULT NULL::character varying,
     default_authorization_limit numeric(18,2) DEFAULT NULL::numeric,
@@ -459,7 +459,7 @@ ALTER TABLE public.default_rules OWNER TO resteasy;
 --
 
 CREATE TABLE department_heads (
-    id integer NOT NULL,
+    id serial NOT NULL,
     department_id integer NOT NULL,
     user_id integer NOT NULL
 );
@@ -473,7 +473,7 @@ ALTER TABLE public.department_heads OWNER TO resteasy;
 --
 
 CREATE TABLE departments (
-    id integer NOT NULL,
+    id serial NOT NULL,
     department_name character varying(50) NOT NULL,
     dept_auth_limit numeric(18,2) DEFAULT NULL::numeric,
     is_auth_required boolean,
@@ -491,7 +491,7 @@ ALTER TABLE public.departments OWNER TO resteasy;
 --
 
 CREATE TABLE invoice_amount_bracket (
-    id integer NOT NULL,
+    id serial NOT NULL,
     invoice_amount numeric(18,2) DEFAULT 0.00,
     client_id integer NOT NULL
 );
@@ -505,7 +505,7 @@ ALTER TABLE public.invoice_amount_bracket OWNER TO resteasy;
 --
 
 CREATE TABLE invoice_amount_bracket_approvers (
-    id integer NOT NULL,
+    id serial NOT NULL,
     client_id integer NOT NULL,
     user_id integer NOT NULL,
     invoice_amount_bracket_id integer NOT NULL
@@ -520,7 +520,7 @@ ALTER TABLE public.invoice_amount_bracket_approvers OWNER TO resteasy;
 --
 
 CREATE TABLE invoice_approvers (
-    id integer NOT NULL,
+    id serial NOT NULL,
     approval_date timestamp without time zone,
     rejection_date timestamp without time zone,
     rejection_reason character varying(500) DEFAULT NULL::character varying,
@@ -541,7 +541,7 @@ ALTER TABLE public.invoice_approvers OWNER TO resteasy;
 --
 
 CREATE TABLE invoice_files (
-    id integer NOT NULL,
+    id serial NOT NULL,
     attached_file character varying(500) DEFAULT NULL::character varying,
     attached_zoom_file character varying(500) DEFAULT NULL::character varying,
     original_file character varying(500) DEFAULT NULL::character varying,
@@ -559,7 +559,7 @@ ALTER TABLE public.invoice_files OWNER TO resteasy;
 --
 
 CREATE TABLE invoice_line_segments (
-    id integer NOT NULL,
+    id serial NOT NULL,
     amount numeric(18,2) DEFAULT NULL::numeric,
     comment character varying(500) DEFAULT NULL::character varying,
     segment01 character varying(50) DEFAULT NULL::character varying,
@@ -596,7 +596,7 @@ ALTER TABLE public.invoice_line_segments OWNER TO resteasy;
 --
 
 CREATE TABLE invoice_lines (
-    id integer NOT NULL,
+    id serial NOT NULL,
     amount numeric(18,2) DEFAULT NULL::numeric,
     line_date timestamp without time zone,
     rejection_reason character varying(2000) DEFAULT NULL::character varying,
@@ -618,7 +618,7 @@ ALTER TABLE public.invoice_lines OWNER TO resteasy;
 --
 
 CREATE TABLE invoice_status (
-    id integer NOT NULL,
+    id serial NOT NULL,
     invoice_status_name character varying(100) DEFAULT NULL::character varying
 );
 
@@ -631,7 +631,7 @@ ALTER TABLE public.invoice_status OWNER TO resteasy;
 --
 
 CREATE TABLE invoice_type (
-    id integer NOT NULL,
+    id serial NOT NULL,
     invoice_type_name character varying(100) DEFAULT NULL::character varying,
     invoice_type_code character varying(50) DEFAULT NULL::character varying
 );
@@ -645,7 +645,7 @@ ALTER TABLE public.invoice_type OWNER TO resteasy;
 --
 
 CREATE TABLE invoices (
-    id integer NOT NULL,
+    id serial NOT NULL,
     invoice_number character varying(50) DEFAULT NULL::character varying,
     created_date timestamp without time zone,
     invoice_date timestamp without time zone,
@@ -708,7 +708,7 @@ ALTER TABLE public.invoices OWNER TO resteasy;
 --
 
 CREATE TABLE permissions (
-    id integer NOT NULL,
+    id serial NOT NULL,
     permission_name character varying(50) DEFAULT NULL::character varying,
     description character varying(250) DEFAULT NULL::character varying
 );
@@ -722,7 +722,7 @@ ALTER TABLE public.permissions OWNER TO resteasy;
 --
 
 CREATE TABLE record_types (
-    id integer NOT NULL,
+    id serial NOT NULL,
     record_type_name character varying(50) DEFAULT NULL::character varying
 );
 
@@ -735,7 +735,7 @@ ALTER TABLE public.record_types OWNER TO resteasy;
 --
 
 CREATE TABLE states (
-    id integer NOT NULL,
+    id serial NOT NULL,
     state_name character varying(50) DEFAULT NULL::character varying,
     state_code character varying(50) DEFAULT NULL::character varying,
     display_order integer,
@@ -751,7 +751,7 @@ ALTER TABLE public.states OWNER TO resteasy;
 --
 
 CREATE TABLE sysdiagrams (
-    id integer NOT NULL,
+    id serial NOT NULL,
     name character varying(160) NOT NULL,
     principal_id integer NOT NULL,
     version integer,
@@ -767,7 +767,7 @@ ALTER TABLE public.sysdiagrams OWNER TO resteasy;
 --
 
 CREATE TABLE templates (
-    id integer NOT NULL,
+    id serial NOT NULL,
     format character varying(300) DEFAULT NULL::character varying,
     template_name character varying(300) DEFAULT NULL::character varying,
     is_default boolean DEFAULT false NOT NULL,
@@ -786,7 +786,7 @@ ALTER TABLE public.templates OWNER TO resteasy;
 --
 
 CREATE TABLE todo_lists (
-    id integer NOT NULL,
+    id serial NOT NULL,
     status_id integer NOT NULL,
     todo_list_title character varying(255) DEFAULT NULL::character varying,
     todo_list_desc text,
@@ -805,7 +805,7 @@ ALTER TABLE public.todo_lists OWNER TO resteasy;
 --
 
 CREATE TABLE track_changes (
-    id integer NOT NULL,
+    id serial NOT NULL,
     record_id integer,
     details text,
     created_date timestamp without time zone,
@@ -822,7 +822,7 @@ ALTER TABLE public.track_changes OWNER TO resteasy;
 --
 
 CREATE TABLE user_credit_cards (
-    id integer NOT NULL,
+    id serial NOT NULL,
     credit_card_number character varying(50) DEFAULT NULL::character varying,
     user_id integer NOT NULL,
     client_bank_id integer NOT NULL
@@ -837,7 +837,7 @@ ALTER TABLE public.user_credit_cards OWNER TO resteasy;
 --
 
 CREATE TABLE user_roles (
-    id integer NOT NULL,
+    id serial NOT NULL,
     user_role_name character varying(50) DEFAULT NULL::character varying
 );
 
@@ -850,7 +850,7 @@ ALTER TABLE public.user_roles OWNER TO resteasy;
 --
 
 CREATE TABLE users (
-    id integer NOT NULL,
+    id serial NOT NULL,
     is_super_user boolean,
     first_name character varying(200) DEFAULT NULL::character varying,
     last_name character varying(200) DEFAULT NULL::character varying,
@@ -890,7 +890,7 @@ ALTER TABLE public.users OWNER TO resteasy;
 --
 
 CREATE TABLE users_departments (
-    id integer NOT NULL,
+    id serial NOT NULL,
     departments_department_id integer NOT NULL,
     users_user_id integer NOT NULL
 );
@@ -904,7 +904,7 @@ ALTER TABLE public.users_departments OWNER TO resteasy;
 --
 
 CREATE TABLE users_permissions (
-    id integer NOT NULL,
+    id serial NOT NULL,
     permissions_permission_id integer NOT NULL,
     users_user_id integer NOT NULL
 );
@@ -918,7 +918,7 @@ ALTER TABLE public.users_permissions OWNER TO resteasy;
 --
 
 CREATE TABLE vendor_types (
-    id integer NOT NULL,
+    id serial NOT NULL,
     vendor_type_name character varying(50) DEFAULT NULL::character varying,
     is_company boolean
 );
@@ -932,7 +932,7 @@ ALTER TABLE public.vendor_types OWNER TO resteasy;
 --
 
 CREATE TABLE vendors (
-    id integer NOT NULL,
+    id serial NOT NULL,
     vendor_name character varying(250) DEFAULT NULL::character varying,
     address character varying(250) DEFAULT NULL::character varying,
     address2 character varying(250) DEFAULT NULL::character varying,
