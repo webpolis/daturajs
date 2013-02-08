@@ -1,4 +1,7 @@
 <form ng-controller="userController" ng-submit="login()">
+    <div class="alert alert-error" ng-show="loginFailed">
+        <strong>{{'Error' | t}}</strong> {{'Invalid credentials' | t}}
+    </div>
     <fieldset>
         <legend>{{ 'Sign in' | t }}</legend>
         <label>{{ 'Username' | t }}</label>

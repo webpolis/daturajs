@@ -97,6 +97,13 @@ module.exports = function(seq, dataTypes) {
 	},{
 		instanceMethods : {
 		// place your custom model methods below.
-		}
+		},
+                classMethods : {
+                    auth : function(data){
+                        // check login fields
+                        
+                        return true;
+                    }
+                }
 	});
 }

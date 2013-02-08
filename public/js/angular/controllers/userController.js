@@ -1,26 +1,36 @@
 function userController($scope, $resource, $window){
     $scope.user = {};
-    $scope._res = $resource('http://'+$window.location.hostname+'\\:3339/rest/user/:action',{
+    $scope.loginFailed = false;
+    $scope._res = $resource('http://'+$window.location.hostname+'\\::port/:parent/:controller/:action',{
         'action' : '@action'
     },{
         login:{
-            method:'PUT',
+            method:'POST',
             params:{
-                action:'login'
+                controller:'auth',
+                action:'login',
+                port:3333
             }
         },
         register:{
             method:'PUT',
             params:{
-                action:'register'
+                parent:'rest',
+                controller:'user',
+                action:'register',
+                port:3339
             }
         }
     });
     
     $scope.login = function(){
         $scope._res.login($scope.user,function(ret){
-            if(ret.username)
+            if(ret){
+                $scope.loginFailed = false;
                 $window.location = '/';
+            }
+        },function(err){
+            $scope.loginFailed = true;
         });
     },
     $scope.register = function(){
