@@ -1,3 +1,8 @@
+/**
+ * Main application's configuration file.
+ * 
+ * @author Nicolas Iglesias <nicolas@clevertech.biz>
+ */
 var _dev = {
     // params are publicly accessible from a controller via this.$$.config.paramName
     params:{
@@ -21,17 +26,6 @@ var _dev = {
     auth:{
         loginUrl : '/auth/login',
         logoutUrl : '/auth/logout',
-        
-        /**
-         * The chosen model must implement 'auth' method inside model's classMethods property, 
-         * so it should be accessible as modelName.auth().
-         * The method must return true when succesful or false if authentication has failed.
-         * 
-         * 'auth' method's signature is:
-         * 
-         * @param   data    username and password fields
-         * @return  boolean Whether authentication succeed or not.
-         */
         model : 'user'
     }
 }
