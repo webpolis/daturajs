@@ -8,7 +8,8 @@ function userController($scope, $resource, $window){
             method:'POST',
             params:{
                 controller:'auth',
-                action:'login'
+                action:'login',
+                port:$window.location.port
             }
         },
         register:{
@@ -33,7 +34,10 @@ function userController($scope, $resource, $window){
         });
     },
     $scope.register = function(){
-        $scope._res.register($scope.user,function(ret){
+        $scope._res.register({
+            user:$scope.user,
+            client:$scope.client
+        },function(ret){
             console.log(ret);
         });
     }
