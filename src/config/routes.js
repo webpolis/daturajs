@@ -25,5 +25,11 @@ exports.main = [
         action: 'user/register',
         method:'put',
         isRest:true
+    },
+    {
+        url: '/rest/location/getStates',
+        action: 'location/getStates',
+        method:'get',
+        isRest:true
     }
     ]
