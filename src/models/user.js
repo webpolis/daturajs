@@ -52,10 +52,11 @@ exports.model = {
                     params:{
                         username:data.username, 
                         password: data.password
-                    }
+                    },
+                    fields:['id','username','first_name', 'last_name']
                 },function(user){
                     // make only a few fields available to the auth object when saving cookie
-                    cbk(user, ['username','first_name', 'last_name'])
+                    cbk(user)
                 });
             }
         },

@@ -17,6 +17,11 @@ exports.main = [
         action: 'user/register',
         method:'get'
     },
+    {
+        url: '/user/settings',
+        action: 'user/settings',
+        method:'get'
+    },
     /**
      * rest api
      */

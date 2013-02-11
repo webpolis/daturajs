@@ -4,7 +4,7 @@
  * @author Nicolas Iglesias <nicolas@clevertech.biz>
  */
 var _dev = {
-    // params are publicly accessible from a controller via this.$$.config.paramName
+    // params are publicly accessible from a controller via this.$$.params
     params:{
         appName : 'charterAP'
     },

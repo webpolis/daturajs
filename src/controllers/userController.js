@@ -15,6 +15,34 @@ module.exports = function(){
                 user: user,
                 client: client
             });
+        },
+        settings : function (req,res){
+            var auth = req.signedCookies.auth;
+            
+            if(typeof auth === 'undefined' || !auth.id){
+                res.redirect('/')
+                return
+            }
+                
+            this.$$.app.set('title','Settings');
+            var user = this.$$.models.user;
+            
+            var _$$ = this.$$;
+            
+            user.$find('one',{
+                conditions:['users.id = :user_id'],
+                params:{
+                    user_id:auth.id
+                },
+                'with':['client']
+            },function(_user){
+                delete _user.password;
+                
+                _$$.render('settings',{
+                    user: _user,
+                    client: _user.client
+                });
+            });
         }
     };
     

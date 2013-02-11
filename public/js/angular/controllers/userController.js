@@ -20,6 +20,15 @@ function userController($scope, $resource, $window){
                     port:3339
                 }
             },
+            update:{
+                method:'PUT',
+                params:{
+                    parent:'rest',
+                    controller:'user',
+                    action:'update',
+                    port:3339
+                }
+            },
             getStates:{
                 method:'GET',
                 params:{
@@ -55,6 +64,13 @@ function userController($scope, $resource, $window){
             client:$scope.client
         },function(user){
             $scope.login();
+        });
+    },
+    $scope.update = function(){
+        $scope._res.update({
+            user:$scope.user
+        },function(user){
+            console.log(user)
         });
     }
 }
