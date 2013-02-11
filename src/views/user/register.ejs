@@ -1,4 +1,4 @@
-<form ng-controller="userController" ng-submit="register()">
+<form ng-controller="userController" ng-submit="register()" ng-init="getStates()">
     <fieldset>
         <%- html.tag('legend','Client Information')%>
         <div class="row-fluid">
@@ -20,7 +20,7 @@
                 <%- html.label('Fax')%>
                 <%- html.input(client,'fax', {angular:true, 'ng-required': false, 'class':'input-xlarge'})%>
                 <%- html.label('State')%>
-                <%- html.select(client,'state_id', {angular:true, 'ng-required': true, data:states, dataLabel:'state_name'})%>
+                <%- html.select(client,'state_id', {angular:true, 'ng-required': true, 'ng-options':'s.id as s.state_name for s in states'})%>
             </div>
         </div>
         <%- html.tag('legend','Billing Information')%>
@@ -37,7 +37,7 @@
                 <%- html.label('City')%>
                 <%- html.input(client,'billing_city', {angular:true, 'ng-required': false, 'class':'input-xlarge'})%>
                 <%- html.label('State')%>
-                <%- html.select(client,'billing_state_id', {angular:true, 'ng-required': true, data:states, dataLabel:'state_name'})%>
+                <%- html.select(client,'billing_state_id', {angular:true, 'ng-required': true, 'ng-options':'s.id as s.state_name for s in states'})%>
             </div>
         </div>
         <%- html.tag('legend','Administrator')%>

@@ -11,16 +11,9 @@ module.exports = function(){
             var user = this.$$.models.user;
             var client = this.$$.models.client;
             
-            _$$ = this.$$;
-            state.$find('all',{
-                'with':['country'],
-                'order':'state_name ASC'
-            }, function(states){
-                _$$.render('register',{
-                    states: states,
-                    user: user,
-                    client: client
-                });
+            this.$$.render('register',{
+                user: user,
+                client: client
             });
         }
     };
