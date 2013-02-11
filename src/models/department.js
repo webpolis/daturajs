@@ -5,32 +5,29 @@
  *
  * @author Nicolas Iglesias <nicolas@clevertech.biz>
  */
-module.exports = function(seq, dataTypes) {
-	return seq.define("department", {
-		"id" : {
-			type : dataTypes.INTEGER, allowNull : false, primaryKey : true, autoIncrement : true
-		},
-		"department_name" : {
-			type : dataTypes.STRING, allowNull : false, max : 50
-		},
-		"dept_auth_limit" : {
-			type : dataTypes.FLOAT, allowNull : true, max : 1179650
-		},
-		"is_auth_required" : {
-			type : dataTypes.BOOLEAN, allowNull : true
-		},
-		"is_super_department" : {
-			type : dataTypes.BOOLEAN, allowNull : true
-		},
-		"is_processing" : {
-			type : dataTypes.BOOLEAN, allowNull : true
-		},
-		"client_id" : {
-			type : dataTypes.INTEGER, allowNull : false
-		},
-	},{
-		instanceMethods : {
-		// place your custom model methods below.
-		}
-	});
+var inflector = require('inflector');
+
+exports.model = {
+	// access your variables by adding the $$ prefix
+	name : 'department',
+	// map your database columns here
+	fields : [
+		{name : 'id', label : 'id'.humanize(), type : 'integer', required : true, primaryKey : true},
+		{name : 'department_name', label : 'department_name'.humanize(), type : 'string', required : true, max : 50},
+		{name : 'dept_auth_limit', label : 'dept_auth_limit'.humanize(), type : 'float', required : false, max : 1179650},
+		{name : 'is_auth_required', label : 'is_auth_required'.humanize(), type : 'boolean', required : false},
+		{name : 'is_super_department', label : 'is_super_department'.humanize(), type : 'boolean', required : false},
+		{name : 'is_processing', label : 'is_processing'.humanize(), type : 'boolean', required : false},
+		{name : 'client_id', label : 'client_id'.humanize(), type : 'integer', required : true},
+	],
+	// place your custom model methods below.
+	methods : {
+		$instanceMethod : function(){ console.log('Prefix your instance methods\' name with a dollar sign ($). Example: model.$instanceMethod()');},
+		classMethod : function(){ console.log('This class method is accesed statically. Example: this.$$.models.modelName.classMethod()');}
+	},
+	relations : {
+		hasOne:[],
+		hasMany:[],
+		belongsTo:[],
+	}
 }

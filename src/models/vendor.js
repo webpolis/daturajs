@@ -5,92 +5,49 @@
  *
  * @author Nicolas Iglesias <nicolas@clevertech.biz>
  */
-module.exports = function(seq, dataTypes) {
-	return seq.define("vendor", {
-		"id" : {
-			type : dataTypes.INTEGER, allowNull : false, primaryKey : true, autoIncrement : true
-		},
-		"vendor_name" : {
-			type : dataTypes.STRING, allowNull : true, max : 250
-		},
-		"address" : {
-			type : dataTypes.STRING, allowNull : true, max : 250
-		},
-		"address2" : {
-			type : dataTypes.STRING, allowNull : true, max : 250
-		},
-		"city" : {
-			type : dataTypes.STRING, allowNull : true, max : 100
-		},
-		"zipcode" : {
-			type : dataTypes.STRING, allowNull : true, max : 50
-		},
-		"phone" : {
-			type : dataTypes.STRING, allowNull : true, max : 50
-		},
-		"fax" : {
-			type : dataTypes.STRING, allowNull : true, max : 50
-		},
-		"email" : {
-			type : dataTypes.STRING, allowNull : true, max : 350
-		},
-		"first_name" : {
-			type : dataTypes.STRING, allowNull : true, max : 150
-		},
-		"last_name" : {
-			type : dataTypes.STRING, allowNull : true, max : 150
-		},
-		"title" : {
-			type : dataTypes.STRING, allowNull : true, max : 150
-		},
-		"accounting_system_id" : {
-			type : dataTypes.STRING, allowNull : true, max : 50
-		},
-		"is_credit_card" : {
-			type : dataTypes.BOOLEAN, allowNull : true
-		},
-		"is_visible" : {
-			type : dataTypes.BOOLEAN, allowNull : true
-		},
-		"is_active" : {
-			type : dataTypes.BOOLEAN, allowNull : true
-		},
-		"is_approved" : {
-			type : dataTypes.BOOLEAN, allowNull : true
-		},
-		"is_deleted" : {
-			type : dataTypes.INTEGER, allowNull : true
-		},
-		"created_date" : {
-			type : dataTypes.DATE, allowNull : true
-		},
-		"created_by_id" : {
-			type : dataTypes.INTEGER, allowNull : true
-		},
-		"modified_date" : {
-			type : dataTypes.DATE, allowNull : true
-		},
-		"modified_by_id" : {
-			type : dataTypes.INTEGER, allowNull : true
-		},
-		"approved_to_import_date" : {
-			type : dataTypes.DATE, allowNull : true
-		},
-		"vendor_type_id" : {
-			type : dataTypes.INTEGER, allowNull : false
-		},
-		"state_id" : {
-			type : dataTypes.INTEGER, allowNull : false
-		},
-		"country_id" : {
-			type : dataTypes.INTEGER, allowNull : false
-		},
-		"client_id" : {
-			type : dataTypes.INTEGER, allowNull : false
-		},
-	},{
-		instanceMethods : {
-		// place your custom model methods below.
-		}
-	});
+var inflector = require('inflector');
+
+exports.model = {
+	// access your variables by adding the $$ prefix
+	name : 'vendor',
+	// map your database columns here
+	fields : [
+		{name : 'id', label : 'id'.humanize(), type : 'integer', required : true, primaryKey : true},
+		{name : 'vendor_name', label : 'vendor_name'.humanize(), type : 'string', required : false, max : 250},
+		{name : 'address', label : 'address'.humanize(), type : 'string', required : false, max : 250},
+		{name : 'address2', label : 'address2'.humanize(), type : 'string', required : false, max : 250},
+		{name : 'city', label : 'city'.humanize(), type : 'string', required : false, max : 100},
+		{name : 'zipcode', label : 'zipcode'.humanize(), type : 'string', required : false, max : 50},
+		{name : 'phone', label : 'phone'.humanize(), type : 'string', required : false, max : 50},
+		{name : 'fax', label : 'fax'.humanize(), type : 'string', required : false, max : 50},
+		{name : 'email', label : 'email'.humanize(), type : 'string', required : false, max : 350},
+		{name : 'first_name', label : 'first_name'.humanize(), type : 'string', required : false, max : 150},
+		{name : 'last_name', label : 'last_name'.humanize(), type : 'string', required : false, max : 150},
+		{name : 'title', label : 'title'.humanize(), type : 'string', required : false, max : 150},
+		{name : 'accounting_system_id', label : 'accounting_system_id'.humanize(), type : 'string', required : false, max : 50},
+		{name : 'is_credit_card', label : 'is_credit_card'.humanize(), type : 'boolean', required : false},
+		{name : 'is_visible', label : 'is_visible'.humanize(), type : 'boolean', required : false},
+		{name : 'is_active', label : 'is_active'.humanize(), type : 'boolean', required : false},
+		{name : 'is_approved', label : 'is_approved'.humanize(), type : 'boolean', required : false},
+		{name : 'is_deleted', label : 'is_deleted'.humanize(), type : 'integer', required : false},
+		{name : 'created_date', label : 'created_date'.humanize(), type : 'date', required : false},
+		{name : 'created_by_id', label : 'created_by_id'.humanize(), type : 'integer', required : false},
+		{name : 'modified_date', label : 'modified_date'.humanize(), type : 'date', required : false},
+		{name : 'modified_by_id', label : 'modified_by_id'.humanize(), type : 'integer', required : false},
+		{name : 'approved_to_import_date', label : 'approved_to_import_date'.humanize(), type : 'date', required : false},
+		{name : 'vendor_type_id', label : 'vendor_type_id'.humanize(), type : 'integer', required : true},
+		{name : 'state_id', label : 'state_id'.humanize(), type : 'integer', required : true},
+		{name : 'country_id', label : 'country_id'.humanize(), type : 'integer', required : true},
+		{name : 'client_id', label : 'client_id'.humanize(), type : 'integer', required : true},
+	],
+	// place your custom model methods below.
+	methods : {
+		$instanceMethod : function(){ console.log('Prefix your instance methods\' name with a dollar sign ($). Example: model.$instanceMethod()');},
+		classMethod : function(){ console.log('This class method is accesed statically. Example: this.$$.models.modelName.classMethod()');}
+	},
+	relations : {
+		hasOne:[],
+		hasMany:[],
+		belongsTo:[],
+	}
 }

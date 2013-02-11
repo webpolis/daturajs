@@ -5,23 +5,26 @@
  *
  * @author Nicolas Iglesias <nicolas@clevertech.biz>
  */
-module.exports = function(seq, dataTypes) {
-	return seq.define("admin", {
-		"id" : {
-			type : dataTypes.INTEGER, allowNull : false, primaryKey : true, autoIncrement : true
-		},
-		"name" : {
-			type : dataTypes.STRING, allowNull : true, max : 100
-		},
-		"username" : {
-			type : dataTypes.STRING, allowNull : true, max : 100
-		},
-		"password" : {
-			type : dataTypes.STRING, allowNull : true, max : 100
-		},
-	},{
-		instanceMethods : {
-		// place your custom model methods below.
-		}
-	});
+var inflector = require('inflector');
+
+exports.model = {
+	// access your variables by adding the $$ prefix
+	name : 'admin',
+	// map your database columns here
+	fields : [
+		{name : 'id', label : 'id'.humanize(), type : 'integer', required : true, primaryKey : true},
+		{name : 'name', label : 'name'.humanize(), type : 'string', required : false, max : 100},
+		{name : 'username', label : 'username'.humanize(), type : 'string', required : false, max : 100},
+		{name : 'password', label : 'password'.humanize(), type : 'string', required : false, max : 100},
+	],
+	// place your custom model methods below.
+	methods : {
+		$instanceMethod : function(){ console.log('Prefix your instance methods\' name with a dollar sign ($). Example: model.$instanceMethod()');},
+		classMethod : function(){ console.log('This class method is accesed statically. Example: this.$$.models.modelName.classMethod()');}
+	},
+	relations : {
+		hasOne:[],
+		hasMany:[],
+		belongsTo:[],
+	}
 }

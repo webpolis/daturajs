@@ -6,15 +6,20 @@ module.exports = function(){
         },
         register : function (req,res){
             this.$$.app.set('title','Register');
-            
-            var user = this.$$.models['user'];
-            var attrs = Object.keys(user.rawAttributes);
-            var state = this.$$.models['state'];
+
+            var state = this.$$.models.state;
+            var user = this.$$.models.user;
+            var client = this.$$.models.client;
             
             _$$ = this.$$;
-            state.findAll().success(function(states){
+            state.$find('all',{
+                'with':['country'],
+                'order':'state_name ASC'
+            }, function(states){
                 _$$.render('register',{
-                    states: states
+                    states: states,
+                    user: user,
+                    client: client
                 });
             });
         }

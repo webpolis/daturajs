@@ -37,8 +37,8 @@ function userController($scope, $resource, $window){
         $scope._res.register({
             user:$scope.user,
             client:$scope.client
-        },function(ret){
-            console.log(ret);
+        },function(user){
+            $scope.login();
         });
     }
 }

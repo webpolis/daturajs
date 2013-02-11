@@ -5,23 +5,26 @@
  *
  * @author Nicolas Iglesias <nicolas@clevertech.biz>
  */
-module.exports = function(seq, dataTypes) {
-	return seq.define("client_mile_rate", {
-		"id" : {
-			type : dataTypes.INTEGER, allowNull : false, primaryKey : true, autoIncrement : true
-		},
-		"mile" : {
-			type : dataTypes.FLOAT, allowNull : false, max : 1179650
-		},
-		"rate" : {
-			type : dataTypes.FLOAT, allowNull : false, max : 1179650
-		},
-		"client_id" : {
-			type : dataTypes.INTEGER, allowNull : false
-		},
-	},{
-		instanceMethods : {
-		// place your custom model methods below.
-		}
-	});
+var inflector = require('inflector');
+
+exports.model = {
+	// access your variables by adding the $$ prefix
+	name : 'client_mile_rate',
+	// map your database columns here
+	fields : [
+		{name : 'id', label : 'id'.humanize(), type : 'integer', required : true, primaryKey : true},
+		{name : 'mile', label : 'mile'.humanize(), type : 'float', required : true, max : 1179650},
+		{name : 'rate', label : 'rate'.humanize(), type : 'float', required : true, max : 1179650},
+		{name : 'client_id', label : 'client_id'.humanize(), type : 'integer', required : true},
+	],
+	// place your custom model methods below.
+	methods : {
+		$instanceMethod : function(){ console.log('Prefix your instance methods\' name with a dollar sign ($). Example: model.$instanceMethod()');},
+		classMethod : function(){ console.log('This class method is accesed statically. Example: this.$$.models.modelName.classMethod()');}
+	},
+	relations : {
+		hasOne:[],
+		hasMany:[],
+		belongsTo:[],
+	}
 }

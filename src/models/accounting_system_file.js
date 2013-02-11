@@ -5,29 +5,28 @@
  *
  * @author Nicolas Iglesias <nicolas@clevertech.biz>
  */
-module.exports = function(seq, dataTypes) {
-	return seq.define("accounting_system_file", {
-		"id" : {
-			type : dataTypes.INTEGER, allowNull : false, primaryKey : true, autoIncrement : true
-		},
-		"accounting_system_session_id" : {
-			type : dataTypes.STRING, allowNull : true, max : 50
-		},
-		"accounting_system_file" : {
-			type : dataTypes.STRING, allowNull : true, max : 50
-		},
-		"export_date" : {
-			type : dataTypes.DATE, allowNull : true
-		},
-		"create_date" : {
-			type : dataTypes.DATE, allowNull : false
-		},
-		"client_id" : {
-			type : dataTypes.INTEGER, allowNull : false
-		},
-	},{
-		instanceMethods : {
-		// place your custom model methods below.
-		}
-	});
+var inflector = require('inflector');
+
+exports.model = {
+	// access your variables by adding the $$ prefix
+	name : 'accounting_system_file',
+	// map your database columns here
+	fields : [
+		{name : 'id', label : 'id'.humanize(), type : 'integer', required : true, primaryKey : true},
+		{name : 'accounting_system_session_id', label : 'accounting_system_session_id'.humanize(), type : 'string', required : false, max : 50},
+		{name : 'accounting_system_file', label : 'accounting_system_file'.humanize(), type : 'string', required : false, max : 50},
+		{name : 'export_date', label : 'export_date'.humanize(), type : 'date', required : false},
+		{name : 'create_date', label : 'create_date'.humanize(), type : 'date', required : true},
+		{name : 'client_id', label : 'client_id'.humanize(), type : 'integer', required : true},
+	],
+	// place your custom model methods below.
+	methods : {
+		$instanceMethod : function(){ console.log('Prefix your instance methods\' name with a dollar sign ($). Example: model.$instanceMethod()');},
+		classMethod : function(){ console.log('This class method is accesed statically. Example: this.$$.models.modelName.classMethod()');}
+	},
+	relations : {
+		hasOne:[],
+		hasMany:[],
+		belongsTo:[],
+	}
 }

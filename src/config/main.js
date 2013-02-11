@@ -14,7 +14,6 @@ var _dev = {
     
     // db configuration
     db:{
-        adapter:'sequelize',
         driver:'postgres',
         host:'localhost',
         username:'resteasy',

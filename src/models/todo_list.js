@@ -5,35 +5,30 @@
  *
  * @author Nicolas Iglesias <nicolas@clevertech.biz>
  */
-module.exports = function(seq, dataTypes) {
-	return seq.define("todo_list", {
-		"id" : {
-			type : dataTypes.INTEGER, allowNull : false, primaryKey : true, autoIncrement : true
-		},
-		"status_id" : {
-			type : dataTypes.INTEGER, allowNull : false
-		},
-		"todo_list_title" : {
-			type : dataTypes.STRING, allowNull : true, max : 255
-		},
-		"todo_list_desc" : {
-			type : dataTypes.TEXT, allowNull : true
-		},
-		"created_by" : {
-			type : dataTypes.INTEGER, allowNull : false
-		},
-		"create_date" : {
-			type : dataTypes.DATE, allowNull : false
-		},
-		"is_deleted" : {
-			type : dataTypes.BOOLEAN, allowNull : false
-		},
-		"client_id" : {
-			type : dataTypes.INTEGER, allowNull : false
-		},
-	},{
-		instanceMethods : {
-		// place your custom model methods below.
-		}
-	});
+var inflector = require('inflector');
+
+exports.model = {
+	// access your variables by adding the $$ prefix
+	name : 'todo_list',
+	// map your database columns here
+	fields : [
+		{name : 'id', label : 'id'.humanize(), type : 'integer', required : true, primaryKey : true},
+		{name : 'status_id', label : 'status_id'.humanize(), type : 'integer', required : true},
+		{name : 'todo_list_title', label : 'todo_list_title'.humanize(), type : 'string', required : false, max : 255},
+		{name : 'todo_list_desc', label : 'todo_list_desc'.humanize(), type : 'text', required : false},
+		{name : 'created_by', label : 'created_by'.humanize(), type : 'integer', required : true},
+		{name : 'create_date', label : 'create_date'.humanize(), type : 'date', required : true},
+		{name : 'is_deleted', label : 'is_deleted'.humanize(), type : 'boolean', required : true},
+		{name : 'client_id', label : 'client_id'.humanize(), type : 'integer', required : true},
+	],
+	// place your custom model methods below.
+	methods : {
+		$instanceMethod : function(){ console.log('Prefix your instance methods\' name with a dollar sign ($). Example: model.$instanceMethod()');},
+		classMethod : function(){ console.log('This class method is accesed statically. Example: this.$$.models.modelName.classMethod()');}
+	},
+	relations : {
+		hasOne:[],
+		hasMany:[],
+		belongsTo:[],
+	}
 }

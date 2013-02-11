@@ -5,26 +5,27 @@
  *
  * @author Nicolas Iglesias <nicolas@clevertech.biz>
  */
-module.exports = function(seq, dataTypes) {
-	return seq.define("client_rule_approver", {
-		"id" : {
-			type : dataTypes.INTEGER, allowNull : false, primaryKey : true, autoIncrement : true
-		},
-		"created_date" : {
-			type : dataTypes.DATE, allowNull : true
-		},
-		"created_by_id" : {
-			type : dataTypes.INTEGER, allowNull : true
-		},
-		"client_rule_id" : {
-			type : dataTypes.INTEGER, allowNull : false
-		},
-		"user_id" : {
-			type : dataTypes.INTEGER, allowNull : false
-		},
-	},{
-		instanceMethods : {
-		// place your custom model methods below.
-		}
-	});
+var inflector = require('inflector');
+
+exports.model = {
+	// access your variables by adding the $$ prefix
+	name : 'client_rule_approver',
+	// map your database columns here
+	fields : [
+		{name : 'id', label : 'id'.humanize(), type : 'integer', required : true, primaryKey : true},
+		{name : 'created_date', label : 'created_date'.humanize(), type : 'date', required : false},
+		{name : 'created_by_id', label : 'created_by_id'.humanize(), type : 'integer', required : false},
+		{name : 'client_rule_id', label : 'client_rule_id'.humanize(), type : 'integer', required : true},
+		{name : 'user_id', label : 'user_id'.humanize(), type : 'integer', required : true},
+	],
+	// place your custom model methods below.
+	methods : {
+		$instanceMethod : function(){ console.log('Prefix your instance methods\' name with a dollar sign ($). Example: model.$instanceMethod()');},
+		classMethod : function(){ console.log('This class method is accesed statically. Example: this.$$.models.modelName.classMethod()');}
+	},
+	relations : {
+		hasOne:[],
+		hasMany:[],
+		belongsTo:[],
+	}
 }

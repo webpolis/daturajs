@@ -5,47 +5,34 @@
  *
  * @author Nicolas Iglesias <nicolas@clevertech.biz>
  */
-module.exports = function(seq, dataTypes) {
-	return seq.define("accounting_segment", {
-		"id" : {
-			type : dataTypes.INTEGER, allowNull : false, primaryKey : true, autoIncrement : true
-		},
-		"segment_title" : {
-			type : dataTypes.STRING, allowNull : true, max : 50
-		},
-		"description" : {
-			type : dataTypes.STRING, allowNull : true, max : 500
-		},
-		"segment_auth_limit" : {
-			type : dataTypes.FLOAT, allowNull : true, max : 1179650
-		},
-		"accounting_system_id" : {
-			type : dataTypes.STRING, allowNull : true, max : 50
-		},
-		"is_visible" : {
-			type : dataTypes.BOOLEAN, allowNull : true
-		},
-		"display_order" : {
-			type : dataTypes.INTEGER, allowNull : true
-		},
-		"created_date" : {
-			type : dataTypes.DATE, allowNull : true
-		},
-		"created_by_id" : {
-			type : dataTypes.INTEGER, allowNull : true
-		},
-		"modified_date" : {
-			type : dataTypes.DATE, allowNull : true
-		},
-		"modified_by_id" : {
-			type : dataTypes.INTEGER, allowNull : true
-		},
-		"client_id" : {
-			type : dataTypes.INTEGER, allowNull : false
-		},
-	},{
-		instanceMethods : {
-		// place your custom model methods below.
-		}
-	});
+var inflector = require('inflector');
+
+exports.model = {
+	// access your variables by adding the $$ prefix
+	name : 'accounting_segment',
+	// map your database columns here
+	fields : [
+		{name : 'id', label : 'id'.humanize(), type : 'integer', required : true, primaryKey : true},
+		{name : 'segment_title', label : 'segment_title'.humanize(), type : 'string', required : false, max : 50},
+		{name : 'description', label : 'description'.humanize(), type : 'string', required : false, max : 500},
+		{name : 'segment_auth_limit', label : 'segment_auth_limit'.humanize(), type : 'float', required : false, max : 1179650},
+		{name : 'accounting_system_id', label : 'accounting_system_id'.humanize(), type : 'string', required : false, max : 50},
+		{name : 'is_visible', label : 'is_visible'.humanize(), type : 'boolean', required : false},
+		{name : 'display_order', label : 'display_order'.humanize(), type : 'integer', required : false},
+		{name : 'created_date', label : 'created_date'.humanize(), type : 'date', required : false},
+		{name : 'created_by_id', label : 'created_by_id'.humanize(), type : 'integer', required : false},
+		{name : 'modified_date', label : 'modified_date'.humanize(), type : 'date', required : false},
+		{name : 'modified_by_id', label : 'modified_by_id'.humanize(), type : 'integer', required : false},
+		{name : 'client_id', label : 'client_id'.humanize(), type : 'integer', required : true},
+	],
+	// place your custom model methods below.
+	methods : {
+		$instanceMethod : function(){ console.log('Prefix your instance methods\' name with a dollar sign ($). Example: model.$instanceMethod()');},
+		classMethod : function(){ console.log('This class method is accesed statically. Example: this.$$.models.modelName.classMethod()');}
+	},
+	relations : {
+		hasOne:[],
+		hasMany:[],
+		belongsTo:[],
+	}
 }

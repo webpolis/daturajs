@@ -5,89 +5,48 @@
  *
  * @author Nicolas Iglesias <nicolas@clevertech.biz>
  */
-module.exports = function(seq, dataTypes) {
-	return seq.define("invoice_line_segment", {
-		"id" : {
-			type : dataTypes.INTEGER, allowNull : false, primaryKey : true, autoIncrement : true
-		},
-		"amount" : {
-			type : dataTypes.FLOAT, allowNull : true, max : 1179650
-		},
-		"comment" : {
-			type : dataTypes.STRING, allowNull : true, max : 500
-		},
-		"segment01" : {
-			type : dataTypes.STRING, allowNull : true, max : 50
-		},
-		"segment02" : {
-			type : dataTypes.STRING, allowNull : true, max : 50
-		},
-		"segment03" : {
-			type : dataTypes.STRING, allowNull : true, max : 50
-		},
-		"segment04" : {
-			type : dataTypes.STRING, allowNull : true, max : 50
-		},
-		"segment05" : {
-			type : dataTypes.STRING, allowNull : true, max : 50
-		},
-		"segment06" : {
-			type : dataTypes.STRING, allowNull : true, max : 50
-		},
-		"segment07" : {
-			type : dataTypes.STRING, allowNull : true, max : 50
-		},
-		"segment08" : {
-			type : dataTypes.STRING, allowNull : true, max : 50
-		},
-		"segment09" : {
-			type : dataTypes.STRING, allowNull : true, max : 50
-		},
-		"segment10" : {
-			type : dataTypes.STRING, allowNull : true, max : 50
-		},
-		"segment11" : {
-			type : dataTypes.STRING, allowNull : true, max : 50
-		},
-		"segment12" : {
-			type : dataTypes.STRING, allowNull : true, max : 50
-		},
-		"segment13" : {
-			type : dataTypes.STRING, allowNull : true, max : 50
-		},
-		"segment14" : {
-			type : dataTypes.STRING, allowNull : true, max : 50
-		},
-		"segment15" : {
-			type : dataTypes.STRING, allowNull : true, max : 50
-		},
-		"account01" : {
-			type : dataTypes.STRING, allowNull : true, max : 50
-		},
-		"account02" : {
-			type : dataTypes.STRING, allowNull : true, max : 50
-		},
-		"segment00" : {
-			type : dataTypes.STRING, allowNull : true, max : 50
-		},
-		"account00" : {
-			type : dataTypes.STRING, allowNull : true, max : 50
-		},
-		"account03" : {
-			type : dataTypes.STRING, allowNull : true, max : 50
-		},
-		"account04" : {
-			type : dataTypes.STRING, allowNull : true, max : 50
-		},
-		"account05" : {
-			type : dataTypes.STRING, allowNull : true, max : 50
-		},
-		"invoice_line_id" : {
-			type : dataTypes.INTEGER, allowNull : false
-		},
-	},{
-		instanceMethods : {
-		// place your custom model methods below.
-		}
-	});
+var inflector = require('inflector');
+
+exports.model = {
+	// access your variables by adding the $$ prefix
+	name : 'invoice_line_segment',
+	// map your database columns here
+	fields : [
+		{name : 'id', label : 'id'.humanize(), type : 'integer', required : true, primaryKey : true},
+		{name : 'amount', label : 'amount'.humanize(), type : 'float', required : false, max : 1179650},
+		{name : 'comment', label : 'comment'.humanize(), type : 'string', required : false, max : 500},
+		{name : 'segment01', label : 'segment01'.humanize(), type : 'string', required : false, max : 50},
+		{name : 'segment02', label : 'segment02'.humanize(), type : 'string', required : false, max : 50},
+		{name : 'segment03', label : 'segment03'.humanize(), type : 'string', required : false, max : 50},
+		{name : 'segment04', label : 'segment04'.humanize(), type : 'string', required : false, max : 50},
+		{name : 'segment05', label : 'segment05'.humanize(), type : 'string', required : false, max : 50},
+		{name : 'segment06', label : 'segment06'.humanize(), type : 'string', required : false, max : 50},
+		{name : 'segment07', label : 'segment07'.humanize(), type : 'string', required : false, max : 50},
+		{name : 'segment08', label : 'segment08'.humanize(), type : 'string', required : false, max : 50},
+		{name : 'segment09', label : 'segment09'.humanize(), type : 'string', required : false, max : 50},
+		{name : 'segment10', label : 'segment10'.humanize(), type : 'string', required : false, max : 50},
+		{name : 'segment11', label : 'segment11'.humanize(), type : 'string', required : false, max : 50},
+		{name : 'segment12', label : 'segment12'.humanize(), type : 'string', required : false, max : 50},
+		{name : 'segment13', label : 'segment13'.humanize(), type : 'string', required : false, max : 50},
+		{name : 'segment14', label : 'segment14'.humanize(), type : 'string', required : false, max : 50},
+		{name : 'segment15', label : 'segment15'.humanize(), type : 'string', required : false, max : 50},
+		{name : 'account01', label : 'account01'.humanize(), type : 'string', required : false, max : 50},
+		{name : 'account02', label : 'account02'.humanize(), type : 'string', required : false, max : 50},
+		{name : 'segment00', label : 'segment00'.humanize(), type : 'string', required : false, max : 50},
+		{name : 'account00', label : 'account00'.humanize(), type : 'string', required : false, max : 50},
+		{name : 'account03', label : 'account03'.humanize(), type : 'string', required : false, max : 50},
+		{name : 'account04', label : 'account04'.humanize(), type : 'string', required : false, max : 50},
+		{name : 'account05', label : 'account05'.humanize(), type : 'string', required : false, max : 50},
+		{name : 'invoice_line_id', label : 'invoice_line_id'.humanize(), type : 'integer', required : true},
+	],
+	// place your custom model methods below.
+	methods : {
+		$instanceMethod : function(){ console.log('Prefix your instance methods\' name with a dollar sign ($). Example: model.$instanceMethod()');},
+		classMethod : function(){ console.log('This class method is accesed statically. Example: this.$$.models.modelName.classMethod()');}
+	},
+	relations : {
+		hasOne:[],
+		hasMany:[],
+		belongsTo:[],
+	}
 }

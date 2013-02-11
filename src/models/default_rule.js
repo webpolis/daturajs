@@ -5,29 +5,28 @@
  *
  * @author Nicolas Iglesias <nicolas@clevertech.biz>
  */
-module.exports = function(seq, dataTypes) {
-	return seq.define("default_rule", {
-		"id" : {
-			type : dataTypes.INTEGER, allowNull : false, primaryKey : true, autoIncrement : true
-		},
-		"default_rule_type" : {
-			type : dataTypes.STRING, allowNull : true, max : 150
-		},
-		"default_rule_name" : {
-			type : dataTypes.STRING, allowNull : true, max : 500
-		},
-		"default_authorization_limit" : {
-			type : dataTypes.FLOAT, allowNull : true, max : 1179650
-		},
-		"default_approvers" : {
-			type : dataTypes.STRING, allowNull : true, max : 500
-		},
-		"comment" : {
-			type : dataTypes.STRING, allowNull : true, max : 1000
-		},
-	},{
-		instanceMethods : {
-		// place your custom model methods below.
-		}
-	});
+var inflector = require('inflector');
+
+exports.model = {
+	// access your variables by adding the $$ prefix
+	name : 'default_rule',
+	// map your database columns here
+	fields : [
+		{name : 'id', label : 'id'.humanize(), type : 'integer', required : true, primaryKey : true},
+		{name : 'default_rule_type', label : 'default_rule_type'.humanize(), type : 'string', required : false, max : 150},
+		{name : 'default_rule_name', label : 'default_rule_name'.humanize(), type : 'string', required : false, max : 500},
+		{name : 'default_authorization_limit', label : 'default_authorization_limit'.humanize(), type : 'float', required : false, max : 1179650},
+		{name : 'default_approvers', label : 'default_approvers'.humanize(), type : 'string', required : false, max : 500},
+		{name : 'comment', label : 'comment'.humanize(), type : 'string', required : false, max : 1000},
+	],
+	// place your custom model methods below.
+	methods : {
+		$instanceMethod : function(){ console.log('Prefix your instance methods\' name with a dollar sign ($). Example: model.$instanceMethod()');},
+		classMethod : function(){ console.log('This class method is accesed statically. Example: this.$$.models.modelName.classMethod()');}
+	},
+	relations : {
+		hasOne:[],
+		hasMany:[],
+		belongsTo:[],
+	}
 }

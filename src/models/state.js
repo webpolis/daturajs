@@ -5,26 +5,27 @@
  *
  * @author Nicolas Iglesias <nicolas@clevertech.biz>
  */
-module.exports = function(seq, dataTypes) {
-	return seq.define("state", {
-		"id" : {
-			type : dataTypes.INTEGER, allowNull : false, primaryKey : true, autoIncrement : true
-		},
-		"state_name" : {
-			type : dataTypes.STRING, allowNull : true, max : 50
-		},
-		"state_code" : {
-			type : dataTypes.STRING, allowNull : true, max : 50
-		},
-		"display_order" : {
-			type : dataTypes.INTEGER, allowNull : true
-		},
-		"country_id" : {
-			type : dataTypes.INTEGER, allowNull : false
-		},
-	},{
-		instanceMethods : {
-		// place your custom model methods below.
-		}
-	});
+var inflector = require('inflector');
+
+exports.model = {
+	// access your variables by adding the $$ prefix
+	name : 'state',
+	// map your database columns here
+	fields : [
+		{name : 'id', label : 'id'.humanize(), type : 'integer', required : true, primaryKey : true},
+		{name : 'state_name', label : 'state_name'.humanize(), type : 'string', required : false, max : 50},
+		{name : 'state_code', label : 'state_code'.humanize(), type : 'string', required : false, max : 50},
+		{name : 'display_order', label : 'display_order'.humanize(), type : 'integer', required : false},
+		{name : 'country_id', label : 'country_id'.humanize(), type : 'integer', required : true},
+	],
+	// place your custom model methods below.
+	methods : {
+	},
+	relations : {
+		hasOne:[],
+		hasMany:[],
+		belongsTo:[
+                    {model:'country', foreignKey:'country_id'}
+                ],
+	}
 }
