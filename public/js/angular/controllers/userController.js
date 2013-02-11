@@ -1,5 +1,11 @@
 function userController($scope, $resource, $window){
     $scope.user = {}, $scope.client = {}, $scope.states = [];
+    
+    // update client when user is updated
+    $scope.$watch('user', function(_user, _oldUsr) {
+        $scope.client = _user.client;
+    });
+    
     $scope.loginFailed = false;
     $scope._res = $resource('http://'+$window.location.hostname+'\\::port/:parent/:controller/:action',{
         },{
