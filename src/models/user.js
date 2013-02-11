@@ -60,10 +60,12 @@ exports.model = {
             }
         },
         relations : {
-            hasOne:[],
+            hasOne:[
+                
+            ],
             hasMany:[],
             belongsTo:[
-                {model:'client', alias:'client', foreignKey:'client_id'}
+                {model:'client', alias:'client', foreignKey: 'client_id'},
             ]
         }
 }
