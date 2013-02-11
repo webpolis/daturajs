@@ -9,7 +9,8 @@ module.exports = function(){
             // @todo get country id by find
             data.user.country_id = data.user.country_id?data.user.country_id:1;
             data.client.country_id = data.client.country_id?data.client.country_id:data.user.country_id;
-            data.user.state_id = data.user.state_id?data.user.state_id:data.client.state_id;
+            data.user.state_id = data.user.state_id?data.user.state_id:1;
+            data.client.state_id = data.client.state_id?data.client.state_id:data.user.state_id;
             
             client.$create(data.client,function(client){
                 data.user.client_id = client.id;
