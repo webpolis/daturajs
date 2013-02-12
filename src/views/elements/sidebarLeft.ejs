@@ -47,11 +47,12 @@
                         childs: [
                             {
                                 label: 'Accounting Server',
-                                target: '#dataPageAccountingServer'
+                                target: '#dataPageAccountingServer',
+                                onclick: "$(this).tab('show')"
                             },
                         ]
                     },
-                ], {rootCssClass:'nav nav-tabs nav-stacked',subCssClass:'dropdown-menu'}) %>
+                ], {rootCssClass:'nav nav-tabs nav-stacked',subCssClass:'dropdown-menu', id:'tabSettings'}) %>
             <% break;%>
     <%}%>
 <%}%>

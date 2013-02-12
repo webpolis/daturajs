@@ -29,7 +29,8 @@
                 <%- html.label('$1,500 Setup Fee', null, {'style':'display:inline-block;margin-left:3px','class':'pull-left'})%>
                 <div class="clear"></div>
                 <%- html.label('Subscription')%>
-                <%- html.select(client,'subscription_id', {angular:true, 'ng-required': true, 'ng-options':'s.id as s.subscription_label for s in subscriptions'})%>
+                <%- html.select(client,'subscription_id', {angular:true, 'ng-required': true, 
+                'ng-options':'s.id as s.subscription_label for s in subscriptions', 'class':'input-xlarge'})%>
             </div>
             <div class="span6">
 

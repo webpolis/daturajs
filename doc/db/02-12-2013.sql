@@ -24,3 +24,9 @@ INSERT INTO subscriptions(subscription_code, subscription_label) VALUES ('USC', 
 INSERT INTO subscriptions(subscription_code, subscription_label) VALUES ('USD', 'Up to 50 Users $399/month');
 INSERT INTO subscriptions(subscription_code, subscription_label) VALUES ('USE', 'Up to 100 Users $699/month');
 INSERT INTO subscriptions(subscription_code, subscription_label) VALUES ('USF', '100 + Users - Call for pricing');
+
+INSERT INTO accounting_system_types(accounting_system_type_name) VALUES ('Sage MIP');
+INSERT INTO accounting_system_types(accounting_system_type_name) VALUES ('QuickBooks');
+INSERT INTO accounting_system_types(accounting_system_type_name) VALUES ('GreatPlains');
+INSERT INTO accounting_system_types(accounting_system_type_name) VALUES ('PeachTree Accounting');
+INSERT INTO accounting_system_types(accounting_system_type_name) VALUES ('Other/Unknown');

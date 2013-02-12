@@ -45,6 +45,14 @@ exports.main = [
         method:'get',
         isRest:true
     },
+    // accounting system related
+    {
+        url: '/rest/accountingSystemType/getAccountingSystemTypes',
+        action: 'accountingSystemType/getAccountingSystemTypes',
+        method:'get',
+        isRest:true
+    },
+    // location related
     {
         url: '/rest/location/getStates',
         action: 'location/getStates',

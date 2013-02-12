@@ -54,6 +54,12 @@ exports.model = {
 	],
 	// place your custom model methods below.
 	methods : {
+            getServerTypes : function(){
+                return [
+                    {code:'mssql',label:'MS SQL'},
+                    {code:'oracle',label:'Oracle'},
+                ]
+            }
 	},
 	relations : {
 		hasOne:[

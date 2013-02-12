@@ -1,0 +1,18 @@
+<form ng-submit="update(true)" ng-init="getAccountingSystemTypes(); accountingServerTypes = <%= JSON.stringify(client.getServerTypes()) %>">
+    <div class="alert alert-error" ng-show="accountingServerFail">
+        <strong><%= 'Error' %></strong> <%= 'Settings were not saved. Please contact the administrator.' %>
+    </div>
+    <div class="alert alert-success" ng-show="accountingServerOk">
+        <strong><%= 'Success' %></strong> <%= 'The information has been updated.' %>
+    </div>
+    <fieldset>
+        <%- html.tag('legend','Accounting Server')%>
+        <%- html.label('Accounting System')%>
+        <%- html.select(client,'accounting_system_type_id', {angular:true, 'ng-required': true, 
+        'ng-options':'s.id as s.accounting_system_type_name for s in accountingSystemTypes', 'class':'input-xlarge'})%>
+        <%- html.label('Server Type')%>
+        <%- html.select(client,'server_type', {angular:true, 'ng-required': true,
+        'ng-options':'s.code as s.label for s in accountingServerTypes', 'class':'input-xlarge'})%>
+        <div class="clear"><%- html.tag('button','Submit',{'class':'btn',type:'submit'})%></div>
+    </fieldset>
+</form>

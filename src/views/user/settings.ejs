@@ -1,79 +1,87 @@
-<form ng-controller="userController" ng-submit="update()" ng-init="getStates(); getSubscriptions(); user = <%= JSON.stringify(user) %>">
-    <div class="alert alert-success" ng-show="settingsSaved">
-        <strong><%= 'Success' %></strong> <%= 'Your settings were updated.' %>
+<div ng-controller="userController"  id="tabSettingsContent" class="tab-content">
+    <div class="tab-pane active" id="dataPageSettings">
+        <form ng-submit="update()" ng-init="getStates(); getSubscriptions(); user = <%= JSON.stringify(user) %>">
+            <div class="alert alert-error" ng-show="settingsFailed">
+                <strong><%= 'Error' %></strong> <%= 'Settings were not saved. Please contact the administrator.' %>
+            </div>
+            <div class="alert alert-success" ng-show="settingsSaved">
+                <strong><%= 'Success' %></strong> <%= 'The information has been updated.' %>
+            </div>
+            <%- html.input(user,'id', {angular:true, type:'hidden'})%>
+            <fieldset>
+                <%- html.tag('legend','Client Information')%>
+                <div class="row-fluid">
+                    <div class="span6">
+                        <%- html.label('Name')%>
+                        <%- html.input(client,'client_name', {angular:true, 'ng-required':true, 'class':'input-xlarge'})%>
+                        <%- html.label('Address')%>
+                        <%- html.input(client,'address', {angular:true, 'ng-required': false, 'class':'input-xlarge'})%>
+                        <%- html.label('Address #2')%>
+                        <%- html.input(client,'address2', {angular:true, 'ng-required': false, 'class':'input-xlarge'})%>
+                        <%- html.label('City')%>
+                        <%- html.input(client,'city', {angular:true, 'ng-required': false, 'class':'input-xlarge'})%>
+                    </div>
+                    <div class="span6">
+                        <%- html.label('Postal Code')%>
+                        <%- html.input(client,'postal_code', {angular:true, 'ng-required': false, 'class':'input-xlarge'})%>
+                        <%- html.label('Phone')%>
+                        <%- html.input(client,'phone', {angular:true, 'ng-required': false, 'class':'input-xlarge'})%>
+                        <%- html.label('Fax')%>
+                        <%- html.input(client,'fax', {angular:true, 'ng-required': false, 'class':'input-xlarge'})%>
+                        <%- html.label('State')%>
+                        <%- html.select(client,'state_id', {angular:true, 'ng-required': true, 'ng-options':'s.id as s.state_name for s in states'})%>
+                    </div>
+                </div>
+                <%- html.tag('legend','Billing Information')%>
+                <div class="row-fluid">
+                    <div class="span6">
+                        <%- html.label('Address', null, {'class':'clear'})%>
+                        <%- html.input(client,'billing_address', {angular:true, 'ng-required': false, 'class':'input-xlarge'})%>
+                        <%- html.label('Address #2')%>
+                        <%- html.input(client,'billing_address2', {angular:true, 'ng-required': false, 'class':'input-xlarge'})%>
+                    </div>
+                    <div class="span6">
+                        <%- html.label('City')%>
+                        <%- html.input(client,'billing_city', {angular:true, 'ng-required': false, 'class':'input-xlarge'})%>
+                        <%- html.label('State')%>
+                        <%- html.select(client,'billing_state_id', {angular:true, 'ng-required': true, 'ng-options':'s.id as s.state_name for s in states'})%>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span12">
+                        <%- html.input(client,'with_setup_fee', {type:'checkbox',angular:true, 'ng-required': false,'class':'pull-left', label: false})%>
+                        <%- html.label('$1,500 Setup Fee', null, {'style':'display:inline-block;margin-left:3px','class':'pull-left'})%>
+                        <div class="clear"></div>
+                        <%- html.label('Subscription')%>
+                        <%- html.select(client,'subscription_id', {angular:true, 'ng-required': true, 
+                        'ng-options':'s.id as s.subscription_label for s in subscriptions', 'class':'input-xlarge'})%>
+                    </div>
+                </div>
+                <%- html.tag('legend','Administrator')%>
+                <%- html.tag('span','Leave password blank if you do not wish to update it.', {'class':'label label-default'})%>
+                <div class="row-fluid">
+                    <div class="span6">
+                        <%- html.label('First name')%>
+                        <%- html.input(user,'first_name', {angular:true, 'ng-required': true})%>
+                        <%- html.label('Username')%>
+                        <%- html.input(user,'username', {angular:true, 'ng-required':true})%>
+                        <%- html.label('Email address')%>
+                        <%- html.input(user,'email', {angular:true, 'ng-required':true})%>
+                    </div>
+                    <div class="span6">
+                        <%- html.label('Last name')%>
+                        <%- html.input(user,'last_name', {angular:true, 'ng-required': true})%>
+                        <%- html.label('Password')%>
+                        <%- html.input(user,'password', {angular:true, type: 'password', 'ng-required': false})%>
+                        <%- html.label('Confirm password')%>
+                        <%- html.input(user,'confirm', {angular:true, type: 'password', 'ng-required': "{{user.password && true || false}}"})%>
+                    </div>
+                    <div class="clear"><%- html.tag('button','Submit',{'class':'btn',type:'submit'})%></div>
+                </div>
+            </fieldset>
+        </form>
     </div>
-    <div class="alert alert-error" ng-show="settingsFailed">
-        <strong><%= 'Error' %></strong> <%= 'Settings were not saved. Please contact the administrator.' %>
+    <div class="tab-pane" id="dataPageAccountingServer">
+        <%- include _accountingServer%>
     </div>
-    <%- html.input(user,'id', {angular:true, type:'hidden'})%>
-    <fieldset>
-        <%- html.tag('legend','Client Information')%>
-        <div class="row-fluid">
-            <div class="span6">
-                <%- html.label('Name')%>
-                <%- html.input(client,'client_name', {angular:true, 'ng-required':true, 'class':'input-xlarge'})%>
-                <%- html.label('Address')%>
-                <%- html.input(client,'address', {angular:true, 'ng-required': false, 'class':'input-xlarge'})%>
-                <%- html.label('Address #2')%>
-                <%- html.input(client,'address2', {angular:true, 'ng-required': false, 'class':'input-xlarge'})%>
-                <%- html.label('City')%>
-                <%- html.input(client,'city', {angular:true, 'ng-required': false, 'class':'input-xlarge'})%>
-            </div>
-            <div class="span6">
-                <%- html.label('Postal Code')%>
-                <%- html.input(client,'postal_code', {angular:true, 'ng-required': false, 'class':'input-xlarge'})%>
-                <%- html.label('Phone')%>
-                <%- html.input(client,'phone', {angular:true, 'ng-required': false, 'class':'input-xlarge'})%>
-                <%- html.label('Fax')%>
-                <%- html.input(client,'fax', {angular:true, 'ng-required': false, 'class':'input-xlarge'})%>
-                <%- html.label('State')%>
-                <%- html.select(client,'state_id', {angular:true, 'ng-required': true, 'ng-options':'s.id as s.state_name for s in states'})%>
-            </div>
-        </div>
-        <%- html.tag('legend','Billing Information')%>
-        <div class="row-fluid">
-            <div class="span6">
-                <%- html.label('Address', null, {'class':'clear'})%>
-                <%- html.input(client,'billing_address', {angular:true, 'ng-required': false, 'class':'input-xlarge'})%>
-                <%- html.label('Address #2')%>
-                <%- html.input(client,'billing_address2', {angular:true, 'ng-required': false, 'class':'input-xlarge'})%>
-            </div>
-            <div class="span6">
-                <%- html.label('City')%>
-                <%- html.input(client,'billing_city', {angular:true, 'ng-required': false, 'class':'input-xlarge'})%>
-                <%- html.label('State')%>
-                <%- html.select(client,'billing_state_id', {angular:true, 'ng-required': true, 'ng-options':'s.id as s.state_name for s in states'})%>
-            </div>
-        </div>
-        <div class="row-fluid">
-            <div class="span12">
-                <%- html.input(client,'with_setup_fee', {type:'checkbox',angular:true, 'ng-required': false,'class':'pull-left', label: false})%>
-                <%- html.label('$1,500 Setup Fee', null, {'style':'display:inline-block;margin-left:3px','class':'pull-left'})%>
-                <div class="clear"></div>
-                <%- html.label('Subscription')%>
-                <%- html.select(client,'subscription_id', {angular:true, 'ng-required': true, 'ng-options':'s.id as s.subscription_label for s in subscriptions'})%>
-            </div>
-        </div>
-        <%- html.tag('legend','Administrator')%>
-        <%- html.tag('span','Leave password blank if you do not wish to update it.', {'class':'label label-default'})%>
-        <div class="row-fluid">
-            <div class="span6">
-                <%- html.label('First name')%>
-                <%- html.input(user,'first_name', {angular:true, 'ng-required': true})%>
-                <%- html.label('Username')%>
-                <%- html.input(user,'username', {angular:true, 'ng-required':true})%>
-                <%- html.label('Email address')%>
-                <%- html.input(user,'email', {angular:true, 'ng-required':true})%>
-            </div>
-            <div class="span6">
-                <%- html.label('Last name')%>
-                <%- html.input(user,'last_name', {angular:true, 'ng-required': true})%>
-                <%- html.label('Password')%>
-                <%- html.input(user,'password', {angular:true, type: 'password', 'ng-required': false})%>
-                <%- html.label('Confirm password')%>
-                <%- html.input(user,'confirm', {angular:true, type: 'password', 'ng-required': "{{user.password && true || false}}"})%>
-            </div>
-            <div class="clear"><%- html.tag('button','Submit',{'class':'btn',type:'submit'})%></div>
-        </div>
-    </fieldset>
-</form>
+</div>

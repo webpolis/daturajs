@@ -1,5 +1,6 @@
 function userController($scope, $window, resourceService){
-    $scope.user = {}, $scope.client = {}, $scope.states = [], $scope.subscriptions = [];
+    $scope.user = {}, $scope.client = {}, $scope.states = [], $scope.subscriptions = []
+    ,$scope.accountingSystemTypes = [];
 
     // update client when user is updated
     $scope.$watch('user', function(_user, _oldUsr) {
@@ -9,9 +10,11 @@ function userController($scope, $window, resourceService){
     $scope.loginFailed = false;
     $scope.settingsFailed = false;
     $scope.settingsSaved = false;
+    $scope.accountingServerFail = false;
+    $scope.accountingServerOk = false;
 
     $scope.getStates = function(){
-        resourceService.getStates($scope.user,function(ret){
+        resourceService.getStates(null,function(ret){
             if(ret && ret.states){
                 $scope.states = ret.states
             }
@@ -19,8 +22,17 @@ function userController($scope, $window, resourceService){
             throw err
         });
     },
+    $scope.getAccountingSystemTypes = function(){
+        resourceService.getAccountingSystemTypes(null,function(ret){
+            if(ret && ret.accountingSystemTypes){
+                $scope.accountingSystemTypes = ret.accountingSystemTypes
+            }
+        },function(err){
+            throw err
+        });
+    },
     $scope.getSubscriptions = function(){
-        resourceService.getSubscriptions($scope.user,function(ret){
+        resourceService.getSubscriptions(null,function(ret){
             if(ret && ret.subscriptions){
                 $scope.subscriptions = ret.subscriptions
             }
@@ -46,12 +58,17 @@ function userController($scope, $window, resourceService){
             $scope.userLogin();
         });
     },
-    $scope.update = function(){
+    $scope.update = function(isExtraSettings){
         resourceService.userUpdate({
             user:$scope.user
         },function(ret){
-            $scope.settingsSaved = ret.success === true;
-            $scope.settingsFailed = !ret.success;
+            if(!isExtraSettings){
+                $scope.settingsSaved = ret.success === true;
+                $scope.settingsFailed = !ret.success;
+            }else{
+                $scope.accountingServerFail = !ret.success;
+                $scope.accountingServerOk = ret.success === true;
+            }
         });
     }
 }

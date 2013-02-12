@@ -40,6 +40,16 @@ charter.factory('resourceService', function($resource, $window) {
                         port:3339
                     }
                 },
+                // accounting system related
+                getAccountingSystemTypes:{
+                    method:'GET',
+                    params:{
+                        parent:'rest',
+                        controller:'accountingSystemType',
+                        action:'getAccountingSystemTypes',
+                        port:3339
+                    }
+                },
                 // location related
                 getStates:{
                     method:'GET',
