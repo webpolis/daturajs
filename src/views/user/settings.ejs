@@ -1,4 +1,10 @@
-<form ng-controller="userController" ng-submit="update()" ng-init="getStates(); user = <%= JSON.stringify(user) %>">
+<form ng-controller="userController" ng-submit="update()" ng-init="getStates(); getSubscriptions(); user = <%= JSON.stringify(user) %>">
+    <div class="alert alert-success" ng-show="settingsSaved">
+        <strong><%= 'Success' %></strong> <%= 'Your settings were updated.' %>
+    </div>
+    <div class="alert alert-error" ng-show="settingsFailed">
+        <strong><%= 'Error' %></strong> <%= 'Settings were not saved. Please contact the administrator.' %>
+    </div>
     <%- html.input(user,'id', {angular:true, type:'hidden'})%>
     <fieldset>
         <%- html.tag('legend','Client Information')%>
@@ -45,10 +51,11 @@
                 <%- html.label('$1,500 Setup Fee', null, {'style':'display:inline-block;margin-left:3px','class':'pull-left'})%>
                 <div class="clear"></div>
                 <%- html.label('Subscription')%>
-                <%- html.select(client,'subscription_id', {angular:true, 'ng-required': true, 'ng-options':'s.id as s.title for s in subscriptions'})%>
+                <%- html.select(client,'subscription_id', {angular:true, 'ng-required': true, 'ng-options':'s.id as s.subscription_label for s in subscriptions'})%>
             </div>
         </div>
         <%- html.tag('legend','Administrator')%>
+        <%- html.tag('span','Leave password blank if you do not wish to update it.', {'class':'label label-default'})%>
         <div class="row-fluid">
             <div class="span6">
                 <%- html.label('First name')%>
@@ -62,9 +69,9 @@
                 <%- html.label('Last name')%>
                 <%- html.input(user,'last_name', {angular:true, 'ng-required': true})%>
                 <%- html.label('Password')%>
-                <%- html.input(user,'password', {angular:true, type: 'password', 'ng-required':true})%>
+                <%- html.input(user,'password', {angular:true, type: 'password', 'ng-required': false})%>
                 <%- html.label('Confirm password')%>
-                <%- html.input(user,'confirm', {angular:true, type: 'password', 'ng-required':true})%>
+                <%- html.input(user,'confirm', {angular:true, type: 'password', 'ng-required': "{{user.password && true || false}}"})%>
             </div>
             <div class="clear"><%- html.tag('button','Submit',{'class':'btn',type:'submit'})%></div>
         </div>

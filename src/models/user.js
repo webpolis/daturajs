@@ -55,7 +55,10 @@ exports.model = {
                     },
                     fields:['id','username','first_name', 'last_name']
                 },function(user){
-                    // make only a few fields available to the auth object when saving cookie
+                    /**
+                     * Make only a few fields available to the auth object when saving cookie 
+                     * by passing an array of fields names as 2nd argument to callback.
+                     */
                     cbk(user)
                 });
             }

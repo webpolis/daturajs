@@ -25,10 +25,24 @@ exports.main = [
     /**
      * rest api
      */
+    
+    // user related
     {
         url: '/rest/user/register',
         action: 'user/register',
-        method:'put',
+        method:'post',
+        isRest:true
+    },
+    {
+        url: '/rest/user/update',
+        action: 'user/update',
+        method:'post',
+        isRest:true
+    },
+    {
+        url: '/rest/subscription/getSubscriptions',
+        action: 'subscription/getSubscriptions',
+        method:'get',
         isRest:true
     },
     {
@@ -36,5 +50,5 @@ exports.main = [
         action: 'location/getStates',
         method:'get',
         isRest:true
-    }
+    },
     ]

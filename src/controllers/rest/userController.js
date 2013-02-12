@@ -20,7 +20,28 @@ module.exports = function(){
                     _.$$.send(200,user);
                 });
             });
-        
+        },
+        update : function (req,res, nxt){
+            var _$$ = this.$$;
+            var data = req.body;
+            
+            if(typeof data.user ===  'object'){
+                var user = this.$$.models.user.getInstance(data.user)
+                var client = this.$$.models.client.getInstance(data.user.client)
+
+                client.$update(data.user.client, null, function(client){
+                    user.$update(data.user, null, function(user){
+                        _$$.send(200, {
+                            success:true
+                        })
+                    },function(err){
+                        _$$.send(400, {
+                            success:false,
+                            err: err
+                        })
+                    })
+                })
+            }
         }
     };
     

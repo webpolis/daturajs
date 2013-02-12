@@ -56,7 +56,9 @@ exports.model = {
 	methods : {
 	},
 	relations : {
-		hasOne:[],
+		hasOne:[
+                    {model:'subscription', alias:'subscription'}
+                ],
 		hasMany:[
                     {model:'user', alias:'user', foreignKey:'client_id'}
                 ],

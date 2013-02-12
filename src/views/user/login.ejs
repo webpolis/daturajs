@@ -1,13 +1,13 @@
 <form ng-controller="userController" ng-submit="login()">
     <div class="alert alert-error" ng-show="loginFailed">
-        <strong>{{'Error' | t}}</strong> {{'Invalid credentials' | t}}
+        <strong><%= 'Error' %></strong> <%= 'Invalid credentials.' %>
     </div>
     <fieldset>
-        <legend>{{ 'Sign in' | t }}</legend>
-        <label>{{ 'Username' | t }}</label>
-        <input required type="text" ng-model="user.username" placeholder="{{'type your username...' | t}}" />
-        <label>{{ 'Password' | t }}</label>
-        <input type="password" required ng-model="user.password" placeholder="{{'password...' | t}}"/>
+        <%- html.tag('legend','Sign in')%>
+        <%- html.label('Username')%>
+        <%- html.input(user,'username', {angular:true, 'ng-required': true})%>
+        <%- html.label('Password')%>
+        <%- html.input(user,'password', {angular:true, type: 'password', 'ng-required': false})%>
         <br />
         <button type="submit" class="btn">{{ 'Login' | t }}</button>
     </fieldset>

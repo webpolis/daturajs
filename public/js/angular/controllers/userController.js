@@ -1,5 +1,5 @@
 function userController($scope, $window, resourceService){
-    $scope.user = {}, $scope.client = {}, $scope.states = [];
+    $scope.user = {}, $scope.client = {}, $scope.states = [], $scope.subscriptions = [];
 
     // update client when user is updated
     $scope.$watch('user', function(_user, _oldUsr) {
@@ -7,11 +7,22 @@ function userController($scope, $window, resourceService){
     });
     
     $scope.loginFailed = false;
+    $scope.settingsFailed = false;
+    $scope.settingsSaved = false;
 
     $scope.getStates = function(){
         resourceService.getStates($scope.user,function(ret){
             if(ret && ret.states){
                 $scope.states = ret.states
+            }
+        },function(err){
+            throw err
+        });
+    },
+    $scope.getSubscriptions = function(){
+        resourceService.getSubscriptions($scope.user,function(ret){
+            if(ret && ret.subscriptions){
+                $scope.subscriptions = ret.subscriptions
             }
         },function(err){
             throw err
@@ -38,8 +49,9 @@ function userController($scope, $window, resourceService){
     $scope.update = function(){
         resourceService.update({
             user:$scope.user
-        },function(user){
-            console.log(user)
+        },function(ret){
+            $scope.settingsSaved = ret.success === true;
+            $scope.settingsFailed = !ret.success;
         });
     }
 }

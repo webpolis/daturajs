@@ -4,7 +4,9 @@ module.exports = function(){
             this.$$.app.set('title','Login');
             this.$$.app.set('code','user.login');
             
-            this.$$.render('login');
+            this.$$.render('login',{
+                user : this.$$.models.user.getInstance()
+            });
         },
         register : function (req,res){
             this.$$.app.set('title','Register');

@@ -1,4 +1,4 @@
-<form ng-controller="userController" ng-submit="register()" ng-init="getStates(); user = <%= JSON.stringify(user) %>">
+<form ng-controller="userController" ng-submit="register()" ng-init="getStates(); getSubscriptions(); user = <%= JSON.stringify(user) %>">
     <fieldset>
         <%- html.tag('legend','Client Information')%>
         <div class="row-fluid">
@@ -29,7 +29,7 @@
                 <%- html.label('$1,500 Setup Fee', null, {'style':'display:inline-block;margin-left:3px','class':'pull-left'})%>
                 <div class="clear"></div>
                 <%- html.label('Subscription')%>
-                <%- html.select(client,'subscription_id', {angular:true, 'ng-required': true, 'ng-options':'s.id as s.title for s in subscriptions'})%>
+                <%- html.select(client,'subscription_id', {angular:true, 'ng-required': true, 'ng-options':'s.id as s.subscription_label for s in subscriptions'})%>
             </div>
             <div class="span6">
 

@@ -14,7 +14,7 @@ charter.factory('resourceService', function($resource, $window) {
                     }
                 },
                 register:{
-                    method:'PUT',
+                    method:'POST',
                     params:{
                         parent:'rest',
                         controller:'user',
@@ -23,11 +23,20 @@ charter.factory('resourceService', function($resource, $window) {
                     }
                 },
                 update:{
-                    method:'PUT',
+                    method:'POST',
                     params:{
                         parent:'rest',
                         controller:'user',
                         action:'update',
+                        port:3339
+                    }
+                },
+                getSubscriptions:{
+                    method:'GET',
+                    params:{
+                        parent:'rest',
+                        controller:'subscription',
+                        action:'getSubscriptions',
                         port:3339
                     }
                 },
