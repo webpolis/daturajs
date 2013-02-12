@@ -5,7 +5,7 @@ charter.factory('resourceService', function($resource, $window) {
         var res = $resource('http://'+$window.location.hostname+'\\::port/:parent/:controller/:action',{
             },{
                 // user related
-                login:{
+                userLogin:{
                     method:'POST',
                     params:{
                         controller:'auth',
@@ -13,7 +13,7 @@ charter.factory('resourceService', function($resource, $window) {
                         port:$window.location.port
                     }
                 },
-                register:{
+                userRegister:{
                     method:'POST',
                     params:{
                         parent:'rest',
@@ -22,7 +22,7 @@ charter.factory('resourceService', function($resource, $window) {
                         port:3339
                     }
                 },
-                update:{
+                userUpdate:{
                     method:'POST',
                     params:{
                         parent:'rest',

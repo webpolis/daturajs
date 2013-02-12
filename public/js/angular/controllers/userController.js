@@ -29,7 +29,7 @@ function userController($scope, $window, resourceService){
         });
     },
     $scope.login = function(){
-        resourceService.login($scope.user,function(ret){
+        resourceService.userLogin($scope.user,function(ret){
             if(ret){
                 $scope.loginFailed = false;
                 $window.location = '/';
@@ -39,15 +39,15 @@ function userController($scope, $window, resourceService){
         });
     },
     $scope.register = function(){
-        resourceService.register({
+        resourceService.userRegister({
             user:$scope.user,
             client:$scope.client
         },function(user){
-            $scope.login();
+            $scope.userLogin();
         });
     },
     $scope.update = function(){
-        resourceService.update({
+        resourceService.userUpdate({
             user:$scope.user
         },function(ret){
             $scope.settingsSaved = ret.success === true;
