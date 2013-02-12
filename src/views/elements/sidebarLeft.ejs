@@ -1,7 +1,43 @@
 <%if(auth){%>
-<ul class="nav nav-pills nav-stacked">
-    <li>{{ 'Departments' | t}}</li>
-    <li>{{ 'Users' | t}}</li>
-    <li>{{ 'Vendors' | t}}</li>
-</ul>
+    <%- menu.vertical([
+        {
+            label: 'Departments',
+            childs: [
+                {
+                    label: 'List Departments',
+                    target: '#dataPageDepartmentsList'
+                },
+                {
+                    label: 'Add Department',
+                    target: '#dataPageDepartmentsCreate'
+                },
+            ]
+        },
+        {
+            label: 'Users',
+            childs: [
+                {
+                    label: 'List Users',
+                    target: '#dataPageUsersList'
+                },
+                {
+                    label: 'Add User',
+                    target: '#dataPageUsersCreate'
+                },
+            ]
+        },
+        {
+            label: 'Vendors',
+            childs: [
+                {
+                    label: 'List Vendors',
+                    target: '#dataPageVendorsList'
+                },
+                {
+                    label: 'Add Vendor',
+                    target: '#dataPageVendorsCreate'
+                },
+            ]
+        },
+    ], {rootCssClass:'nav nav-pills nav-stacked',subCssClass:'dropdown-menu'}) %>
 <%}%>

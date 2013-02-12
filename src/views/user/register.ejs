@@ -1,4 +1,4 @@
-<form ng-controller="userController" ng-submit="register()" ng-init="getStates()">
+<form ng-controller="userController" ng-submit="register()" ng-init="getStates(); user = <%= JSON.stringify(user) %>">
     <fieldset>
         <%- html.tag('legend','Client Information')%>
         <div class="row-fluid">

@@ -13,8 +13,6 @@
         "pg":"*",
         "sequelize":"*",
         "restify":"*",
-        "passport":"*",
-        "passport-local":"*",
         "inflector":"*",
         "cheerio":"*",
         "i18n" : "*"

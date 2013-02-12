@@ -7,13 +7,12 @@ module.exports = function(){
         register : function (req,res){
             this.$$.app.set('title','Register');
 
-            var state = this.$$.models.state;
             var user = this.$$.models.user;
             var client = this.$$.models.client;
             
             this.$$.render('register',{
-                user: user,
-                client: client
+                user: user.getInstance(),
+                client: client.getInstance()
             });
         },
         settings : function (req,res){
