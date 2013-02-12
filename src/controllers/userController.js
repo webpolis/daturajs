@@ -2,10 +2,13 @@ module.exports = function(){
     var userController = {
         login : function (req,res){
             this.$$.app.set('title','Login');
+            this.$$.app.set('code','user.login');
+            
             this.$$.render('login');
         },
         register : function (req,res){
             this.$$.app.set('title','Register');
+            this.$$.app.set('code','user.register');
 
             var user = this.$$.models.user;
             var client = this.$$.models.client;
@@ -18,12 +21,15 @@ module.exports = function(){
         settings : function (req,res){
             var auth = req.signedCookies.auth;
             
+            // @todo apply role based permission
             if(typeof auth === 'undefined' || !auth.id){
                 res.redirect('/')
                 return
             }
                 
             this.$$.app.set('title','Settings');
+            this.$$.app.set('code','user.settings');
+            
             var user = this.$$.models.user;
             
             var _$$ = this.$$;
