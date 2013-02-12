@@ -27,8 +27,6 @@
         <%- html.tag('legend','Billing Information')%>
         <div class="row-fluid">
             <div class="span6">
-                <%- html.input(client,'same_address', {type:'checkbox',angular:true, 'ng-required': false,'class':'pull-left', label: false})%>
-                <%- html.label('Same as above', null, {'style':'display:inline-block;margin-left:3px','class':'pull-left'})%>
                 <%- html.label('Address', null, {'class':'clear'})%>
                 <%- html.input(client,'billing_address', {angular:true, 'ng-required': false, 'class':'input-xlarge'})%>
                 <%- html.label('Address #2')%>
