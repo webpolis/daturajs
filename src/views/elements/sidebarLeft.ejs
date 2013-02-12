@@ -1,7 +1,7 @@
-<%if(auth){%>
-    <% switch(settings.code){
-            case 'user.settings':
-    %>
+<% switch(settings.code){
+        case 'user.settings':
+%>
+        <%if(auth){%>
                 <%- menu.vertical([
                     {
                         label: 'Departments',
@@ -42,7 +42,7 @@
                             },
                         ]
                     },
-                ], {rootCssClass:'nav nav-pills nav-stacked',subCssClass:'dropdown-menu'}) %>
+                ], {rootCssClass:'nav nav-tabs nav-stacked',subCssClass:'dropdown-menu'}) %>
             <% break;%>
     <%}%>
 <%}%>
