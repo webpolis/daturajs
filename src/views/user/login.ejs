@@ -7,7 +7,7 @@
         <%- html.label('Username')%>
         <%- html.input(user,'username', {angular:true, 'ng-required': true})%>
         <%- html.label('Password')%>
-        <%- html.input(user,'password', {angular:true, type: 'password', 'ng-required': false})%>
+        <%- html.input(user,'password', {angular:true, type: 'password', 'ng-required': true})%>
         <br />
         <button type="submit" class="btn">{{ 'Login' | t }}</button>
     </fieldset>
