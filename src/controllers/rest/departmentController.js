@@ -1,7 +1,7 @@
+// @todo REST must have token authorization and some sort of mechanism to authenticate client
 module.exports = function(){
     var departmentController = {
         getDepartments : function (req,res, nxt){
-            // @todo REST must have token authorization and some sort of mechanism to authenticate client
             if(req.params.clientId){
                 var department = this.$$.models.department;
                 
@@ -19,6 +19,25 @@ module.exports = function(){
                 })
             }else
                 res.send(400,false);
+        },
+        departmentSave : function(req,res, nxt){
+            var department = req.body.department;
+            var ret = function(err){
+                res.send(err?400:200,{
+                    department: department
+                })
+            }
+            
+            if(department.id && department.id !== null){
+                
+            }else{
+                this.$$.models.department.$create(department, function(_department){
+                    department = _department;
+                    ret(false)
+                }, function(){
+                    ret(true)
+                })
+            }
         }
     };
     
