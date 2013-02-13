@@ -75,3 +75,16 @@ charter.directive('ngPercent', function() {
         }
     }
 });
+
+charter.directive('grid', function() {
+    return {
+        restrict: 'EA',
+        replace:false,
+        transclude:true,
+        template:'<div class="grid span12 clear" ng-grid="gridOptions"></div>',
+        link:function(scope, el,attr){
+            if(attr.gridClass)
+                el.addClass(attr.gridClass)
+        }
+    }
+});

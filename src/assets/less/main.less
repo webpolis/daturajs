@@ -16,21 +16,6 @@
 }
 body{
     background-color:@main-bg-color;
-    .dataList{
-        .grid{
-            border: 1px solid rgb(212,212,212);
-            height: 300px;
-            .ngHeaderText{
-                font-size:80%
-            }
-            .ngPagerControl{
-                input[type=text]{margin-bottom:0;}
-            }
-            .ngTotalSelectContainer{
-                .ngLabel{font-size:80%;color:#555}
-            }
-        }
-    }
 }
 .body-row{
     background-color:#fff;
@@ -38,6 +23,40 @@ body{
     .pad;
     .body{
         .pad(1em);
+        .dataList{
+            .grid{
+                border: 1px solid rgb(212,212,212);
+                height: 450px;
+                .ngHeaderCell{
+                    #gradient > .vertical(lighten(desaturate(#ff6600, 65%), 30%),desaturate(#ff6600, 65%));
+                    color:#fff
+                }
+                .ngColMenu{
+                    background-color:darken(desaturate(@blue, 85%),10%);color:#fff;
+                    input[type=checkbox]{margin-top:-8px}
+                }
+                .ngRow.selected{
+                    background-color:lighten(desaturate(@orange, 75%),35%)
+                }
+                .ngCellElement:focus{background-color:transparent}
+                .ngHeaderText{
+                    font-size:80%
+                }
+                .ngPagerControl{
+                    input[type=text]{margin-bottom:0;}
+                }
+                .ngTotalSelectContainer{
+                    .ngLabel{font-size:80%;color:#555}
+                }
+            }
+            .dataCommands{
+                margin-bottom:1em;
+                .btn{font-weight:700}
+            }
+        }
+        .modal{
+            form{margin-bottom:0}
+        }
     }
 }
 .header {

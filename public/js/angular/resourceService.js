@@ -50,6 +50,15 @@ charter.factory('resourceService', function($resource, $window) {
                         port:3339
                     }
                 },
+                departmentSave:{
+                    method:'POST',
+                    params:{
+                        parent:'rest',
+                        controller:'department',
+                        action:'departmentSave',
+                        port:3339
+                    }
+                },
                 // accounting system related
                 getAccountingSystemTypes:{
                     method:'GET',

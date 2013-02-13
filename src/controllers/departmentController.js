@@ -1,6 +1,6 @@
 module.exports = function(){
     var departmentController = {
-        list : function (req,res){
+        index : function (req,res){
             var auth = req.signedCookies.auth;
 
             // @todo apply role based permission
@@ -9,11 +9,16 @@ module.exports = function(){
                 return
             }
             
+            var department = this.$$.models.department.getInstance({
+                client_id:auth.client_id
+            })
+            
             this.$$.app.set('title','Departments');
             this.$$.app.set('code','department.list');
             
             this.$$.render('list',{
-                clientId : auth.client_id
+                clientId : auth.client_id,
+                department: department
             });
         }
     };

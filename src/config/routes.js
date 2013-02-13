@@ -25,8 +25,8 @@ exports.main = [
     },
     // department related
     {
-        url: '/department/list',
-        action: 'department/list',
+        url: '/departments',
+        action: 'department/index',
         method:'get'
     },
     /**
@@ -57,6 +57,12 @@ exports.main = [
         url: ['/rest/department/getDepartments/:clientId'],
         action: 'department/getDepartments',
         method:'get',
+        isRest:true
+    },
+    {
+        url: '/rest/department/departmentSave',
+        action: 'department/departmentSave',
+        method:'post',
         isRest:true
     },
     // accounting system related
