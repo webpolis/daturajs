@@ -1,4 +1,4 @@
-var charter = charter || angular.module('charter',['ngResource','ui']);
+var charter = charter || angular.module('charter',['ngResource','ui', 'ngGrid']);
 
 /**
  * Translate

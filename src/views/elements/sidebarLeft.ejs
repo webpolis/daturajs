@@ -1,4 +1,5 @@
 <% switch(settings.code){
+        case 'department.list':
         case 'user.settings':
 %>
         <%if(auth){%>
@@ -8,7 +9,7 @@
                         childs: [
                             {
                                 label: 'List Departments',
-                                target: '#dataPageDepartmentsList'
+                                target: '/department/list'
                             },
                             {
                                 label: 'Add Department',
@@ -47,8 +48,7 @@
                         childs: [
                             {
                                 label: 'Accounting Server',
-                                target: '#dataPageAccountingServer',
-                                onclick: "$(this).tab('show')"
+                                target: '/user/settings/server',
                             },
                         ]
                     },

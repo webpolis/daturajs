@@ -66,7 +66,8 @@ exports.model = {
                     {model:'subscription', alias:'subscription'}
                 ],
 		hasMany:[
-                    {model:'user', alias:'user', foreignKey:'client_id'}
+                    {model:'user', alias:'user', foreignKey:'client_id'},
+                    {model:'department', alias:'department', foreignKey:'client_id'},
                 ],
 		belongsTo:[],
 	}

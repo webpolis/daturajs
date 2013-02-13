@@ -53,7 +53,7 @@ exports.model = {
                         username:data.username, 
                         password: data.password
                     },
-                    fields:['id','username','first_name', 'last_name']
+                    fields:['id','username','first_name', 'last_name', 'client_id']
                 },function(user){
                     /**
                      * Make only a few fields available to the auth object when saving cookie 

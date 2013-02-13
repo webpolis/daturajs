@@ -7,6 +7,7 @@ exports.main = [
         action: 'static/home', // format is path:controller_no_suffix/action
         method:'get'
     },
+    // user related
     {
         url: '/user/login',
         action: 'user/login',
@@ -18,8 +19,14 @@ exports.main = [
         method:'get'
     },
     {
-        url: '/user/settings',
+        url: ['/user/settings','/user/settings/:section'],
         action: 'user/settings',
+        method:'get'
+    },
+    // department related
+    {
+        url: '/department/list',
+        action: 'department/list',
         method:'get'
     },
     /**
@@ -42,6 +49,13 @@ exports.main = [
     {
         url: '/rest/subscription/getSubscriptions',
         action: 'subscription/getSubscriptions',
+        method:'get',
+        isRest:true
+    },
+    // department related
+    {
+        url: ['/rest/department/getDepartments/:clientId'],
+        action: 'department/getDepartments',
         method:'get',
         isRest:true
     },

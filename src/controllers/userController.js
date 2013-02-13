@@ -22,13 +22,14 @@ module.exports = function(){
         },
         settings : function (req,res){
             var auth = req.signedCookies.auth;
-            
+
             // @todo apply role based permission
             if(typeof auth === 'undefined' || !auth.id){
                 res.redirect('/')
                 return
             }
                 
+            var section = req.params && req.params.section ? req.params.section : 'settings';
             this.$$.app.set('title','Settings');
             this.$$.app.set('code','user.settings');
             
@@ -45,7 +46,7 @@ module.exports = function(){
             },function(_user){
                 delete _user.password;
                 
-                _$$.render('settings',{
+                _$$.render(section,{
                     user: _user,
                     client: _user.client
                 });

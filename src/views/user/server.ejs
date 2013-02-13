@@ -1,4 +1,4 @@
-<form ng-submit="update(true)" ng-init="getAccountingSystemTypes(); accountingServerTypes = <%= JSON.stringify(client.getServerTypes()) %>">
+<form ng-controller="userController" ng-submit="update(true)" ng-init="user = <%= JSON.stringify(user) %>; getAccountingSystemTypes(); accountingServerTypes = <%= JSON.stringify(client.getServerTypes()) %>">
     <div class="alert alert-error" ng-show="accountingServerFail">
         <strong><%= 'Error' %></strong> <%= 'Settings were not saved. Please contact the administrator.' %>
     </div>
