@@ -3,7 +3,13 @@ function departmentController($scope, $window, resourceService, gridService){
     
     $scope.init = function(){
         $scope.getDepartments();
-        gridService($scope).init('departments','departmentColumns', 25);
+        gridService($scope).init('departments','departmentColumns', 25, $scope._onSelect);
+    }
+
+    $scope._onSelect = function(r,ev){
+        var sel = r.entity;
+        $scope.department = sel;
+        $('#departmentForm').modal('show')
     }
 
     $scope.getDepartments = function(){

@@ -3,7 +3,7 @@ var charter = charter || {};
 charter.factory('gridService', function() {
     return function($scope){
         return {
-            init : function(dataVar, colsVar, limit){
+            init : function(dataVar, colsVar, limit, selCbk){
                 var cc = []
                 if(typeof $scope[colsVar] !== 'undefined'){
                     for(var c in $scope[colsVar]){
@@ -27,7 +27,8 @@ charter.factory('gridService', function() {
                     displaySelectionCheckbox:false,
                     enablePaging: true,
                     pagingOptions: $scope.pagingOptions,
-                    columnDefs:cc
+                    columnDefs:cc,
+                    afterSelectionChange:selCbk?selCbk:function(){}
                 };
                 
                 $scope.$watch('pagingOptions', function () {

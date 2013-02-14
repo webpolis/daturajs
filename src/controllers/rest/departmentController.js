@@ -29,7 +29,12 @@ module.exports = function(){
             }
             
             if(department.id && department.id !== null){
-            // update
+                // update
+                var _department = this.$$.models.client.getInstance(department);
+                _department.$update(_department,null,function(_dept){
+                    department = _dept;
+                    ret(false)
+                })
             }else{
                 // create new
                 this.$$.models.department.$create(department, function(_department){
