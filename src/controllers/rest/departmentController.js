@@ -6,7 +6,7 @@ module.exports = function(){
                 var department = this.$$.models.department;
                 
                 department.$find('all',{
-                    conditions:['client_id = :client_id'],
+                    conditions:['client_id = :client_id AND is_active = true'],
                     params:{
                         client_id:req.params.clientId
                     },

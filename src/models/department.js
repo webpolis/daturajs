@@ -19,6 +19,7 @@ exports.model = {
 		{name : 'is_super_department', label : 'is_super_department'.humanize(), type : 'boolean', required : false},
 		{name : 'is_processing', label : 'is_processing'.humanize(), type : 'boolean', required : false},
 		{name : 'client_id', label : 'client_id'.humanize(), type : 'integer', required : true},
+                {name : 'is_active', label : 'Active', type : 'boolean', required : false},
 	],
 	// place your custom model methods below.
         methods : {
