@@ -28,8 +28,11 @@ module.exports = function(){
             if(typeof data.user ===  'object'){
                 var user = this.$$.models.user.getInstance(data.user)
                 var client = this.$$.models.client.getInstance(data.user.client)
-
+                delete data.user.client.id
+                
                 client.$update(data.user.client, null, function(client){
+                    delete data.user.id
+                    
                     user.$update(data.user, null, function(user){
                         _$$.send(200, {
                             success:true

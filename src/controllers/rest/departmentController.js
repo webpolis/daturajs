@@ -30,8 +30,10 @@ module.exports = function(){
             
             if(department.id && department.id !== null){
                 // update
-                var _department = this.$$.models.client.getInstance(department);
-                _department.$update(_department,null,function(_dept){
+                var _department = this.$$.models.department.getInstance(department);
+                delete department.id
+                
+                _department.$update(department,null,function(_dept){
                     department = _dept;
                     ret(false)
                 })
