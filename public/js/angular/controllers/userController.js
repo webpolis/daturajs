@@ -55,7 +55,7 @@ function userController($scope, $window, resourceService){
             user:$scope.user,
             client:$scope.client
         },function(user){
-            $scope.userLogin();
+            $scope.login();
         });
     },
     $scope.update = function(isExtraSettings){

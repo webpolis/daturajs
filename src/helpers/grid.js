@@ -23,11 +23,7 @@ module.exports = function(config){
                     case 'boolean':
                         var bb = _config.typeMap['boolean'].split(';')
                         f.cellTemplate = "<div>{{ row.entity[col.field] && '"+bb[0]+"' || '"+bb[1]+"' }}</div>";
-                        f.sortFn = function(a,b){
-                            if (a == b) return 0;
-                            if (a < b) return -1;
-                            return 1;
-                        }
+                        f.sortCbk = 'boolean'
                         break;
                 }
             })

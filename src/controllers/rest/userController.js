@@ -2,9 +2,9 @@ module.exports = function(){
     var userController = {
         register : function (req,res, nxt){
             var _ = this;
+            var data = req.body;
             var user = this.$$.models.user;
             var client = this.$$.models.client;
-            var data = req.body;
             
             // @todo get country id by find
             data.user.country_id = data.user.country_id?data.user.country_id:1;
