@@ -1,10 +1,11 @@
 module.exports = function(){
     var userController = {
         register : function (req,res, nxt){
-            var _ = this;
+            var _this = this;
             var data = req.body;
             var user = this.$$.models.user;
             var client = this.$$.models.client;
+            var role = this.$$.models.user_role;
             
             // @todo get country id by find
             data.user.country_id = data.user.country_id?data.user.country_id:1;
@@ -14,10 +15,24 @@ module.exports = function(){
             data.client.state_id = data.client.state_id?data.client.state_id:data.user.state_id;
             
             client.$create(data.client,function(client){
-                data.user.client_id = client.id;
-                user.$create(data.user,function(user){
-                    delete user.password;
-                    _.$$.send(200,user);
+                // set default role 'Administrator'
+                role.$find('one',{
+                    conditions:["user_role_name LIKE ':roleName'"],
+                    params:{
+                        roleName:'Administrator'
+                    }
+                },function(_role){
+                    if(_role.id){
+                        data.user.user_role_id = _role.id;
+                        data.user.client_id = client.id;
+                        
+                        user.$create(data.user,function(user){
+                            delete user.password;
+                            _this.$$.send(200,user);
+                        });
+                    }
+                }, function(err){
+                    _this.$$.send(400,false)
                 });
             });
         },
