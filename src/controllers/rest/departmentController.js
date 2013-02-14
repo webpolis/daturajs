@@ -10,7 +10,8 @@ module.exports = function(){
                     params:{
                         client_id:req.params.clientId
                     },
-                    'with':['client'],
+                    //'with':['client'],
+                    fields:department.getListableColumns(),
                     order:'department_name ASC'
                 },function(departments){
                     res.send(200,{
@@ -29,8 +30,9 @@ module.exports = function(){
             }
             
             if(department.id && department.id !== null){
-                
+            // update
             }else{
+                // create new
                 this.$$.models.department.$create(department, function(_department){
                     department = _department;
                     ret(false)

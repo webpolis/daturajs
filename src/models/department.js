@@ -14,15 +14,18 @@ exports.model = {
 	fields : [
 		{name : 'id', label : 'id'.humanize(), type : 'integer', required : true, primaryKey : true},
 		{name : 'department_name', label : 'department_name'.humanize(), type : 'string', required : true, max : 50},
-		{name : 'dept_auth_limit', label : 'dept_auth_limit'.humanize(), type : 'float', required : false, max : 1179650},
-		{name : 'is_auth_required', label : 'is_auth_required'.humanize(), type : 'boolean', required : false},
+		{name : 'dept_auth_limit', label : 'Authorization Limit', type : 'float', required : false, max : 1179650},
+		{name : 'is_auth_required', label : 'Additional Authorization', type : 'boolean', required : false},
 		{name : 'is_super_department', label : 'is_super_department'.humanize(), type : 'boolean', required : false},
 		{name : 'is_processing', label : 'is_processing'.humanize(), type : 'boolean', required : false},
 		{name : 'client_id', label : 'client_id'.humanize(), type : 'integer', required : true},
 	],
 	// place your custom model methods below.
-	methods : {
-	},
+        methods : {
+            getListableColumns : function(){
+                return ['id','department_name', 'dept_auth_limit','is_auth_required']
+            }
+        },
 	relations : {
 		hasOne:[],
 		hasMany:[],

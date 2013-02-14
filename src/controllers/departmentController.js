@@ -14,11 +14,12 @@ module.exports = function(){
             })
             
             this.$$.app.set('title','Departments');
-            this.$$.app.set('code','department.list');
+            this.$$.app.set('code','department.index');
             
             this.$$.render('list',{
                 clientId : auth.client_id,
-                department: department
+                department: department,
+                departmentColumns : department.$getFields(department.getListableColumns())
             });
         }
     };
