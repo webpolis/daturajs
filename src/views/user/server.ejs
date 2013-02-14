@@ -1,4 +1,7 @@
 <form ng-controller="userController" ng-submit="update(true)" ng-init="user = <%= JSON.stringify(user) %>; getAccountingSystemTypes(); accountingServerTypes = <%= JSON.stringify(client.getServerTypes()) %>">
+    <div class="alert alert-block">
+        <strong><%= 'Important' %></strong> <%= 'Use this form to set up a connection between the accounting system and '+settings.params.appName+' Portal.' %>
+    </div>
     <div class="alert alert-error" ng-show="accountingServerFail">
         <strong><%= 'Error' %></strong> <%= 'Settings were not saved. Please contact the administrator.' %>
     </div>
@@ -7,12 +10,33 @@
     </div>
     <fieldset>
         <%- html.tag('legend','Accounting Server')%>
-        <%- html.label('Accounting System')%>
-        <%- html.select(client,'accounting_system_type_id', {angular:true, 'ng-required': true, 
-        'ng-options':'s.id as s.accounting_system_type_name for s in accountingSystemTypes', 'class':'input-xlarge'})%>
-        <%- html.label('Server Type')%>
-        <%- html.select(client,'server_type', {angular:true, 'ng-required': true,
-        'ng-options':'s.code as s.label for s in accountingServerTypes', 'class':'input-xlarge'})%>
-        <div class="clear"><%- html.tag('button','Submit',{'class':'btn',type:'submit'})%></div>
+        <div class="row-fluid">
+            <div class="span6">
+                <%- html.label('Accounting System')%>
+                <%- html.select(client,'accounting_system_type_id', {angular:true, 'ng-required': true, 
+                'ng-options':'s.id as s.accounting_system_type_name for s in accountingSystemTypes', 'class':'input-xlarge'})%>
+                <%- html.label('Server Type')%>
+                <%- html.select(client,'server_type', {angular:true, 'ng-required': true,
+                'ng-options':'s.code as s.label for s in accountingServerTypes', 'class':'input-xlarge'})%>
+                <%- html.label('Server Address')%>
+                <%- html.input(client,'server_address', {angular:true, 'ng-required':true, 'class':'input-xlarge'})%>
+                <%- html.label('Server Port')%>
+                <%- html.input(client,'server_port', {angular:true, 'ng-required':true, 'class':'input-small'})%>
+            </div>
+            <div class="span6">
+                <%- html.label('Database Name')%>
+                <%- html.input(client,'dbname', {angular:true, 'ng-required':true, 'class':'input-xlarge'})%>
+                <%- html.label('Database User')%>
+                <%- html.input(client,'dblogin', {angular:true, 'ng-required':true, 'class':'input-xlarge'})%>
+                <%- html.label('Database Password')%>
+                <%- html.input(client,'dbpassword', {angular:true, 'ng-required':true, 'class':'input-xlarge', 'type':'password'})%>
+                <%- html.label('Accounts Payable Code')%>
+                <%- html.input(client,'accounts_payable_code', {angular:true, 'ng-required':true, 'class':'input-xlarge'})%>
+            </div>
+        </div>
+        <div class="btn-group clear">
+            <%- html.tag('button','Verify Connection',{'class':'btn btn-info',type:'button'})%>
+            <%- html.tag('button','Save',{'class':'btn',type:'submit'})%>
+        </div>
     </fieldset>
 </form>
