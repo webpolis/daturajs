@@ -21,7 +21,7 @@
             </div>
             <div class="modal-footer">
                 <%- html.tag('button', 'Close', {type:'button', 'data-dismiss':'modal', 'aria-hidden':'true', 'class':'btn'})%>
-                <%- html.tag('button','Inactivate',{'class':'btn btn-danger','ng-click':'department.is_active = false',type:'submit'})%>
+                <%- html.tag('button','Inactivate',{'ng-show':'department.id && true || false','class':'btn btn-danger','ng-click':'department.is_active = false',type:'submit'})%>
                 <%- html.tag('button','Save',{'class':'btn btn-primary',type:'submit'})%>
             </div>
         </fieldset>
