@@ -1,5 +1,6 @@
 <% switch(settings.code){
         case 'department.index':
+        case 'vendor.index':
         case 'user.settings':
 %>
         <%if(auth){%>
@@ -18,6 +19,19 @@
                         ]
                     },
                     {
+                        label: 'Vendors',
+                        childs: [
+                            {
+                                label: 'List Vendors',
+                                target: '/vendors'
+                            },
+                            {
+                                label: 'Add Vendor',
+                                target: '#dataPageVendorsCreate'
+                            },
+                        ]
+                    },
+                    {
                         label: 'Users',
                         childs: [
                             {
@@ -27,19 +41,6 @@
                             {
                                 label: 'Add User',
                                 target: '#dataPageUsersCreate'
-                            },
-                        ]
-                    },
-                    {
-                        label: 'Vendors',
-                        childs: [
-                            {
-                                label: 'List Vendors',
-                                target: '#dataPageVendorsList'
-                            },
-                            {
-                                label: 'Add Vendor',
-                                target: '#dataPageVendorsCreate'
                             },
                         ]
                     },

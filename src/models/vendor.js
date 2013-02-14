@@ -24,7 +24,7 @@ exports.model = {
 		{name : 'first_name', label : 'first_name'.humanize(), type : 'string', required : false, max : 150},
 		{name : 'last_name', label : 'last_name'.humanize(), type : 'string', required : false, max : 150},
 		{name : 'title', label : 'title'.humanize(), type : 'string', required : false, max : 150},
-		{name : 'accounting_system_id', label : 'accounting_system_id'.humanize(), type : 'string', required : false, max : 50},
+		{name : 'accounting_system_id', label : 'Accounting Code', type : 'string', required : false, max : 50},
 		{name : 'is_credit_card', label : 'is_credit_card'.humanize(), type : 'boolean', required : false},
 		{name : 'is_visible', label : 'is_visible'.humanize(), type : 'boolean', required : false},
 		{name : 'is_active', label : 'is_active'.humanize(), type : 'boolean', required : false},
@@ -36,15 +36,16 @@ exports.model = {
 		{name : 'modified_by_id', label : 'modified_by_id'.humanize(), type : 'integer', required : false},
 		{name : 'approved_to_import_date', label : 'approved_to_import_date'.humanize(), type : 'date', required : false},
 		{name : 'vendor_type_id', label : 'vendor_type_id'.humanize(), type : 'integer', required : true},
-		{name : 'state_id', label : 'state_id'.humanize(), type : 'integer', required : true},
+		{name : 'state_id', label : 'State', type : 'integer', required : true},
 		{name : 'country_id', label : 'country_id'.humanize(), type : 'integer', required : true},
 		{name : 'client_id', label : 'client_id'.humanize(), type : 'integer', required : true},
 	],
 	// place your custom model methods below.
-	methods : {
-		$instanceMethod : function(){ console.log('Prefix your instance methods\' name with a dollar sign ($). Example: model.$instanceMethod()');},
-		classMethod : function(){ console.log('This class method is accesed statically. Example: this.$$.models.modelName.classMethod()');}
-	},
+        methods : {
+            getListableColumns : function(){
+                return ['id','vendor_name', 'email','accounting_system_id','state_id']
+            }
+        },
 	relations : {
 		hasOne:[],
 		hasMany:[],

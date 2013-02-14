@@ -59,6 +59,25 @@ charter.factory('resourceService', function($resource, $window) {
                         port:3339
                     }
                 },
+                // vendor related
+                getVendors:{
+                    method:'GET',
+                    params:{
+                        parent:'rest',
+                        controller:'vendor',
+                        action:'getVendors',
+                        port:3339
+                    }
+                },
+                vendorSave:{
+                    method:'POST',
+                    params:{
+                        parent:'rest',
+                        controller:'vendor',
+                        action:'vendorSave',
+                        port:3339
+                    }
+                },
                 // accounting system related
                 getAccountingSystemTypes:{
                     method:'GET',

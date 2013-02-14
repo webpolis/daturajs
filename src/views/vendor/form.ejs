@@ -1,0 +1,47 @@
+<div id="vendorForm" class="modal hide fade" ng-init="vendor = <%= JSON.stringify(vendor)%>" 
+     role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+    <form ng-submit="vendorSave()">
+        <fieldset>
+            <div class="modal-header">
+                <%- html.tag('button', 'x', {type:'button', 'data-dismiss':'modal', 'aria-hidden':'true', 'class':'close'})%>
+                <%- html.tag('h4', 'Vendor')%>
+            </div>
+            <div class="modal-body">
+                <div class="row-fluid">
+                    <div class="span6">
+                        <%- html.label('Name')%>
+                        <%- html.input(vendor,'vendor_name', {angular:true, 'ng-required':true, 'class':'input-xlarge'})%>
+                        <%- html.label('Address')%>
+                        <%- html.input(vendor,'address', {angular:true, 'ng-required': false, 'class':'input-xlarge'})%>
+                        <%- html.label('Address #2')%>
+                        <%- html.input(vendor,'address2', {angular:true, 'ng-required': false, 'class':'input-xlarge'})%>
+                        <%- html.label('City')%>
+                        <%- html.input(vendor,'city', {angular:true, 'ng-required': false, 'class':'input-xlarge'})%>
+                    </div>
+                    <div class="span6">
+                        <%- html.label('Postal Code')%>
+                        <%- html.input(vendor,'zipcode', {angular:true, 'ng-required': false, 'class':'input-xlarge'})%>
+                        <%- html.label('Phone')%>
+                        <%- html.input(vendor,'phone', {angular:true, 'ng-required': false, 'class':'input-xlarge'})%>
+                        <%- html.label('Fax')%>
+                        <%- html.input(vendor,'fax', {angular:true, 'ng-required': false, 'class':'input-xlarge'})%>
+                        <%- html.label('State')%>
+                        <%- html.select(vendor,'state_id', {angular:true, 'ng-required': true, 'ng-options':'s.id as s.state_name for s in states'})%>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span6">
+                        <%- html.label('Email')%>
+                        <%- html.input(vendor,'email', {angular:true, 'ng-required':true, 'class':'input-xlarge'})%>
+                    </div>
+                    <div class="span6">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <%- html.tag('button', 'Close', {type:'button', 'data-dismiss':'modal', 'aria-hidden':'true', 'class':'btn'})%>
+                <%- html.tag('button','Save',{'class':'btn btn-primary',type:'submit'})%>
+            </div>
+        </fieldset>
+    </form>
+</div>

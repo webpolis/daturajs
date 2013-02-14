@@ -29,6 +29,12 @@ exports.main = [
         action: 'department/index',
         method:'get'
     },
+    // vendor related
+    {
+        url: '/vendors',
+        action: 'vendor/index',
+        method:'get'
+    },
     /**
      * rest api
      */
@@ -62,6 +68,19 @@ exports.main = [
     {
         url: '/rest/department/departmentSave',
         action: 'department/departmentSave',
+        method:'post',
+        isRest:true
+    },
+    // vendor related
+    {
+        url: ['/rest/vendor/getVendors/:clientId'],
+        action: 'vendor/getVendors',
+        method:'get',
+        isRest:true
+    },
+    {
+        url: '/rest/vendor/vendorSave',
+        action: 'vendor/vendorSave',
         method:'post',
         isRest:true
     },

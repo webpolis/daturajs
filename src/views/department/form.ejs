@@ -1,26 +1,28 @@
 <div id="departmentForm" class="modal hide fade" ng-init="department = <%= JSON.stringify(department)%>" 
      role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
     <form ng-submit="departmentSave()">
-        <div class="modal-header">
-            <%- html.tag('button', 'x', {type:'button', 'data-dismiss':'modal', 'aria-hidden':'true', 'class':'close'})%>
-            <%- html.tag('h4', 'Department')%>
-        </div>
-        <div class="modal-body">
-            <%- html.label('Name')%>
-            <%- html.input(department,'department_name', {angular:true, 'ng-required':true, 'class':'input-xlarge'})%>
-            <%- html.label('Authorization Limit')%>
-            <%- html.input(department,'dept_auth_limit', {angular:true, 'ng-required':true, 'ng-pattern':'/[0-9]+/','class':'input-xlarge'})%>
-            <div class="clear"></div>
-            <%- html.input(department,'is_processing', {type:'checkbox',angular:true, 'ng-required': false,'class':'pull-left', label: false})%>
-            <%- html.label('Processing Department', null, {'style':'display:inline-block;margin-left:3px','class':'pull-left'})%>
-            <div class="clear"></div>
-            <%- html.input(department,'is_auth_required', {type:'checkbox',angular:true, 'ng-required': false,'class':'pull-left', label: false})%>
-            <%- html.label('Additional Authorization Required', null, {'style':'display:inline-block;margin-left:3px','class':'pull-left'})%>
-            <div class="clear"></div>
-        </div>
-        <div class="modal-footer">
-            <%- html.tag('button', 'Close', {type:'button', 'data-dismiss':'modal', 'aria-hidden':'true', 'class':'btn'})%>
-            <%- html.tag('button','Save',{'class':'btn btn-primary',type:'submit'})%>
-        </div>
+        <fieldset>
+            <div class="modal-header">
+                <%- html.tag('button', 'x', {type:'button', 'data-dismiss':'modal', 'aria-hidden':'true', 'class':'close'})%>
+                <%- html.tag('h4', 'Department')%>
+            </div>
+            <div class="modal-body">
+                <%- html.label('Name')%>
+                <%- html.input(department,'department_name', {angular:true, 'ng-required':true, 'class':'input-xlarge'})%>
+                <%- html.label('Authorization Limit')%>
+                <%- html.input(department,'dept_auth_limit', {angular:true, 'ng-required':true, 'ng-pattern':'/[0-9]+/','class':'input-xlarge'})%>
+                <div class="clear"></div>
+                <%- html.input(department,'is_processing', {type:'checkbox',angular:true, 'ng-required': false,'class':'pull-left', label: false})%>
+                <%- html.label('Processing Department', null, {'style':'display:inline-block;margin-left:3px','class':'pull-left'})%>
+                <div class="clear"></div>
+                <%- html.input(department,'is_auth_required', {type:'checkbox',angular:true, 'ng-required': false,'class':'pull-left', label: false})%>
+                <%- html.label('Additional Authorization Required', null, {'style':'display:inline-block;margin-left:3px','class':'pull-left'})%>
+                <div class="clear"></div>
+            </div>
+            <div class="modal-footer">
+                <%- html.tag('button', 'Close', {type:'button', 'data-dismiss':'modal', 'aria-hidden':'true', 'class':'btn'})%>
+                <%- html.tag('button','Save',{'class':'btn btn-primary',type:'submit'})%>
+            </div>
+        </fieldset>
     </form>
 </div>
