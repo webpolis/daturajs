@@ -10,7 +10,6 @@ module.exports = function(){
                     params:{
                         client_id:req.params.clientId
                     },
-                    //'with':['client'],
                     fields:department.getListableColumns(),
                     order:'department_name ASC'
                 },function(departments){

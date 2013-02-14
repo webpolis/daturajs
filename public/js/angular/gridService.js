@@ -14,7 +14,6 @@ charter.factory('gridService', function() {
                             });
                     }
                 }
-                
                 $scope.pagingOptions = {
                     pageSizes: [25, 50, 100],
                     pageSize: limit ? parseInt(limit) : 25,

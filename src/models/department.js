@@ -31,6 +31,6 @@ exports.model = {
 		hasMany:[],
 		belongsTo:[
                     {model:'client', alias:'client', foreignKey: 'client_id'},
-                ],
+                ]
 	}
 }
