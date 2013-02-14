@@ -1,3 +1,5 @@
+var gridHelper = require('../helpers/grid');
+
 module.exports = function(){
     var vendorController = {
         index : function (req,res){
@@ -19,7 +21,7 @@ module.exports = function(){
             this.$$.render('list',{
                 clientId : auth.client_id,
                 vendor: vendor,
-                vendorColumns : vendor.$getFields(vendor.getListableColumns())
+                vendorColumns : gridHelper.typeMap(vendor.$getFields(vendor.getListableColumns()))
             });
         }
     };

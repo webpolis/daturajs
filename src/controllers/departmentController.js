@@ -1,3 +1,5 @@
+var gridHelper = require('../helpers/grid');
+
 module.exports = function(){
     var departmentController = {
         index : function (req,res){
@@ -19,7 +21,7 @@ module.exports = function(){
             this.$$.render('list',{
                 clientId : auth.client_id,
                 department: department,
-                departmentColumns : department.$getFields(department.getListableColumns())
+                departmentColumns : gridHelper.typeMap(department.$getFields(department.getListableColumns()))
             });
         }
     };
