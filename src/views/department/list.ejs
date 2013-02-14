@@ -1,4 +1,5 @@
-<div class="dataList" ng-controller="departmentController" ng-init="clientId = <%= JSON.stringify(clientId) %>; getDepartments();" >
+<div class="dataList" ng-controller="departmentController" ng-init="clientId = <%= JSON.stringify(clientId) %>; 
+     departmentColumns = <%= JSON.stringify(departmentColumns) %>; init();" >
     <div class="row-fluid span12 dataCommands">
         <%- html.tag('a','Add Department',{'class':'btn btn-primary', role:'button', 'data-toggle':'modal',
         href:'#departmentForm', 'ng-click':'department = null'})%>
