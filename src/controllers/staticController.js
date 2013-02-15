@@ -7,8 +7,6 @@ module.exports = function(){
             this.$$.render({
                 view:'home',
                 layout:'main'
-            },{
-                appName:this.$$.params.appName
             });
         }
     };
