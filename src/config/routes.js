@@ -53,8 +53,8 @@ exports.main = [
         isRest:true
     },
     {
-        url: '/rest/user/update',
-        action: 'user/update',
+        url: '/rest/user/updateSettings',
+        action: 'user/updateSettings',
         method:'post',
         isRest:true
     },
