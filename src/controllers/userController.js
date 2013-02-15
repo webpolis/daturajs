@@ -63,6 +63,7 @@ module.exports = function(){
                 return
             }
             
+            // set a new model's instance to be made available to the "Add User"
             var user = this.$$.models.user.getInstance({
                 client_id:auth.client_id
             })

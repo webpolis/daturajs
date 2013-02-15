@@ -72,7 +72,36 @@ module.exports = function(){
             }
         },
         /**
-         * Retrieves a list of users for the specificied client.
+         * Retrieves one user record belonging the specified client.
+         * 
+         * @method  getUsers
+         */
+        getUser : function (req,res, nxt){
+            if(req.params.clientId){
+                var user = this.$$.models.user;
+                
+                // add additional columns to be made available, not only those that are shown within the grid
+                var ff = user.getListableColumns();
+                ff = ff.concat(['state_id','address','address2','zip_code', 'username', 'user_role_id', 'is_deleted'])
+                
+                user.$find('one',{
+                    conditions:['client_id = :client_id'],
+                    params:{
+                        client_id:req.params.clientId
+                    },
+                    'with':['client'],
+                    fields:ff,
+                    order:'first_name ASC, last_name ASC'
+                },function(_user){
+                    res.send(200,{
+                        user:_user
+                    })
+                })
+            }else
+                res.send(400,false);
+        },
+        /**
+         * Retrieves a list of active users for the specificied client.
          * 
          * @method  getUsers
          */
