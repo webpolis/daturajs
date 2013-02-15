@@ -84,6 +84,14 @@ charter.factory('resourceService', function($resource, $window) {
                     action:'updateSettings',
                     port:3339
                 }
+            },
+            testServerConnection:{
+                method:'POST',
+                params:{
+                    controller:'client',
+                    action:'testServerConnection',
+                    port:$window.location.port
+                }
             }
         },
         'department':{

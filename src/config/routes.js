@@ -33,6 +33,11 @@ exports.main = [
         url: '/client/settings',
         action: 'client/settings',
         method:'get'
+    }, 
+    {
+        url: '/client/testServerConnection',
+        action: 'client/testServerConnection',
+        method:'post'
     },  
     // department related
     {

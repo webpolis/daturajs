@@ -8,6 +8,12 @@
     <div class="alert alert-success" ng-show="settingsOk">
         <strong><%= 'Success' %></strong> <%= 'The information has been updated.' %>
     </div>
+    <div class="alert alert-error" ng-show="serverFail">
+        <strong><%= 'Error' %></strong> {{ serverFailMsg }}
+    </div>
+    <div class="alert alert-success" ng-show="serverOk">
+        <strong><%= 'Success' %></strong> <%= 'The connection was successful.' %>
+    </div>
     <fieldset>
         <%- html.tag('legend','Accounting Server')%>
         <div class="row-fluid">
@@ -35,7 +41,7 @@
             </div>
         </div>
         <div class="btn-group clear">
-            <%- html.tag('button','Verify Connection',{'class':'btn btn-info',type:'button'})%>
+            <%- html.tag('button','Verify Connection',{'class':'btn btn-info',type:'button', 'ng-click':'testServerConnection()'})%>
             <%- html.tag('button','Save',{'class':'btn',type:'submit'})%>
         </div>
     </fieldset>
