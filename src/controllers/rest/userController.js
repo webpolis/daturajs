@@ -1,5 +1,10 @@
 module.exports = function(){
     var userController = {
+        /**
+         * Creates a new client and its associated Administrator account.
+         *
+         * @method  register
+         */
         register : function (req,res, nxt){
             var _this = this;
             var data = req.body;
@@ -36,6 +41,11 @@ module.exports = function(){
                 });
             });
         },
+        /**
+         * Updates client & accounting server settings.
+         *
+         * @method  updateSettings
+         */
         updateSettings : function (req,res, nxt){
             var _$$ = this.$$;
             var data = req.body;
@@ -61,6 +71,11 @@ module.exports = function(){
                 })
             }
         },
+        /**
+         * Retrieves a list of users for the specificied client.
+         * 
+         * @method  getUsers
+         */
         getUsers : function (req,res, nxt){
             if(req.params.clientId){
                 var user = this.$$.models.user;
@@ -93,6 +108,12 @@ module.exports = function(){
                 })
             })
         },
+        /**
+         * Updates or creates a new user. No "client" creation is done here, so 
+         * the client_id is expected to be set already.
+         * 
+         * @method  userSave
+         */
         userSave : function(req,res, nxt){
             var user = req.body.user;
             var ret = function(err){
