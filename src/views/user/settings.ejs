@@ -1,4 +1,4 @@
-<form ng-controller="userController" ng-submit="update()" ng-init="getStates(); getSubscriptions(); user = <%= JSON.stringify(user) %>">
+<form ng-controller="userController" ng-submit="updateSettings()" ng-init="getStates(); getSubscriptions(); user = <%= JSON.stringify(user) %>">
     <div class="alert alert-error" ng-show="settingsFailed">
         <strong><%= 'Error' %></strong> <%= 'Settings were not saved. Please contact the administrator.' %>
     </div>

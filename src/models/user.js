@@ -61,6 +61,9 @@ exports.model = {
                      */
                     cbk(user)
                 });
+            },
+            getListableColumns : function(){
+                return ['id','first_name', 'last_name','email', 'phone', 'job_title', 'city']
             }
         },
         relations : {

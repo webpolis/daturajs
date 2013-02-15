@@ -36,7 +36,7 @@ module.exports = function(){
                 });
             });
         },
-        update : function (req,res, nxt){
+        updateSettings : function (req,res, nxt){
             var _$$ = this.$$;
             var data = req.body;
             
@@ -58,6 +58,66 @@ module.exports = function(){
                             err: err
                         })
                     })
+                })
+            }
+        },
+        getUsers : function (req,res, nxt){
+            if(req.params.clientId){
+                var user = this.$$.models.user;
+                
+                // add additional columns to be made available, not only those that are shown within the grid
+                var ff = user.getListableColumns();
+                ff = ff.concat(['state_id','address','address2','zip_code', 'username', 'user_role_id'])
+                
+                user.$find('all',{
+                    conditions:['client_id = :client_id AND (is_deleted = false OR is_deleted IS NULL)'],
+                    params:{
+                        client_id:req.params.clientId
+                    },
+                    fields:ff,
+                    order:'first_name ASC, last_name ASC'
+                },function(users){
+                    res.send(200,{
+                        users:users
+                    })
+                })
+            }else
+                res.send(400,false);
+        },
+        getUserRoles : function (req,res, nxt){
+            var userRole = this.$$.models.user_role;
+                
+            userRole.$find('all',null,function(_roles){
+                res.send(200,{
+                    userRoles:_roles
+                })
+            })
+        },
+        userSave : function(req,res, nxt){
+            var user = req.body.user;
+            var ret = function(err){
+                res.send(err?400:200,{
+                    user: user
+                })
+            }
+            
+            if(user.id && user.id !== null){
+                // update
+                var _user = this.$$.models.user.getInstance(user);
+                delete user.id
+                
+                _user.$update(user,null,function(_dept){
+                    user = _dept;
+                    ret(false)
+                })
+            }else{
+                // create new
+                user.country_id = user.country_id?user.country_id:1
+                this.$$.models.user.$create(user, function(_user){
+                    user = _user;
+                    ret(false)
+                }, function(){
+                    ret(true)
                 })
             }
         }

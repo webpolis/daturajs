@@ -1,4 +1,5 @@
 <% switch(settings.code){
+        case 'user.index':
         case 'department.index':
         case 'vendor.index':
         case 'user.settings':
@@ -36,7 +37,7 @@
                         childs: [
                             {
                                 label: 'List Users',
-                                target: '#dataPageUsersList'
+                                target: '/users'
                             },
                             {
                                 label: 'Add User',

@@ -1,3 +1,5 @@
+var gridHelper = require('../helpers/grid');
+
 module.exports = function(){
     var userController = {
         login : function (req,res){
@@ -50,6 +52,29 @@ module.exports = function(){
                     user: _user,
                     client: _user.client
                 });
+            });
+        },
+        index : function (req,res){
+            var auth = req.signedCookies.auth;
+
+            // @todo apply role based permission
+            if(typeof auth === 'undefined' || !auth.id){
+                res.redirect('/')
+                return
+            }
+            
+            var user = this.$$.models.user.getInstance({
+                client_id:auth.client_id
+            })
+            
+            this.$$.app.set('title','Users');
+            this.$$.app.set('code','user.index');
+            
+            this.$$.render('list',{
+                clientId : auth.client_id,
+                user: user,
+                // those that will be visible in the grid
+                userColumns : gridHelper.typeMap(user.$getFields(user.getListableColumns()))
             });
         }
     };

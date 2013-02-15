@@ -22,12 +22,39 @@ charter.factory('resourceService', function($resource, $window) {
                         port:3339
                     }
                 },
-                userUpdate:{
+                updateSettings:{
                     method:'POST',
                     params:{
                         parent:'rest',
                         controller:'user',
-                        action:'update',
+                        action:'updateSettings',
+                        port:3339
+                    }
+                },
+                getUsers:{
+                    method:'GET',
+                    params:{
+                        parent:'rest',
+                        controller:'user',
+                        action:'getUsers',
+                        port:3339
+                    }
+                },
+                userSave:{
+                    method:'POST',
+                    params:{
+                        parent:'rest',
+                        controller:'user',
+                        action:'userSave',
+                        port:3339
+                    }
+                },
+                getUserRoles:{
+                    method:'GET',
+                    params:{
+                        parent:'rest',
+                        controller:'user',
+                        action:'getUserRoles',
                         port:3339
                     }
                 },

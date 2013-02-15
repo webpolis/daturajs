@@ -22,7 +22,13 @@ exports.main = [
         url: ['/user/settings','/user/settings/:section'],
         action: 'user/settings',
         method:'get'
+    },   
+    {
+        url: '/users',
+        action: 'user/index',
+        method:'get'
     },
+    
     // department related
     {
         url: '/departments',
@@ -56,6 +62,24 @@ exports.main = [
         url: '/rest/subscription/getSubscriptions',
         action: 'subscription/getSubscriptions',
         method:'get',
+        isRest:true
+    },
+    {
+        url: '/rest/user/getUserRoles',
+        action: 'user/getUserRoles',
+        method:'get',
+        isRest:true
+    },
+    {
+        url: ['/rest/user/getUsers/:clientId'],
+        action: 'user/getUsers',
+        method:'get',
+        isRest:true
+    },
+    {
+        url: '/rest/user/userSave',
+        action: 'user/userSave',
+        method:'post',
         isRest:true
     },
     // department related
