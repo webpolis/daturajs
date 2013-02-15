@@ -14,7 +14,7 @@ function vendorController($scope, $window, resourceService, gridService){
     }
 
     $scope.getStates = function(){
-        resourceService.getStates(null,function(ret){
+        resourceService('location').getStates(null,function(ret){
             if(ret && ret.states){
                 $scope.states = ret.states
             }
@@ -24,7 +24,7 @@ function vendorController($scope, $window, resourceService, gridService){
     },
 
     $scope.getVendors = function(){
-        resourceService.getVendors({
+        resourceService('vendor').getVendors({
             extra1:$scope.clientId
         },function(ret){
             if(ret.vendors)
@@ -37,7 +37,7 @@ function vendorController($scope, $window, resourceService, gridService){
     $scope.vendorSave = function(){
         $scope.vendor.client_id = $scope.clientId;
 
-        resourceService.vendorSave({
+        resourceService('vendor').vendorSave({
             vendor: $scope.vendor
         },function(ret){
             if(ret.vendor){

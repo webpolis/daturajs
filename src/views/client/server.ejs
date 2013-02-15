@@ -1,11 +1,11 @@
-<form ng-controller="userController" ng-submit="updateSettings(true)" ng-init="user = <%= JSON.stringify(user) %>; getAccountingSystemTypes(); accountingServerTypes = <%= JSON.stringify(client.getServerTypes()) %>">
+<form ng-controller="clientController" ng-submit="updateSettings()" ng-init="client = <%= JSON.stringify(client) %>; getAccountingSystemTypes(); accountingServerTypes = <%= JSON.stringify(client.getServerTypes()) %>">
     <div class="alert alert-block">
         <strong><%= 'Important' %></strong> <%= 'Use this form to set up a connection between the accounting system and '+settings.params.appName+' Portal.' %>
     </div>
-    <div class="alert alert-error" ng-show="accountingServerFail">
+    <div class="alert alert-error" ng-show="settingsFail">
         <strong><%= 'Error' %></strong> <%= 'Settings were not saved. Please contact the administrator.' %>
     </div>
-    <div class="alert alert-success" ng-show="accountingServerOk">
+    <div class="alert alert-success" ng-show="settingsOk">
         <strong><%= 'Success' %></strong> <%= 'The information has been updated.' %>
     </div>
     <fieldset>

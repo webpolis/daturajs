@@ -42,7 +42,7 @@ module.exports = function(){
             });
         },
         /**
-         * Updates client & accounting server settings.
+         * Updates user & client's basic info.
          *
          * @method  updateSettings
          */
@@ -111,7 +111,7 @@ module.exports = function(){
                 
                 // add additional columns to be made available, not only those that are shown within the grid
                 var ff = user.getListableColumns();
-                ff = ff.concat(['state_id','address','address2','zip_code', 'username', 'user_role_id'])
+                ff = ff.concat(['state_id','address','address2','zip_code', 'username', 'user_role_id', 'job_title'])
                 
                 user.$find('all',{
                     conditions:['client_id = :client_id AND (is_deleted = false OR is_deleted IS NULL)'],

@@ -16,7 +16,8 @@
     "restify": "*",
     "inflector": "*",
     "cheerio": "*",
-    "i18n": "*"
+    "i18n": "*",
+    "tedious": "*"
   },
   "author": {
     "name": "Nicolas Iglesias",

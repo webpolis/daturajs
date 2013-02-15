@@ -17,6 +17,8 @@
                     <div class="span6">
                         <%- html.label('Last name')%>
                         <%- html.input(user,'last_name', {angular:true, 'ng-required': true})%>
+                        <%- html.label('Job Title')%>
+                        <%- html.input(user,'job_title', {angular:true, 'ng-required': false})%>
                     </div>
                 </div>
                 <%- html.tag('legend','Location Information')%>
@@ -31,7 +33,7 @@
                     </div>
                     <div class="span6">
                         <%- html.label('Postal Code')%>
-                        <%- html.input(user,'postal_code', {angular:true, 'ng-required': false, 'class':'input-small'})%>
+                        <%- html.input(user,'zip_code', {angular:true, 'ng-required': false, 'class':'input-small'})%>
                         <%- html.label('Phone')%>
                         <%- html.input(user,'phone', {angular:true, 'ng-required': false, 'class':'input-large'})%>
                         <%- html.label('State')%>
@@ -59,7 +61,7 @@
                 <div class="btn-group">
                     <%- html.tag('button', 'Close', {type:'button', 'data-dismiss':'modal', 'aria-hidden':'true', 'class':'btn'})%>
                     <%- html.tag('button','Inactivate',{'ng-confirm':'Are you sure?', 'ng-show':'user.id && true || false',
-                        'class':'btn btn-danger','ng-click':'user.is_deleted = true',type:'submit'})%>
+                    'class':'btn btn-danger','ng-click':'user.is_deleted = true',type:'submit'})%>
                     <%- html.tag('button','Save',{'class':'btn btn-primary',type:'submit'})%>
                 </div>
             </div>

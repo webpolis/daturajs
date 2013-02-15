@@ -28,7 +28,7 @@ function userController($scope, $window, resourceService, gridService){
     }
 
     $scope.getStates = function(){
-        resourceService.getStates(null,function(ret){
+        resourceService('location').getStates(null,function(ret){
             if(ret && ret.states){
                 $scope.states = ret.states
             }
@@ -38,7 +38,7 @@ function userController($scope, $window, resourceService, gridService){
     }
     
     $scope.getUserRoles = function(){
-        resourceService.getUserRoles(null,function(ret){
+        resourceService('user').getUserRoles(null,function(ret){
             if(ret && ret.userRoles){
                 $scope.userRoles = ret.userRoles
             }
@@ -48,7 +48,7 @@ function userController($scope, $window, resourceService, gridService){
     }
     
     $scope.getUsers = function(){
-        resourceService.getUsers({
+        resourceService('user').getUsers({
             extra1:$scope.clientId
         },function(ret){
             if(ret.users)
@@ -58,18 +58,8 @@ function userController($scope, $window, resourceService, gridService){
         })
     }
     
-    $scope.getAccountingSystemTypes = function(){
-        resourceService.getAccountingSystemTypes(null,function(ret){
-            if(ret && ret.accountingSystemTypes){
-                $scope.accountingSystemTypes = ret.accountingSystemTypes
-            }
-        },function(err){
-            throw err
-        });
-    }
-    
     $scope.getSubscriptions = function(){
-        resourceService.getSubscriptions(null,function(ret){
+        resourceService('user').getSubscriptions(null,function(ret){
             if(ret && ret.subscriptions){
                 $scope.subscriptions = ret.subscriptions
             }
@@ -78,7 +68,7 @@ function userController($scope, $window, resourceService, gridService){
         });
     },
     $scope.login = function(){
-        resourceService.userLogin($scope.user,function(ret){
+        resourceService('user').userLogin($scope.user,function(ret){
             if(ret){
                 $scope.loginFailed = false;
                 $window.location = '/';
@@ -89,7 +79,7 @@ function userController($scope, $window, resourceService, gridService){
     }
     
     $scope.register = function(){
-        resourceService.userRegister({
+        resourceService('user').userRegister({
             user:$scope.user,
             client:$scope.client
         },function(user){
@@ -97,24 +87,19 @@ function userController($scope, $window, resourceService, gridService){
         });
     }
     
-    $scope.updateSettings = function(isExtraSettings){
-        resourceService.updateSettings({
+    $scope.updateSettings = function(){
+        resourceService('user').updateSettings({
             user:$scope.user
         },function(ret){
-            if(!isExtraSettings){
-                $scope.settingsSaved = ret.success === true;
-                $scope.settingsFailed = !ret.success;
-            }else{
-                $scope.accountingServerFail = !ret.success;
-                $scope.accountingServerOk = ret.success === true;
-            }
+            $scope.settingsSaved = ret.success === true;
+            $scope.settingsFailed = !ret.success;
         });
     }
     
     $scope.userSave = function(){
         $scope.user.client_id = $scope.clientId;
 
-        resourceService.userSave({
+        resourceService('user').userSave({
             user: $scope.user
         },function(ret){
             if(ret.user){

@@ -13,7 +13,7 @@ function departmentController($scope, $window, resourceService, gridService){
     }
 
     $scope.getDepartments = function(){
-        resourceService.getDepartments({
+        resourceService('department').getDepartments({
             extra1:$scope.clientId
         },function(ret){
             if(ret.departments)
@@ -26,7 +26,7 @@ function departmentController($scope, $window, resourceService, gridService){
     $scope.departmentSave = function(){
         $scope.department.client_id = $scope.clientId;
 
-        resourceService.departmentSave({
+        resourceService('department').departmentSave({
             department: $scope.department
         },function(ret){
             if(ret.department){

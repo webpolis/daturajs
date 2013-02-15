@@ -3,6 +3,7 @@
         case 'department.index':
         case 'vendor.index':
         case 'user.settings':
+        case 'client.settings':
 %>
         <%if(auth){%>
                 <%- menu.vertical([
@@ -50,7 +51,7 @@
                         childs: [
                             {
                                 label: 'Accounting Server',
-                                target: '/user/settings/server',
+                                target: '/client/settings',
                             },
                         ]
                     },

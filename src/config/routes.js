@@ -19,7 +19,7 @@ exports.main = [
         method:'get'
     },
     {
-        url: ['/user/settings','/user/settings/:section'],
+        url: '/user/settings',
         action: 'user/settings',
         method:'get'
     },   
@@ -28,7 +28,12 @@ exports.main = [
         action: 'user/index',
         method:'get'
     },
-    
+    // client related
+    {
+        url: '/client/settings',
+        action: 'client/settings',
+        method:'get'
+    },  
     // department related
     {
         url: '/departments',
@@ -79,6 +84,13 @@ exports.main = [
     {
         url: '/rest/user/userSave',
         action: 'user/userSave',
+        method:'post',
+        isRest:true
+    },
+    // client related
+    {
+        url: '/rest/client/updateSettings',
+        action: 'client/updateSettings',
         method:'post',
         isRest:true
     },
