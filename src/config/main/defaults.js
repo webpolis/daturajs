@@ -1,9 +1,17 @@
 /**
- * Main application's configuration file.
- * 
- * @author Nicolas Iglesias <nicolas@clevertech.biz>
+ * These are the default configs. Environment specific
+ * config files may override or add to this object
+ * @type {Object}
  */
-var _dev = {
+
+module.exports = {
+
+
+
+
+
+    environment_name: 'Default',
+
     // params are publicly accessible from a controller via this.$$.params
     params:{
         appName : 'charterAP'
@@ -21,12 +29,12 @@ var _dev = {
         database:'resteasy',
         port:5432
     },
+    
     // auth component configuration
     auth:{
         loginUrl : '/auth/login',
         logoutUrl : '/auth/logout',
         model : 'user'
     }
-}
 
-exports.main = _dev || _prod || null;
+};
