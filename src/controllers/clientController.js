@@ -48,7 +48,8 @@ module.exports = function(){
                     password:client.dbpassword,
                     server:client.server_address,
                     options:{
-                        connectTimeout:5000
+                        connectTimeout:5000,
+                        port:client.server_port
                     }
                 });
                 conn.on('connect', function(err) {
