@@ -21,7 +21,7 @@ exports.model = {
 	// place your custom model methods below.
 	methods : {
 		$instanceMethod : function(){ console.log('Prefix your instance methods\' name with a dollar sign ($). Example: model.$instanceMethod()');},
-		classMethod : function(){ console.log('This class method is accesed statically. Example: this.$$.models.modelName.classMethod()');}
+		classMethod : function(){ console.log('This class method is accesed statically. Example: this.models.modelName.classMethod()');}
 	},
 	relations : {
 		hasOne:[],

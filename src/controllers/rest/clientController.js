@@ -6,19 +6,18 @@ module.exports = function(){
          * @method  updateSettings
          */
         updateSettings : function (req,res, nxt){
-            var _$$ = this.$$;
-            var data = req.body;
+            var _this = this;
             
-            if(typeof data.client ===  'object'){
-                var client = this.$$.models.client.getInstance(data.client)
-                delete data.client.id
+            if(typeof this.data.client ===  'object'){
+                var client = this.models.client.getInstance(this.data.client)
+                delete this.data.client.id
                 
-                client.$update(data.client, null, function(_client){
-                    _$$.send(200, {
+                client.$update(this.data.client, null, function(_client){
+                    _this.send(200, {
                         client:_client
                     })
                 },function(err){
-                    _$$.send(400, {
+                    _this.send(400, {
                         success:false,
                         err: err
                     })

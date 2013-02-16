@@ -14,8 +14,12 @@
         },
         "lib/components/auth.js": {
             "name": "lib/components/auth.js",
-            "modules": {},
-            "classes": {},
+            "modules": {
+                "auth": 1
+            },
+            "classes": {
+                "auth": 1
+            },
             "fors": {},
             "namespaces": {}
         },
@@ -23,6 +27,17 @@
             "name": "lib/components/object.js",
             "modules": {},
             "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "lib/components/validator.js": {
+            "name": "lib/components/validator.js",
+            "modules": {
+                "validator": 1
+            },
+            "classes": {
+                "validator": 1
+            },
             "fors": {},
             "namespaces": {}
         },
@@ -113,7 +128,51 @@
             "tag": "module",
             "file": "lib/adapters/db.js",
             "line": 20,
-            "description": "Database adapter.\n\nThis adapter acts as a proxy within your application and the ORM module chosen.\nCurrently it only supports Sequelize - http://www.sequelizejs.com/ - but more \nwill be added in the future.\n\nSupported addapters' strings: sequelize",
+            "description": "Database adapter.\n\nThis adapter acts as a proxy within your application and the ORM module chosen.\nCurrently it only supports Sequelize - http://www.sequelizejs.com/ - but more \nwill be added in the future.\n\nSupported adapters' strings: sequelize",
+            "author": "Nicolas Iglesias <nicolas@clevertech.biz>"
+        },
+        "auth": {
+            "name": "auth",
+            "submodules": {},
+            "classes": {
+                "auth": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "lib/components/auth.js",
+            "line": 36,
+            "description": "Basic authentication mechanism.\n\nThe Auth Component currently does basically a few things:\n\nWhen initialized, it will lookup at the settings - src/config/main.js - and will \nlisten to any request made to the selected login route - config.loginUrl -.\nAfterwards, will instantiate the selected model - config.model - and will use \nmodel's 'auth' method to execute custom authentication logic (db lookup, etc).\nInternally, a cookie is generated - named 'auth' - containing basic user information.\n\nThe configuration parameters are as follow:\n\nloginUrl     - URL receiving POST fields for user information (username, password).",
+            "todo": [
+                "logoutUrl    - URL that will clear cookies and redirect the user.\n\nThe chosen model must implement 'auth' method as a non-instance method",
+                "so it should be accessible as modelName.auth().\n\n'auth' method's signature is:"
+            ],
+            "params": [
+                {
+                    "name": "username",
+                    "description": "and password fields, or custom object.",
+                    "type": "Object"
+                },
+                {
+                    "name": "Callback",
+                    "description": "function to be executed when done. You should pass \n                     your user/custom object as the argument, which will be set \n                     as the 'auth' cookie. An optional 2nd argument is an array of \n                     fields that will be available in the cookie; otherwise, all fields \n                     are going to be saved in the 'auth' cookie (BEWARE! not to show passwords).",
+                    "type": "Function"
+                }
+            ],
+            "author": "Nicolas Iglesias <nicolas@clevertech.biz>"
+        },
+        "validator": {
+            "name": "validator",
+            "submodules": {},
+            "classes": {
+                "validator": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "lib/components/validator.js",
+            "line": 11,
+            "description": "Validation module.",
             "author": "Nicolas Iglesias <nicolas@clevertech.biz>"
         },
         "core": {
@@ -127,7 +186,7 @@
             "tag": "module",
             "file": "lib/core.js",
             "line": 13,
-            "description": "Main core file for custom framework implementation.\n\nThis module exports an object which have access to different components and \nhelpers to be made available to either models or controllers.\nAlso, it stores a reference to existing models so they can be accessed from any controller \nvia this.$$.models.",
+            "description": "Main core file for custom framework implementation.\n\nThis module exports an object which have access to different components and \nhelpers to be made available to either models or controllers.\nAlso, it stores a reference to existing models so they can be accessed from any controller \nvia this.models.",
             "author": "Nicolas Iglesias <nicolas@cleversight.biz>"
         }
     },
@@ -144,6 +203,32 @@
             "namespace": "",
             "file": "lib/adapters/db.js",
             "line": 20
+        },
+        "auth": {
+            "name": "auth",
+            "shortname": "auth",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "auth",
+            "namespace": "",
+            "file": "lib/components/auth.js",
+            "line": 36
+        },
+        "validator": {
+            "name": "validator",
+            "shortname": "validator",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "validator",
+            "namespace": "",
+            "file": "lib/components/validator.js",
+            "line": 11
         },
         "core": {
             "name": "core",
@@ -194,7 +279,7 @@
         },
         {
             "file": "lib/adapters/db.js",
-            "line": 94,
+            "line": 95,
             "description": "Get new ORM model's instance.\nThis method will return a new instance of the given model in its ORM's specific format, \nby using the appropiate method defined by the chosen ORM module.",
             "params": [
                 {
@@ -214,7 +299,7 @@
         },
         {
             "file": "lib/adapters/db.js",
-            "line": 178,
+            "line": 181,
             "description": "This will convert the provided ORM model's instance into a  \nbaseModel instance.",
             "params": [
                 {
@@ -229,7 +314,12 @@
                 },
                 {
                     "name": "With.",
-                    "description": "names of related models to be attached to the \n                     returned model.",
+                    "description": "Names of associated models to be attached to the \n                     returning model.",
+                    "type": "Array"
+                },
+                {
+                    "name": "Internal",
+                    "description": "usage. Only return selected fields.",
                     "type": "Array"
                 }
             ],
@@ -243,32 +333,28 @@
             "module": "db"
         },
         {
-            "file": "lib/components/auth.js",
-            "line": 1,
-            "description": "Basic authentication mechanism.\n\nThe Auth Component currently does basically a few things:\n\nWhen initialized, it will lookup at the settings - src/config/main.js - and will \nlisten to any request made to the selected login route - config.loginUrl -.\nAfterwards, will instantiate the selected model - config.model - and will use \nmodel's 'auth' method to execute custom authentication logic (db lookup, etc).\nInternally, a cookie is generated - named 'auth' - containing basic user information.\n\nThe configuration parameters are as follow:\n\nloginUrl     - URL receiving POST fields for user information (username, password).",
-            "todo": [
-                "logoutUrl    - URL that will clear cookies and redirect the user.\n\nThe chosen model must implement 'auth' method inside model's classMethods property (when using Sequelize as the ORM)",
-                "so it should be accessible as modelName.auth().\nThe method must return true when succesful or false if authentication has failed.\n\n'auth' method's signature is:"
-            ],
+            "file": "lib/adapters/db.js",
+            "line": 285,
             "params": [
                 {
-                    "name": "username",
-                    "description": "and password fields, or custom object.",
+                    "name": "Optional",
+                    "description": "ORM model to be refreshed.",
                     "type": "Object"
                 },
                 {
-                    "name": "Callback",
-                    "description": "function to be executed when done. You should pass \n                     your user/custom object as the argument, which will be set \n                     as the 'auth' cookie. An optional 2nd argument is an array of \n                     fields that will be available in the cookie; otherwise, all fields \n                     are going to be saved in the 'auth' cookie (BEWARE! not to show passwords).",
-                    "type": "Function"
+                    "name": "Only",
+                    "description": "return and do not refresh lib.core.models",
+                    "type": "Boolean"
                 }
             ],
-            "author": "Nicolas Iglesias <nicolas@clevertech.biz>",
-            "class": "core",
+            "itemtype": "method",
+            "name": "setupRelationships",
+            "class": "db",
             "module": "db"
         },
         {
             "file": "lib/components/auth.js",
-            "line": 38,
+            "line": 43,
             "description": "Listen to login/logout requests and provide custom authentication mechanism.",
             "params": [
                 {
@@ -287,35 +373,50 @@
                     "type": "Function"
                 }
             ],
-            "class": "core",
-            "module": "db"
+            "itemtype": "method",
+            "name": "initialize",
+            "class": "auth",
+            "module": "auth"
+        },
+        {
+            "file": "lib/components/auth.js",
+            "line": 95,
+            "description": "Returns an instance of the already initialized auth object, which may \ncontain authenticated user's information.",
+            "itemtype": "method",
+            "name": "getInstance",
+            "return": {
+                "description": "",
+                "type": "Object"
+            },
+            "class": "auth",
+            "module": "auth"
         },
         {
             "file": "lib/components/object.js",
             "line": 1,
             "description": "Low level Javascript Object manipulation.\nVarious tools and added features applied to the most basic form of framework's objects.\n\nHandle with care.",
             "author": "Nicolas Iglesias <nicolas@cleversight.com>",
-            "class": "core",
-            "module": "db"
+            "class": "validator",
+            "module": "auth"
         },
         {
             "file": "lib/console/modelGenerator.js",
             "line": 1,
-            "description": "Generates ORM models based on provided database schema.\nAt the moment, only supporting Postgresql and Sequelize ORM.\n\nInternally, this script will fetch all tables names using the db configuration \nset in src/config/main.js and will generate a new model in src/models for each.",
+            "description": "Generates daturajs models based on provided database schema.\nAt the moment, only supporting Postgresql and Sequelize ORM.\n\nInternally, this script will fetch all tables names using the db configuration \nset in src/config/main.js and will generate a new model in src/models for each.",
             "todo": [
                 "Obtain foreign indexes and generate appropiate \"model association\" source code.\n\nATTENTION! This will overwrite existing models."
             ],
             "author": "Nicolas Iglesias <nicolas@clevertech.biz>",
             "class": "core",
-            "module": "db"
+            "module": "validator"
         },
         {
             "file": "lib/console/modelGenerator.js",
-            "line": 74,
+            "line": 79,
             "description": "\"+r.table_name.singular().humanize()+\" model.\\n\\\n\\n\\\nAuto-generated by modelGenerator.\\n\\\n\\n\\",
-            "author": "Nicolas Iglesias <nicolas@clevertech.biz>\\n\\\n/\\n\\\n\";\n       o.fileHeader += \"\\\nvar inflector = require('inflector');\\n\\\n\\n\\\nexports.model = {\\\n\";\n       o.fileBody = '';\n       o.queryColumns = qc.replace(/\\$\\$table/gi,r.table_name);\n       o.fileFooter = '}';\n       tables[r.table_name] = o;\n   });\n   qtt.on('end',function(){\n       for(var t in tables){\n           var qqc = client.query(tables[t].queryColumns);\n           qqc.on('row',function(c){\n               if(typeof tables[c.table].columns === 'undefined')\n                   tables[c.table].columns = [];\n               tables[c.table].columns.push(c);\n           });\n           qqc.on('end',function(){\n               });\n       }\n       \n       setTimeout(function(){\n           client.end();\n           \n           for(tt in tables){\n               tables[tt].fileBody = \"\\t// access your variables by adding the $$ prefix\\n\";\n               tables[tt].fileBody += \"\\tname : '\"+tt.singular()+\"',\\n\";\n               tables[tt].fileBody += \"\\t// map your database columns here\\n\\tfields : [\\n\";\n               tables[tt].columns.forEach(function(c){\n                   var type = /int\\d+/.test(c.type) ? typeMap['int'] : typeMap[c.type];\n                   var props = [\n                   'name : \\''+c.field+'\\'',\n                   'label : \\''+c.field+'\\'.humanize()',\n                   'type : \\''+type+'\\'',\n                   'required : '+(!c.not_null?'false':'true')\n                   ];\n                   \n                   if(type === typeMap['int'] && c.field === 'id')\n                       props.push('primaryKey : true');\n                   if(c.length_var!==-1)\n                       props.push('max : '+(config.main.db.driver==='postgres'?c.length_var-4:c.length_var)); // postgres adds 4 chars\n                   \n                   tables[tt].fileBody += '\\t\\t{'+props.join(', ')+'},\\n';\n               });\n               tables[tt].fileBody += '\\t],\\n'\n               tables[tt].fileBody += ''\n               +'\\t// place your custom model methods below.\\n'\n               +'\\tmethods : {\\n'\n               +\"\\t\\t$instanceMethod : function(){ console.log('Prefix your instance methods\\\\' name with a dollar sign ($). Example: model.$instanceMethod()');},\\n\"\n               +\"\\t\\tclassMethod : function(){ console.log('This class method is accesed statically. Example: this.$$.models.modelName.classMethod()');}\\n\"\n               +'\\t},\\n'\n               +'\\trelations : {\\n'\n               +'\\t\\thasOne:[],\\n'\n               +'\\t\\thasMany:[],\\n'\n               +'\\t\\tbelongsTo:[],\\n'\n               +'\\t}';\n               \n               var content = [\n               tables[tt].fileHeader,\n               tables[tt].fileBody,\n               tables[tt].fileFooter\n               ];\n               var fname = path.resolve(__dirname+'/../../src/models/'+tt.singular().toLowerCase()+'.js');\n\n               console.log('Saving '+tt.singular()+' model into '+fname);\n               fs.writeFile(fname,content.join('\\n'),function(err){\n                   if (err) throw err;\n               });\n           }\n       }, 5000);\n   });\n});",
+            "author": "Nicolas Iglesias <nicolas@clevertech.biz>\\n\\\n/\\n\\\n\";\n       o.fileHeader += \"\\\nvar inflector = require('inflector');\\n\\\n\\n\\\nexports.model = {\\\n\";\n       o.fileBody = '';\n       o.queryColumns = qc.replace(/\\$\\$table/gi,r.table_name);\n       o.fileFooter = '}';\n       tables[r.table_name] = o;\n   });\n   qtt.on('end',function(){\n       for(var t in tables){\n           if(modelName!== null && modelName !== t.singular()) continue;\n           \n           var qqc = client.query(tables[t].queryColumns);\n           qqc.on('row',function(c){\n               if(typeof tables[c.table].columns === 'undefined')\n                   tables[c.table].columns = [];\n               tables[c.table].columns.push(c);\n           });\n           qqc.on('end',function(){\n               });\n       }\n       \n       setTimeout(function(){\n           client.end();\n           \n           for(tt in tables){\n               if(modelName!== null && modelName !== tt.singular()) continue;\n               \n               tables[tt].fileBody = \"\\t// access your variables by adding the $$ prefix\\n\";\n               tables[tt].fileBody += \"\\tname : '\"+tt.singular()+\"',\\n\";\n               tables[tt].fileBody += \"\\t// map your database columns here\\n\\tfields : [\\n\";\n               tables[tt].columns.forEach(function(c){\n                   var type = /int\\d+/.test(c.type) ? typeMap['int'] : typeMap[c.type];\n                   var props = [\n                   'name : \\''+c.field+'\\'',\n                   'label : \\''+c.field+'\\'.humanize()',\n                   'type : \\''+type+'\\'',\n                   'required : '+(!c.not_null?'false':'true')\n                   ];\n                   \n                   if(type === typeMap['int'] && c.field === 'id')\n                       props.push('primaryKey : true');\n                   if(c.length_var!==-1)\n                       props.push('max : '+(config.main.db.driver==='postgres'?c.length_var-4:c.length_var)); // postgres adds 4 chars\n                   \n                   tables[tt].fileBody += '\\t\\t{'+props.join(', ')+'},\\n';\n               });\n               tables[tt].fileBody += '\\t],\\n'\n               tables[tt].fileBody += ''\n               +'\\t// place your custom model methods below.\\n'\n               +'\\tmethods : {\\n'\n               +\"\\t\\t$instanceMethod : function(){ console.log('Prefix your instance methods\\\\' name with a dollar sign ($). Example: model.$instanceMethod()');},\\n\"\n               +\"\\t\\tclassMethod : function(){ console.log('This class method is accesed statically. Example: this.models.modelName.classMethod()');}\\n\"\n               +'\\t},\\n'\n               +'\\trelations : {\\n'\n               +'\\t\\thasOne:[],\\n'\n               +'\\t\\thasMany:[],\\n'\n               +'\\t\\tbelongsTo:[],\\n'\n               +'\\t}';\n               \n               var content = [\n               tables[tt].fileHeader,\n               tables[tt].fileBody,\n               tables[tt].fileFooter\n               ];\n               var fname = path.resolve(__dirname+'/../../src/models/'+tt.singular().toLowerCase()+'.js');\n\n               console.log('Saving '+tt.singular()+' model into '+fname);\n               fs.writeFile(fname,content.join('\\n'),function(err){\n                   if (err) throw err;\n               });\n           }\n       }, 5000);\n   });\n});",
             "class": "core",
-            "module": "db"
+            "module": "validator"
         },
         {
             "file": "lib/controllers/rest/baseController.js",
@@ -323,7 +424,7 @@
             "description": "Base controller for REST Api.\n\nThis is the base class for all the REST controllers in the application.\nVarious helpful methods will be implemented from time to time, that will be made \navailable to all REST controllers.",
             "author": "Nicolas Iglesias <nicolas@clevertech.biz>",
             "class": "core",
-            "module": "db"
+            "module": "validator"
         },
         {
             "file": "lib/controllers/rest/index.js",
@@ -331,7 +432,30 @@
             "description": "REST Controllers initialization.\n\nYou will not likely need to modify this file.",
             "author": "Nicolas Iglesias <nicolas@clevertech.biz>",
             "class": "core",
-            "module": "db"
+            "module": "validator"
+        },
+        {
+            "file": "lib/controllers/rest/index.js",
+            "line": 16,
+            "description": "Used internally.",
+            "itemtype": "method",
+            "name": "_defineAndFinish",
+            "params": [
+                {
+                    "name": "Controller",
+                    "description": "object.",
+                    "type": "Object"
+                },
+                {
+                    "name": "Controller's",
+                    "description": "name.",
+                    "type": "String"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "class": "core",
+            "module": "validator"
         },
         {
             "file": "lib/controllers/baseController.js",
@@ -339,7 +463,7 @@
             "description": "Base controller.\n\nThis is the base class for all the controllers in the application.\nVarious helpful methods will be implemented from time to time, that will be made \navailable to all controllers.",
             "author": "Nicolas Iglesias <nicolas@clevertech.biz>",
             "class": "core",
-            "module": "db"
+            "module": "validator"
         },
         {
             "file": "lib/controllers/index.js",
@@ -347,11 +471,59 @@
             "description": "Controllers initialization.\n\nYou will not likely need to modify this file.",
             "author": "Nicolas Iglesias <nicolas@clevertech.biz>",
             "class": "core",
-            "module": "db"
+            "module": "validator"
+        },
+        {
+            "file": "lib/controllers/index.js",
+            "line": 16,
+            "description": "Used internally.",
+            "itemtype": "method",
+            "name": "_defineAndFinish",
+            "params": [
+                {
+                    "name": "Controller",
+                    "description": "object.",
+                    "type": "Object"
+                },
+                {
+                    "name": "Controller's",
+                    "description": "name.",
+                    "type": "String"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "class": "core",
+            "module": "validator"
         },
         {
             "file": "lib/models/baseModel.js",
-            "line": 20,
+            "line": 21,
+            "description": "Gets a new instance of the current model.\nOptionally define its default attributes.",
+            "params": [
+                {
+                    "name": "Optional.",
+                    "description": "Default attributes for new instance.",
+                    "type": "Object"
+                },
+                {
+                    "name": "Unimplemented.",
+                    "description": "Optional associated models to be retrieved.",
+                    "type": "Array"
+                }
+            ],
+            "itemtype": "method",
+            "name": "getInstance",
+            "return": {
+                "description": "The model's instance.",
+                "type": "Object"
+            },
+            "class": "core",
+            "module": "validator"
+        },
+        {
+            "file": "lib/models/baseModel.js",
+            "line": 40,
             "params": [
                 {
                     "name": "Can",
@@ -360,7 +532,7 @@
                 },
                 {
                     "name": "Additional",
-                    "description": "options. Includes 'with' (array of related models \n                      to be included in returning results), 'conditions', 'limit' and 'offset'.",
+                    "description": "options. Includes 'with' (array of related models \n                     to be included in returning results), 'conditions', 'limit' and 'offset'.",
                     "type": "Object"
                 },
                 {
@@ -370,7 +542,7 @@
                 }
             ],
             "class": "core",
-            "module": "db"
+            "module": "validator"
         },
         {
             "file": "lib/models/index.js",
@@ -378,7 +550,7 @@
             "description": "Models initialization file.\n\nYou will not likely need to modify this file.",
             "author": "Nicolas Iglesias <nicolas@clevertech.biz>",
             "class": "core",
-            "module": "db"
+            "module": "validator"
         },
         {
             "file": "lib/bootstrap.js",
@@ -389,19 +561,19 @@
             ],
             "author": "Nicolas Iglesias <nicolas@clevertech.biz>",
             "class": "core",
-            "module": "db"
+            "module": "validator"
         },
         {
             "file": "lib/bootstrap.js",
             "line": 20,
             "description": "The following is a list of path strings widely accessed by this application.",
             "class": "core",
-            "module": "db"
+            "module": "validator"
         },
         {
             "file": "lib/core.js",
             "line": 17,
-            "description": "A list of models classes to be accesed statically from any controller.\nExample:\n\nthis.$$.models.myModel",
+            "description": "A list of models classes to be accesed statically from any controller.\nExample:\n\nthis.models.myModel",
             "itemtype": "property",
             "name": "models",
             "type": "{Array}",
@@ -429,24 +601,16 @@
     ],
     "warnings": [
         {
-            "message": "Missing item type\nBasic authentication mechanism.\n\nThe Auth Component currently does basically a few things:\n\nWhen initialized, it will lookup at the settings - src/config/main.js - and will \nlisten to any request made to the selected login route - config.loginUrl -.\nAfterwards, will instantiate the selected model - config.model - and will use \nmodel's 'auth' method to execute custom authentication logic (db lookup, etc).\nInternally, a cookie is generated - named 'auth' - containing basic user information.\n\nThe configuration parameters are as follow:\n\nloginUrl     - URL receiving POST fields for user information (username, password).",
-            "line": " lib/components/auth.js:1"
-        },
-        {
-            "message": "Missing item type\nListen to login/logout requests and provide custom authentication mechanism.",
-            "line": " lib/components/auth.js:38"
-        },
-        {
             "message": "Missing item type\nLow level Javascript Object manipulation.\nVarious tools and added features applied to the most basic form of framework's objects.\n\nHandle with care.",
             "line": " lib/components/object.js:1"
         },
         {
-            "message": "Missing item type\nGenerates ORM models based on provided database schema.\nAt the moment, only supporting Postgresql and Sequelize ORM.\n\nInternally, this script will fetch all tables names using the db configuration \nset in src/config/main.js and will generate a new model in src/models for each.",
+            "message": "Missing item type\nGenerates daturajs models based on provided database schema.\nAt the moment, only supporting Postgresql and Sequelize ORM.\n\nInternally, this script will fetch all tables names using the db configuration \nset in src/config/main.js and will generate a new model in src/models for each.",
             "line": " lib/console/modelGenerator.js:1"
         },
         {
             "message": "Missing item type\n\"+r.table_name.singular().humanize()+\" model.\\n\\\n\\n\\\nAuto-generated by modelGenerator.\\n\\\n\\n\\",
-            "line": " lib/console/modelGenerator.js:74"
+            "line": " lib/console/modelGenerator.js:79"
         },
         {
             "message": "Missing item type\nBase controller for REST Api.\n\nThis is the base class for all the REST controllers in the application.\nVarious helpful methods will be implemented from time to time, that will be made \navailable to all REST controllers.",
@@ -466,7 +630,7 @@
         },
         {
             "message": "Missing item type",
-            "line": " lib/models/baseModel.js:20"
+            "line": " lib/models/baseModel.js:40"
         },
         {
             "message": "Missing item type\nModels initialization file.\n\nYou will not likely need to modify this file.",

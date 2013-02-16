@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>lib&#x2F;controllers&#x2F;rest&#x2F;index.js</title>
+    <title>validator</title>
     <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0pr2&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
@@ -96,85 +96,49 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: lib&#x2F;controllers&#x2F;rest&#x2F;index.js</h1>
-
-<div class="file">
-    <pre class="code prettyprint linenums">
-&#x2F;**
- * REST Controllers initialization.
- * 
- * You will not likely need to modify this file.
- * 
- * @author Nicolas Iglesias &lt;nicolas@clevertech.biz&gt;
- *&#x2F;
-var fs = require(&#x27;fs&#x27;)
-,path = require(&#x27;path&#x27;)
-,models = require(path.resolve(__dirname+&#x27;&#x2F;..&#x2F;..&#x2F;models&#x27;))
-,object = require(&#x27;..&#x2F;..&#x2F;components&#x2F;object&#x27;)
-,vm = require(&#x27;vm&#x27;)
-,lib = require(path.resolve(__dirname+&#x27;&#x2F;..&#x2F;..&#x2F;&#x27;));
-
-function _init(cbk){
-    &#x2F;**
-     * Used internally.
-     *
-     * @method  _defineAndFinish
-     * @param   {Object}    Controller object.
-     * @param   {String}    Controller&#x27;s name.
-     * @private
-     *&#x2F;
-    var _defineAndFinish = function(ccc, js){
-        &#x2F;&#x2F; extend controller&#x27;s features
-        Object.defineProperty(ccc,&#x27;models&#x27;,{
-            value:models,
-            writable:false,
-            configurable:false,
-            enumerable:true
-        });
-        Object.defineProperty(ccc,&#x27;vars&#x27;,{
-            value:require(path.resolve(__dirname+&#x27;&#x2F;..&#x2F;..&#x2F;..&#x2F;src&#x2F;config&#x2F;main&#x27;))[&#x27;main&#x27;][&#x27;params&#x27;],
-            writable:false,
-            configurable:false,
-            enumerable:true
-        });
-        
-        Object.defineProperties(ccc,object);
-
-        lib.core.controllers.rest[js]=ccc;
-    }
+                        <h1>validator Module</h1>
+<div class="box clearfix meta">
     
-    &#x2F;&#x2F; dynamically build controllers array for internal usage.
-    fs.readdir(path.resolve(__dirname+&#x27;&#x2F;..&#x2F;..&#x2F;..&#x2F;src&#x2F;controllers&#x2F;rest&#x2F;&#x27;),function(err,l){
-        l.forEach(function(ll){
-            if(!(&#x2F;^.*\.js$&#x2F;i.test(ll)))
-                return;
 
-            var js = path.basename(ll,&#x27;.js&#x27;);
+    
+
+    
+        <div class="foundat">
+            Defined in: <a href="..&#x2F;files&#x2F;lib_components_validator.js.html#l11"><code>lib&#x2F;components&#x2F;validator.js:11</code></a>
+        </div>
+    
+
+    
+</div>
+
+
+
+<div class="box intro">
+    <p>Validation module.</p>
+</div>
+
+
+
+<div class="yui3-g">
+    <div class="yui3-u-1-2">
+        
+            <p>This module provides the following classes:</p>
+
+            <ul class="module-classes">
             
-            if(!&#x2F;index|baseController&#x2F;i.test(js)){
-                try{
-                    var cc = require(path.resolve(__dirname+&#x27;&#x2F;..&#x2F;..&#x2F;..&#x2F;src&#x2F;controllers&#x2F;rest&#x2F;&#x27;+js));
-                    var base = require(&#x27;.&#x2F;baseController&#x27;);
-                    var ccc = Object.merge(base(), cc());
+                <li class="module-class">
+                    <a href="..&#x2F;classes/validator.html">
+                        validator
+                    </a>
+                </li>
+            
+            </ul>
+        
+    </div>
 
-                    var userBaseC = path.resolve(__dirname+&#x27;&#x2F;..&#x2F;..&#x2F;..&#x2F;src&#x2F;controllers&#x2F;rest&#x2F;baseController&#x27;);
-                    var uc = require(userBaseC);
-                    ccc = Object.merge(ccc, uc());
-                        
-                    _defineAndFinish(ccc, js);
-                }catch(e){
-                    console.trace(e);
-                }
-            } 
-        });
-        cbk();
-    });
-}
-
-module.exports = {
-    init:_init
-}
-    </pre>
+    <div class="yui3-u-1-2">
+        
+    </div>
 </div>
 
                     </div>

@@ -41,17 +41,25 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
+                <li><a href="..&#x2F;classes/auth.html">auth</a></li>
+            
                 <li><a href="..&#x2F;classes/core.html">core</a></li>
             
                 <li><a href="..&#x2F;classes/db.html">db</a></li>
+            
+                <li><a href="..&#x2F;classes/validator.html">validator</a></li>
             
             </ul>
 
             <ul id="api-modules" class="apis modules">
             
+                <li><a href="..&#x2F;modules/auth.html">auth</a></li>
+            
                 <li><a href="..&#x2F;modules/core.html">core</a></li>
             
                 <li><a href="..&#x2F;modules/db.html">db</a></li>
+            
+                <li><a href="..&#x2F;modules/validator.html">validator</a></li>
             
             </ul>
         </div>
@@ -107,6 +115,34 @@ var fs = require(&#x27;fs&#x27;)
 ,lib = require(path.resolve(__dirname+&#x27;&#x2F;..&#x2F;&#x27;));
 
 function _init(cbk){
+    &#x2F;**
+     * Used internally.
+     *
+     * @method  _defineAndFinish
+     * @param   {Object}    Controller object.
+     * @param   {String}    Controller&#x27;s name.
+     * @private
+     *&#x2F;
+    var _defineAndFinish = function(ccc, js){
+        &#x2F;&#x2F; extend controller&#x27;s features
+        Object.defineProperty(ccc,&#x27;models&#x27;,{
+            value:models,
+            writable:false,
+            configurable:false,
+            enumerable:true
+        });
+        Object.defineProperty(ccc,&#x27;vars&#x27;,{
+            value:require(path.resolve(__dirname+&#x27;&#x2F;..&#x2F;..&#x2F;src&#x2F;config&#x2F;main&#x27;))[&#x27;main&#x27;][&#x27;params&#x27;],
+            writable:false,
+            configurable:false,
+            enumerable:true
+        });
+
+        Object.defineProperties(ccc,object);
+        
+        lib.core.controllers.main[js]=ccc;
+    }
+    
     &#x2F;&#x2F; dynamically build controllers array for internal usage.
     fs.readdir(path.resolve(__dirname+&#x27;&#x2F;..&#x2F;..&#x2F;src&#x2F;controllers&#x2F;&#x27;),function(err,l){
         l.forEach(function(ll){
@@ -114,27 +150,21 @@ function _init(cbk){
                 return;
             
             var js = path.basename(ll,&#x27;.js&#x27;);
-            if(!&#x2F;index&#x2F;i.test(js)){
+            
+            if(!&#x2F;index|baseController&#x2F;i.test(js)){
                 try{
                     var cc = require(path.resolve(__dirname+&#x27;&#x2F;..&#x2F;..&#x2F;src&#x2F;controllers&#x2F;&#x27;+js));
                     var base = require(&#x27;.&#x2F;baseController&#x27;);
                     var ccc = Object.merge(base(), cc());
-                    
-                    &#x2F;&#x2F; extend controller&#x27;s features
-                    Object.defineProperty(ccc,&#x27;$$&#x27;,{
-                        value:{
-                            models:models,
-                            params:require(path.resolve(__dirname+&#x27;&#x2F;..&#x2F;..&#x2F;src&#x2F;config&#x2F;main&#x27;))[&#x27;main&#x27;][&#x27;params&#x27;]
-                        },
-                        writable:false,
-                        configurable:false,
-                        enumerable:false
-                    });
-                    Object.defineProperties(ccc,object);
-                    
-                    lib.core.controllers.main[js]=ccc;
+
+                    &#x2F;&#x2F; implement custom base controller&#x27;s methods
+                    var userBaseC = path.resolve(__dirname+&#x27;&#x2F;..&#x2F;..&#x2F;src&#x2F;controllers&#x2F;baseController&#x27;);
+                    var uc = require(userBaseC);
+                    ccc = Object.merge(ccc, uc());
+                        
+                    _defineAndFinish(ccc, js);
                 }catch(e){
-                    console.log(&#x27;[error] &#x27;+e.message);
+                    console.trace(e);
                 }
             } 
         });

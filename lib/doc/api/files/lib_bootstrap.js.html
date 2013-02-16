@@ -41,17 +41,25 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
+                <li><a href="..&#x2F;classes/auth.html">auth</a></li>
+            
                 <li><a href="..&#x2F;classes/core.html">core</a></li>
             
                 <li><a href="..&#x2F;classes/db.html">db</a></li>
+            
+                <li><a href="..&#x2F;classes/validator.html">validator</a></li>
             
             </ul>
 
             <ul id="api-modules" class="apis modules">
             
+                <li><a href="..&#x2F;modules/auth.html">auth</a></li>
+            
                 <li><a href="..&#x2F;modules/core.html">core</a></li>
             
                 <li><a href="..&#x2F;modules/db.html">db</a></li>
+            
+                <li><a href="..&#x2F;modules/validator.html">validator</a></li>
             
             </ul>
         </div>
@@ -130,7 +138,7 @@ exports.init = function(app, express, rest){
         app.set(&#x27;views&#x27;, path.resolve(__dirname + &#x27;&#x2F;src&#x2F;views&#x27;));
         app.set(&#x27;view engine&#x27;, &#x27;ejs&#x27;);
         app.set(&#x27;layout&#x27;, path.resolve(__dirname+&#x27;&#x2F;..&#x2F;src&#x2F;views&#x2F;layouts&#x2F;main&#x27;));
-        app.set(&#x27;params&#x27;,config.main.params);
+        app.set(&#x27;vars&#x27;,config.main.params);
         app.use(layout);
         app.use(express.compress());
         app.use(express.favicon());
@@ -166,7 +174,7 @@ exports.init = function(app, express, rest){
         
         &#x2F;&#x2F; initialize auth
         if(typeof config.main.auth===&#x27;object&#x27;){
-            app.use(auth().initialize);
+            app.use(auth.initialize);
         }
         
         &#x2F;&#x2F; allow http access to &#x2F;public
@@ -210,12 +218,16 @@ exports.init = function(app, express, rest){
                                         if(!isRest){
                                             app[route.method](url, function(req, res){
                                                 &#x2F;&#x2F; setup method for render
-                                                cc.$$.render = function(view,data,cbk){
+                                                cc.render = function(view,data,cbk){
+                                                    data = data || {};
                                                     var viewFile = null;
-                                                    res.locals.auth = req.signedCookies.auth || false;
+
+                                                    &#x2F;&#x2F; make component accesible to views
+                                                    res.locals[&#x27;auth&#x27;] = cc.auth !== null ? cc.auth : auth.getInstance();
                                                     
                                                     &#x2F;&#x2F; inject helpers
                                                     res.locals.html = require(&#x27;.&#x2F;helpers&#x2F;html&#x27;);
+                                                    res.locals.menu = require(&#x27;.&#x2F;helpers&#x2F;menu&#x27;);
                                                     
                                                     if(typeof view.layout !== &#x27;undefined&#x27;){
                                                         viewFile = path.resolve(__dirname+&#x27;&#x2F;..&#x2F;src&#x2F;views&#x2F;&#x27;+c+&#x27;&#x2F;&#x27;+view.view);
@@ -227,15 +239,25 @@ exports.init = function(app, express, rest){
                                                         res.render(viewFile,data,cbk);
                                                     }
                                                 }
-                                                cc.$$.app = app;
+                                                cc.app = app;
+                                                
+                                                &#x2F;&#x2F; make components available to controller
+                                                cc.auth = auth.getInstance();
+
+                                                &#x2F;&#x2F; set req body to be accessed via data
+                                                cc.data = req.body ? req.body : null;
+                                                cc.params = req.params ? req.params : null;
                                                 cc[a](req, res);
                                             });
                                         }else{
                                             var cbk = function(req, res, nxt){
                                                 &#x2F;&#x2F; setup method for output
-                                                cc.$$.send = function(status, data){
+                                                cc.send = function(status, data){
                                                     res.send(status, data);
                                                 }
+                                                &#x2F;&#x2F; set req body to be accessed via data
+                                                cc.data = req.body ? req.body : null;
+                                                cc.params = req.params ? req.params : null;
                                                 cc[a](req, res, nxt);
                                             };
                                             rest[route.method](url, cbk);
@@ -249,9 +271,13 @@ exports.init = function(app, express, rest){
                                 target.forEach(function(url){
                                     rest.put(url, function(req, res, nxt){
                                         &#x2F;&#x2F; setup method for output
-                                        cc.$$.send = function(status, data){
+                                        cc.send = function(status, data){
                                             res.send(status, data);
                                         }
+                                        &#x2F;&#x2F; set req body to be accessed via data
+                                        cc.data = req.body ? req.body : null;
+                                        cc.params = req.params ? req.params : null;
+                                                
                                         cc[a](req, res, nxt);
                                     });
                                 });

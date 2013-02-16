@@ -41,17 +41,25 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
+                <li><a href="..&#x2F;classes/auth.html">auth</a></li>
+            
                 <li><a href="..&#x2F;classes/core.html">core</a></li>
             
                 <li><a href="..&#x2F;classes/db.html">db</a></li>
+            
+                <li><a href="..&#x2F;classes/validator.html">validator</a></li>
             
             </ul>
 
             <ul id="api-modules" class="apis modules">
             
+                <li><a href="..&#x2F;modules/auth.html">auth</a></li>
+            
                 <li><a href="..&#x2F;modules/core.html">core</a></li>
             
                 <li><a href="..&#x2F;modules/db.html">db</a></li>
+            
+                <li><a href="..&#x2F;modules/validator.html">validator</a></li>
             
             </ul>
         </div>
@@ -99,7 +107,7 @@
  * Currently it only supports Sequelize - http:&#x2F;&#x2F;www.sequelizejs.com&#x2F; - but more 
  * will be added in the future.
  * 
- * Supported addapters&#x27; strings: sequelize
+ * Supported adapters&#x27; strings: sequelize
  * 
  * @module  db
  * @author Nicolas Iglesias &lt;nicolas@clevertech.biz&gt;
@@ -143,7 +151,7 @@ module.exports = function(){
                             });
                         })
                     }catch(e){
-                        console.trace(r)
+                        console.trace(e)
                     }
                 break;
         }
@@ -185,6 +193,7 @@ module.exports = function(){
     
             return null;
         },
+        
         &#x2F;**
          * Get new ORM model&#x27;s instance.
          * This method will return a new instance of the given model in its ORM&#x27;s specific format, 
@@ -196,7 +205,7 @@ module.exports = function(){
          *&#x2F;
         loadORMModel : function(modelName){
             if(!config.adapter &amp;&amp; typeof _instance !== &#x27;object&#x27;)
-                console.trace(&#x27;db adapter not properly set.&#x27;);
+                throw new Error(&#x27;db adapter not properly set.&#x27;);
             
             var model = null;
             
@@ -245,10 +254,12 @@ module.exports = function(){
                         }
                         
                         &#x2F;&#x2F; define custom attributes
-                        model._customFields = {};
+                        model._customFields = {}, model._dbFields = {};
                         Object.keys(local.model).forEach(function(a){
                             if(!(&#x2F;^(?:fields|relations|methods)$&#x2F;g.test(a))){
                                 model._customFields[a] = local.model[a];
+                            }else if(a===&#x27;fields&#x27;){
+                                model._dbFields = local.model[a]
                             }
                         });
                             
@@ -275,12 +286,13 @@ module.exports = function(){
          * 
          * @param   {Object}    ORM. ORM&#x27;s specific model instance.
          * @param   {Object}    Base. model&#x27;s instance.
-         * @param   {Array}     With. names of related models to be attached to the 
-         *                      returned model.
+         * @param   {Array}     With. Names of associated models to be attached to the 
+         *                      returning model.
+         * @param   {Array}     Internal usage. Only return selected fields.
          * @method getLocalModelFromORM
          * @return  {Object}    This framework&#x27;s compatible model.
          *&#x2F;
-        getLocalModelFromORM : function(ormModel, baseModel, _with){
+        getLocalModelFromORM : function(ormModel, baseModel, _with, _fields){
             &#x2F;&#x2F; convert to base model
             var base = typeof baseModel !== &#x27;undefined&#x27; ? baseModel :require(path.resolve(__dirname+&#x27;&#x2F;..&#x2F;models&#x2F;baseModel&#x27;))(ormModel);
             var model = base;
@@ -293,40 +305,53 @@ module.exports = function(){
                     model = Object.merge(base, opts.instanceMethods);
                     model = Object.merge(model, opts.classMethods);
                     modelName = typeof baseModel !== &#x27;undefined&#x27; ? baseModel.$$name : ormModel.name;
+                    
+                    &#x2F;&#x2F; define getter&#x2F;setters
+                    Object.keys(ormModel.rawAttributes).forEach(function(f){
+                        if(_fields &amp;&amp; _fields!==null){
+                            if(_fields.indexOf(f)===-1){
+                                delete model[f];
+                                return
+                            }
+                        }
+
+                        Object.defineProperty(model,f,{
+                            get : function(){
+                                switch(config.adapter){
+                                    case &#x27;sequelize&#x27;:
+                                        return typeof ormModel[f]=== &#x27;undefined&#x27;?null:ormModel[f];
+                                        break;
+                                }
+                            },
+                            set : function(newV){
+                                switch(config.adapter){
+                                    case &#x27;sequelize&#x27;:
+                                        ormModel[f]= newV;
+                                        break;
+                                }
+                            },
+                            enumerable : true,
+                            configurable : true
+                        });
+                    });
                     break;
             }
             
-            &#x2F;&#x2F; if this is an instance of a local model, then delete top class methods&#x2F;properties
+            &#x2F;&#x2F; if this is a baseModel instance, then delete top class methods&#x2F;properties
             if(typeof baseModel !== &#x27;undefined&#x27;){
                 Object.keys(baseModel).forEach(function(k){
                     if(&#x2F;^\$(?:find|create)$&#x2F;g.test(k)){
                         delete model[k]
                     }
                 });
+                Object.defineProperty(model,&#x27;_isInstance&#x27;,{
+                    value: true,
+                    writable: false,
+                    configurable: false,
+                    enumerable: false
+                });
             }
 
-            &#x2F;&#x2F; define getter&#x2F;setters
-            model.$getFields().forEach(function(f){
-                Object.defineProperty(model,f,{
-                    get : function(){
-                        switch(config.adapter){
-                            case &#x27;sequelize&#x27;:
-                                return ormModel[f];
-                                break;
-                        }
-                    },
-                    set : function(newV){
-                        switch(config.adapter){
-                            case &#x27;sequelize&#x27;:
-                                ormModel[f]= newV;
-                                break;
-                        }
-                    },
-                    enumerable : true,
-                    configurable : true
-                });
-            });
-            
             &#x2F;&#x2F; set custom fields
             if(typeof ormModel._customFields === &#x27;object&#x27;){
                 Object.keys(ormModel._customFields).forEach(function(f){
@@ -346,17 +371,73 @@ module.exports = function(){
             &#x2F;&#x2F; make orm available (for internal purposes only)
             Object.defineProperty(model, &#x27;_ormModel&#x27;,{
                 value: ormModel,
-                writable: false,
+                writable: true,
                 configurable: false,
                 enumerable: false
             });
             
             &#x2F;&#x2F; if baseModel is a live instance, make relations available to final model
-            if(typeof baseModel !==&#x27;undefined&#x27; &amp;&amp; typeof _with !== &#x27;undefined&#x27;)
-                _defineRelationsGettersAndSetters(_with, model, this);
+            if(typeof baseModel !==&#x27;undefined&#x27; &amp;&amp; typeof _with !== &#x27;undefined&#x27; &amp;&amp; _with !== null){
+                if(_with instanceof Array)
+                    _defineRelationsGettersAndSetters(_with, model, this);
+            }
             
             return model;
         },
+        &#x2F;**
+         * @param   {Object}    Optional ORM model to be refreshed.
+         * @param   {Boolean}   Only return and do not refresh lib.core.models
+         * @method  setupRelationships
+         *&#x2F;
+        setupRelationships : function(forORMModel, ret){
+            if(typeof lib.core.ormModels !== &#x27;undefined&#x27;){
+                for(var modelName in lib.core.ormModels){
+                    var ormModel = lib.core.ormModels[modelName];
+                    
+                    if(typeof forORMModel !== &#x27;undefined&#x27; &amp;&amp; forORMModel.name !== modelName){
+                        continue
+                    }else if(typeof forORMModel !== &#x27;undefined&#x27; &amp;&amp; forORMModel.name === modelName){
+                        return ormModel
+                    }
+           
+                    for(var relType in lib.core.ormModels[modelName]._customRelationships){
+                        var rel = lib.core.ormModels[modelName]._customRelationships;
+                        if(rel[relType].length &gt;0){
+                            rel[relType].forEach(function(r){
+                                switch(config.adapter){
+                                    case &#x27;sequelize&#x27;:
+                                        &#x2F;&#x2F; config relation
+                                        var relConfig = {
+                                            as: rel.alias ? r.alias : r.model,
+                                            foreignKey : r.foreignKey ? r.foreignKey : r.model+&#x27;_id&#x27;
+                                        };
+                        
+                                        &#x2F;&#x2F; self-to-self relation
+                                        if(r.selfRelationship)
+                                            relConfig.useJunctionTable = false
+                        
+                                        &#x2F;&#x2F; many-to-many relation
+                                        if(r.joinTable)
+                                            relConfig.joinTableName = r.joinTable
+                        
+                                        &#x2F;&#x2F; set relation
+                                        ormModel[relType](lib.core.ormModels[r.model], relConfig);
+                                        break;
+                                }
+                            });
+                        }
+                    }
+            
+                    &#x2F;&#x2F; build new instance of local model
+                    var model = this.getLocalModelFromORM(ormModel);
+                    
+                    if(ret)
+                        return model
+
+                    lib.core.models[ormModel.name] = model;
+                }
+            }
+        }
     }
 }
     </pre>

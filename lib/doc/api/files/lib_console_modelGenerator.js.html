@@ -41,17 +41,25 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
+                <li><a href="..&#x2F;classes/auth.html">auth</a></li>
+            
                 <li><a href="..&#x2F;classes/core.html">core</a></li>
             
                 <li><a href="..&#x2F;classes/db.html">db</a></li>
+            
+                <li><a href="..&#x2F;classes/validator.html">validator</a></li>
             
             </ul>
 
             <ul id="api-modules" class="apis modules">
             
+                <li><a href="..&#x2F;modules/auth.html">auth</a></li>
+            
                 <li><a href="..&#x2F;modules/core.html">core</a></li>
             
                 <li><a href="..&#x2F;modules/db.html">db</a></li>
+            
+                <li><a href="..&#x2F;modules/validator.html">validator</a></li>
             
             </ul>
         </div>
@@ -93,7 +101,7 @@
 <div class="file">
     <pre class="code prettyprint linenums">
 &#x2F;**
- * Generates ORM models based on provided database schema.
+ * Generates daturajs models based on provided database schema.
  * At the moment, only supporting Postgresql and Sequelize ORM.
  * 
  * Internally, this script will fetch all tables names using the db configuration 
@@ -111,7 +119,12 @@ var fs = require(&#x27;fs&#x27;)
 ,path = require(&#x27;path&#x27;)
 ,inflector = require(&#x27;inflector&#x27;)
 ,seq = require(&#x27;sequelize&#x27;)
-,config = require(path.resolve(__dirname+&#x27;&#x2F;..&#x2F;..&#x2F;src&#x2F;config&#x2F;main&#x27;));
+,config = require(path.resolve(__dirname+&#x27;&#x2F;..&#x2F;..&#x2F;src&#x2F;config&#x2F;main&#x27;))
+,modelName = null;
+
+if(process.argv[2]){
+    modelName = process.argv[2].trim().singular();
+}
 
 var con = &#x27;tcp:&#x2F;&#x2F;&#x27;
 +config.main.db.username
@@ -185,6 +198,8 @@ exports.model = {\
     });
     qtt.on(&#x27;end&#x27;,function(){
         for(var t in tables){
+            if(modelName!== null &amp;&amp; modelName !== t.singular()) continue;
+            
             var qqc = client.query(tables[t].queryColumns);
             qqc.on(&#x27;row&#x27;,function(c){
                 if(typeof tables[c.table].columns === &#x27;undefined&#x27;)
@@ -199,6 +214,8 @@ exports.model = {\
             client.end();
             
             for(tt in tables){
+                if(modelName!== null &amp;&amp; modelName !== tt.singular()) continue;
+                
                 tables[tt].fileBody = &quot;\t&#x2F;&#x2F; access your variables by adding the $$ prefix\n&quot;;
                 tables[tt].fileBody += &quot;\tname : &#x27;&quot;+tt.singular()+&quot;&#x27;,\n&quot;;
                 tables[tt].fileBody += &quot;\t&#x2F;&#x2F; map your database columns here\n\tfields : [\n&quot;;
@@ -223,7 +240,7 @@ exports.model = {\
                 +&#x27;\t&#x2F;&#x2F; place your custom model methods below.\n&#x27;
                 +&#x27;\tmethods : {\n&#x27;
                 +&quot;\t\t$instanceMethod : function(){ console.log(&#x27;Prefix your instance methods\\&#x27; name with a dollar sign ($). Example: model.$instanceMethod()&#x27;);},\n&quot;
-                +&quot;\t\tclassMethod : function(){ console.log(&#x27;This class method is accesed statically. Example: this.$$.models.modelName.classMethod()&#x27;);}\n&quot;
+                +&quot;\t\tclassMethod : function(){ console.log(&#x27;This class method is accesed statically. Example: this.models.modelName.classMethod()&#x27;);}\n&quot;
                 +&#x27;\t},\n&#x27;
                 +&#x27;\trelations : {\n&#x27;
                 +&#x27;\t\thasOne:[],\n&#x27;

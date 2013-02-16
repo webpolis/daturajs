@@ -41,17 +41,25 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
+                <li><a href="..&#x2F;classes/auth.html">auth</a></li>
+            
                 <li><a href="..&#x2F;classes/core.html">core</a></li>
             
                 <li><a href="..&#x2F;classes/db.html">db</a></li>
+            
+                <li><a href="..&#x2F;classes/validator.html">validator</a></li>
             
             </ul>
 
             <ul id="api-modules" class="apis modules">
             
+                <li><a href="..&#x2F;modules/auth.html">auth</a></li>
+            
                 <li><a href="..&#x2F;modules/core.html">core</a></li>
             
                 <li><a href="..&#x2F;modules/db.html">db</a></li>
+            
+                <li><a href="..&#x2F;modules/validator.html">validator</a></li>
             
             </ul>
         </div>
@@ -108,9 +116,8 @@
  * loginUrl     - URL receiving POST fields for user information (username, password).
  * @todo logoutUrl    - URL that will clear cookies and redirect the user.
  * 
- * The chosen model must implement &#x27;auth&#x27; method inside model&#x27;s classMethods property (when using Sequelize as the ORM), 
+ * The chosen model must implement &#x27;auth&#x27; method as a non-instance method, 
  * so it should be accessible as modelName.auth().
- * The method must return true when succesful or false if authentication has failed.
  * 
  * &#x27;auth&#x27; method&#x27;s signature is:
  * 
@@ -122,12 +129,18 @@
  *                      are going to be saved in the &#x27;auth&#x27; cookie (BEWARE! not to show passwords).
  * 
  * @author Nicolas Iglesias &lt;nicolas@clevertech.biz&gt;
+ * @module  auth
  *&#x2F;
 var path = require(&#x27;path&#x27;)
 ,config = require(path.resolve(__dirname+&#x27;&#x2F;..&#x2F;..&#x2F;src&#x2F;config&#x2F;main&#x27;)).main.auth
 ,db = require(path.resolve(__dirname+&#x27;&#x2F;..&#x2F;adapters&#x2F;db&#x27;));
 
+&#x2F;**
+ * @class auth
+ *&#x2F;
 module.exports = function(){
+    var _auth = _auth || null;
+    
     return{
         &#x2F;**
          * Listen to login&#x2F;logout requests and provide custom authentication mechanism.
@@ -135,33 +148,35 @@ module.exports = function(){
          * @param   {Object}    Request.
          * @param   {Object}    Response.
          * @param   {Function}  Continue expressjs initialization.
+         * @method  initialize
          *&#x2F;
         initialize: function(req, res, nxt){
             &#x2F;&#x2F; listen for login requests
             if(req.originalUrl === config.loginUrl){
-                var user = req.body;
+                var userData = req.body;
                 
                 if(typeof config.model!==&#x27;undefined&#x27;){
                     &#x2F;&#x2F; instantiate model
                     var ormModel = new db().loadORMModel(config.model.toLowerCase().trim());
 
-                    db().getLocalModelFromORM(ormModel).auth(user,function(user, fields){
-                        if(!(user instanceof Array)){
+                    db().getLocalModelFromORM(ormModel).auth(userData,function(_userData, fields){
+                        if(!(_userData instanceof Array)){
                             var now = new Date();
                             var expireDate = new Date(now.getFullYear(), now.getMonth(), now.getDate()+1);
 
                             &#x2F;&#x2F; only keep allowed fields
                             if(typeof fields !== &#x27;undefined&#x27; &amp;&amp; fields.length&gt;0){
-                                Object.keys(user).forEach(function(k){
+                                Object.keys(_userData).forEach(function(k){
                                     if(fields.indexOf(k)===-1)
-                                        delete user[k]
+                                        delete _userData[k]
                                 })
                             }
-                            res.cookie(&#x27;auth&#x27;,user, {
+                            res.cookie(&#x27;auth&#x27;,_userData, {
                                 expires: expireDate,
                                 signed: true
                             });
 
+                            _auth = _userData;
                             res.send(200, true);
                         }else{
                             res.send(401, false);
@@ -176,11 +191,21 @@ module.exports = function(){
                 res.redirect(&#x27;&#x2F;&#x27;);
                 return;
             }
-            
+
             nxt();
+        },
+        &#x2F;**
+         * Returns an instance of the already initialized auth object, which may 
+         * contain authenticated user&#x27;s information.
+         * 
+         * @method  getInstance
+         * @return  {Object}
+         *&#x2F;
+        getInstance : function(){
+            return _auth;
         }
     }
-}
+}()
     </pre>
 </div>
 

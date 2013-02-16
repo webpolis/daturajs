@@ -41,17 +41,25 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
+                <li><a href="..&#x2F;classes/auth.html">auth</a></li>
+            
                 <li><a href="..&#x2F;classes/core.html">core</a></li>
             
                 <li><a href="..&#x2F;classes/db.html">db</a></li>
+            
+                <li><a href="..&#x2F;classes/validator.html">validator</a></li>
             
             </ul>
 
             <ul id="api-modules" class="apis modules">
             
+                <li><a href="..&#x2F;modules/auth.html">auth</a></li>
+            
                 <li><a href="..&#x2F;modules/core.html">core</a></li>
             
                 <li><a href="..&#x2F;modules/db.html">db</a></li>
+            
+                <li><a href="..&#x2F;modules/validator.html">validator</a></li>
             
             </ul>
         </div>
@@ -112,7 +120,7 @@ var dbAdapter = db().initialize();
 fs.readdir(path.resolve(__dirname+&#x27;&#x2F;..&#x2F;..&#x2F;src&#x2F;models&#x27;),function(err,l){
     l.forEach(function(j){
         j = path.basename(j,&#x27;.js&#x27;);
-        if(!&#x2F;index&#x2F;i.test(j)){
+        if(!&#x2F;index|baseModel&#x2F;i.test(j)){
             try{
                 &#x2F;&#x2F; get instance per orm
                 var ormModel = db().loadORMModel(j);
@@ -124,43 +132,15 @@ fs.readdir(path.resolve(__dirname+&#x27;&#x2F;..&#x2F;..&#x2F;src&#x2F;models&#x
     });
     
     &#x2F;&#x2F; setup relationships (must be done here so we can access all models instances).
-    if(typeof lib.core.ormModels !== &#x27;undefined&#x27;){
-        for(var modelName in lib.core.ormModels){
-            var ormModel = lib.core.ormModels[modelName];
-            
-            for(var relType in lib.core.ormModels[modelName]._customRelationships){
-                var rel = lib.core.ormModels[modelName]._customRelationships;
-                if(rel[relType].length &gt;0){
-                    rel[relType].forEach(function(r){
-                        
-                        switch(config.adapter){
-                            case &#x27;sequelize&#x27;:
-                                &#x2F;&#x2F; config relation
-                                var relConfig = {
-                                    as: rel.alias ? r.alias : r.model,
-                                    foreignKey : r.foreignKey ? r.foreignKey : r.model+&#x27;_id&#x27;
-                                };
-                        
-                                &#x2F;&#x2F; self-to-self relation
-                                if(r.selfRelationship)
-                                    relConfig.useJunctionTable = false
-                        
-                                &#x2F;&#x2F; many-to-many relation
-                                if(r.joinTable)
-                                    relConfig.joinTableName = r.joinTable
-                        
-                                &#x2F;&#x2F; set relation
-                                ormModel[relType](lib.core.ormModels[r.model], relConfig);
-                                break;
-                        }
-                    });
-                }
-            }
-            
-            &#x2F;&#x2F; build new instance of local model
-            var model = db().getLocalModelFromORM(ormModel);
-            lib.core.models[ormModel.name] = model;
-        }
+    db().setupRelationships();
+    
+    &#x2F;&#x2F; inherit baseModel
+    if(lib.core.models.length &gt; 0){
+        var baseModel = require(&#x27;.&#x2F;baseModel&#x27;);
+        
+        lib.core.models.forEach(function(m){
+            &#x2F;&#x2F;m = Object.merge(baseModel(), m());
+        })
     }
 });
 

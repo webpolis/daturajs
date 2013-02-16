@@ -7,19 +7,18 @@ module.exports = function(){
          */
         register : function (req,res, nxt){
             var _this = this;
-            var data = req.body;
-            var user = this.$$.models.user;
-            var client = this.$$.models.client;
-            var role = this.$$.models.user_role;
+            var user = this.models.user;
+            var client = this.models.client;
+            var role = this.models.user_role;
             
             // @todo get country id by find
-            data.user.country_id = data.user.country_id?data.user.country_id:1;
-            data.client.country_id = data.client.country_id?data.client.country_id:data.user.country_id;
+            this.data.user.country_id = this.data.user.country_id?this.data.user.country_id:1;
+            this.data.client.country_id = this.data.client.country_id?this.data.client.country_id:this.data.user.country_id;
             // @todo get state id by find
-            data.user.state_id = data.user.state_id?data.user.state_id:1;
-            data.client.state_id = data.client.state_id?data.client.state_id:data.user.state_id;
+            this.data.user.state_id = this.data.user.state_id?this.data.user.state_id:1;
+            this.data.client.state_id = this.data.client.state_id?this.data.client.state_id:this.data.user.state_id;
             
-            client.$create(data.client,function(client){
+            client.$create(this.data.client,function(client){
                 // set default role 'Administrator'
                 role.$find('one',{
                     conditions:["user_role_name LIKE ':roleName'"],
@@ -28,16 +27,16 @@ module.exports = function(){
                     }
                 },function(_role){
                     if(_role.id){
-                        data.user.user_role_id = _role.id;
-                        data.user.client_id = client.id;
+                        _this.data.user.user_role_id = _role.id;
+                        _this.data.user.client_id = client.id;
                         
-                        user.$create(data.user,function(user){
+                        user.$create(_this.data.user,function(user){
                             delete user.password;
-                            _this.$$.send(200,user);
+                            _this.send(200,user);
                         });
                     }
                 }, function(err){
-                    _this.$$.send(400,false)
+                    _this.send(400,false)
                 });
             });
         },
@@ -47,23 +46,22 @@ module.exports = function(){
          * @method  updateSettings
          */
         updateSettings : function (req,res, nxt){
-            var _$$ = this.$$;
-            var data = req.body;
+            var _this = this;
             
-            if(typeof data.user ===  'object'){
-                var user = this.$$.models.user.getInstance(data.user)
-                var client = this.$$.models.client.getInstance(data.user.client)
-                delete data.user.client.id
+            if(typeof this.data.user ===  'object'){
+                var user = this.models.user.getInstance(this.data.user)
+                var client = this.models.client.getInstance(this.data.user.client)
+                delete this.data.user.client.id
                 
-                client.$update(data.user.client, null, function(client){
-                    delete data.user.id
+                client.$update(this.data.user.client, null, function(client){
+                    delete _this.data.user.id
                     
-                    user.$update(data.user, null, function(user){
-                        _$$.send(200, {
+                    user.$update(_this.data.user, null, function(_user){
+                        _this.send(200, {
                             success:true
                         })
                     },function(err){
-                        _$$.send(400, {
+                        _this.send(400, {
                             success:false,
                             err: err
                         })
@@ -72,13 +70,14 @@ module.exports = function(){
             }
         },
         /**
-         * Retrieves one user record belonging the specified client.
+         * Retrieves one user record belonging to the specified client.
          * 
          * @method  getUsers
          */
         getUser : function (req,res, nxt){
-            if(req.params.clientId){
-                var user = this.$$.models.user;
+            if(this.params.clientId){
+                var _this = this;
+                var user = this.models.user;
                 
                 // add additional columns to be made available, not only those that are shown within the grid
                 var ff = user.getListableColumns();
@@ -87,7 +86,7 @@ module.exports = function(){
                 user.$find('one',{
                     conditions:['client_id = :client_id'],
                     params:{
-                        client_id:req.params.clientId
+                        client_id:_this.params.clientId
                     },
                     'with':['client'],
                     fields:ff,
@@ -106,8 +105,9 @@ module.exports = function(){
          * @method  getUsers
          */
         getUsers : function (req,res, nxt){
-            if(req.params.clientId){
-                var user = this.$$.models.user;
+            if(this.params.clientId){
+                var user = this.models.user;
+                var _this = this; 
                 
                 // add additional columns to be made available, not only those that are shown within the grid
                 var ff = user.getListableColumns();
@@ -116,7 +116,7 @@ module.exports = function(){
                 user.$find('all',{
                     conditions:['client_id = :client_id AND (is_deleted = false OR is_deleted IS NULL)'],
                     params:{
-                        client_id:req.params.clientId
+                        client_id:_this.params.clientId
                     },
                     fields:ff,
                     order:'first_name ASC, last_name ASC'
@@ -129,7 +129,7 @@ module.exports = function(){
                 res.send(400,false);
         },
         getUserRoles : function (req,res, nxt){
-            var userRole = this.$$.models.user_role;
+            var userRole = this.models.user_role;
                 
             userRole.$find('all',null,function(_roles){
                 res.send(200,{
@@ -144,7 +144,7 @@ module.exports = function(){
          * @method  userSave
          */
         userSave : function(req,res, nxt){
-            var user = req.body.user;
+            var user = this.data.user;
             var ret = function(err){
                 res.send(err?400:200,{
                     user: user
@@ -153,7 +153,7 @@ module.exports = function(){
             
             if(user.id && user.id !== null){
                 // update
-                var _user = this.$$.models.user.getInstance(user);
+                var _user = this.models.user.getInstance(user);
                 delete user.id
                 
                 _user.$update(user,null,function(_dept){
@@ -163,7 +163,7 @@ module.exports = function(){
             }else{
                 // create new
                 user.country_id = user.country_id?user.country_id:1
-                this.$$.models.user.$create(user, function(_user){
+                this.models.user.$create(user, function(_user){
                     user = _user;
                     ret(false)
                 }, function(){

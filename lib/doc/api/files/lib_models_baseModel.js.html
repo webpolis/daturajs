@@ -41,17 +41,25 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
+                <li><a href="..&#x2F;classes/auth.html">auth</a></li>
+            
                 <li><a href="..&#x2F;classes/core.html">core</a></li>
             
                 <li><a href="..&#x2F;classes/db.html">db</a></li>
+            
+                <li><a href="..&#x2F;classes/validator.html">validator</a></li>
             
             </ul>
 
             <ul id="api-modules" class="apis modules">
             
+                <li><a href="..&#x2F;modules/auth.html">auth</a></li>
+            
                 <li><a href="..&#x2F;modules/core.html">core</a></li>
             
                 <li><a href="..&#x2F;modules/db.html">db</a></li>
+            
+                <li><a href="..&#x2F;modules/validator.html">validator</a></li>
             
             </ul>
         </div>
@@ -95,7 +103,8 @@
 var seq = require(&#x27;sequelize&#x27;)
 ,path = require(&#x27;path&#x27;)
 ,config = require(path.resolve(__dirname+&#x27;&#x2F;..&#x2F;..&#x2F;src&#x2F;config&#x2F;main&#x27;)).main.db
-,db = require(path.resolve(__dirname+&#x27;&#x2F;..&#x2F;adapters&#x2F;db&#x27;));
+,db = require(path.resolve(__dirname+&#x27;&#x2F;..&#x2F;adapters&#x2F;db&#x27;))
+,lib = require(path.resolve(__dirname+&#x27;&#x2F;..&#x2F;&#x27;));
 
 module.exports = function(ormModel){
     var _ormModel = typeof ormModel.__options !== &#x27;undefined&#x27; ? ormModel:ormModel;
@@ -112,27 +121,48 @@ module.exports = function(ormModel){
     
     var model =  {
         &#x2F;**
-         * 
+         * Gets a new instance of the current model.
+         * Optionally define its default attributes.
+         *
+         * @param   {Object}    Optional. Default attributes for new instance.
+         * @param   {Array}     Unimplemented. Optional associated models to be retrieved.
+         * @method  getInstance
+         * @return  {Object}    The model&#x27;s instance.
+         *&#x2F;
+        getInstance:function(model, _with){
+            var _this = this;
+            
+            if(typeof model !== &#x27;undefined&#x27;){
+                var _ormModel = db().loadORMModel(_this.$$name).build(model);
+                _this = db().getLocalModelFromORM(_ormModel, _this);
+            }
+            
+            return _this;
+        },
+        &#x2F;**
          * @param   {String}    Can be &#x27;all&#x27;, &#x27;one&#x27;, &#x27;min&#x27;, &#x27;max&#x27; or &#x27;count&#x27;
          * @param   {Object}    Additional options. Includes &#x27;with&#x27; (array of related models 
          *                      to be included in returning results), &#x27;conditions&#x27;, &#x27;limit&#x27; and &#x27;offset&#x27;.
          * @param   {Function}  Callback to be executed when done
          *&#x2F;
         $find:function(type, opts, cbk){
-            var findAll, cc, findCustom,conds,params,limit,offset,order, _with = null;
+            var findAll, cc, findCustom,conds,params,limit,offset,order,fields, _with = null;
             var _this = this;
 
             &#x2F;&#x2F; map conditions with params
             var _mapConditions = function(c){
                 if(&#x2F;\:[\w]+&#x2F;g.test(c) &amp;&amp; (typeof params === &#x27;undefined&#x27; || params.length === 0))
-                    console.trace(&#x27;params were not set&#x27;);
+                    throw new Error(&#x27;params were not set&#x27;);
                             
                 for(var p in params){
-                    c = c.replace(&#x27;:&#x27;+p,params[p]);
+                    c = c.replace(&#x27;:&#x27;+p,typeof params[p]!==&#x27;string&#x27;?
+                        params[p]:params[p].replace(&#x2F;\&#x27;&#x2F;g,&#x27;\&#x27;&#x27;));
                 }
                             
                 return c;
             }
+            
+            &#x2F;&#x2F; @todo execute beforeFind here. pass type &amp; opts and enclose following in cbk
             
             &#x2F;&#x2F; initialize options
             if(typeof opts !== &#x27;undefined&#x27; &amp;&amp; opts!==null){
@@ -141,6 +171,7 @@ module.exports = function(ormModel){
                 limit = opts.limit ? opts.limit : limit;
                 offset = opts.offset ? opts.offset : offset;
                 order = opts.order ? opts.order : order;
+                fields = opts.fields ? opts.fields : fields;
                 _with = opts[&#x27;with&#x27;] ? opts[&#x27;with&#x27;] : null;
                 
                 &#x2F;&#x2F; construct query
@@ -157,28 +188,40 @@ module.exports = function(ormModel){
                 case &#x27;sequelize&#x27;:
                     var o = {
                         where:cc?cc:&#x27;1=1&#x27;,
-                        order:order?order:null
+                        order:order?order:null,
+                        attributes:fields?fields:null
                     };
                         
                     findAll = function(t){
                         if(t===&#x27;one&#x27;) o.limit = limit
                         if(_with!==null) o.include = _with
-
-                        _ormModel.findAll(o).success(function(models){
+                        
+                        &#x2F;&#x2F; refreshes relations
+                        _this._ormModel = db().setupRelationships(_this._ormModel);
+                        
+                        return _this._ormModel.findAll(o).success(function(models){
                             var mm = [];
                             models.forEach(function(m){
                                 if(typeof m.name === &#x27;undefined&#x27;)
-                                    m.name = _ormModel.name
+                                    m.name = _this._ormModel.name
                                 
-                                var model = db().getLocalModelFromORM(m, _this, _with)
+                                var model = db().getLocalModelFromORM(m, _this, _with, fields)
                                 mm.push(model);
                             });
+                            
+                            &#x2F;&#x2F; @todo execute afterFind here. pass mm and enclose following in cbk
+                            
                             cbk(t===&#x27;one&#x27; &amp;&amp; mm.length&gt;0?mm[0]:mm)
                         });
                     }
                     
                     findCustom = function(t){
-                        _ormModel[t](o).success(function(v){
+                        &#x2F;&#x2F; refreshes relations
+                        _this._ormModel = db().setupRelationships(_this._ormModel);
+                        
+                        return _this._ormModel[t](o).success(function(v){
+                            &#x2F;&#x2F; @todo execute afterFind here. pass v
+                            
                             cbk(v);
                         });
                     }
@@ -188,32 +231,40 @@ module.exports = function(ormModel){
             switch(type){
                 case &#x27;one&#x27;:
                 case &#x27;all&#x27;:
-                    findAll(type);
+                    return findAll(type);
                     break;
                 case &#x27;min&#x27;:
                 case &#x27;max&#x27;:
                 case &#x27;count&#x27;:
-                    findCustom(type);
+                    return findCustom(type);
                     break;
             }
         },
-        $update:function(attrs, opts, cbk){
+        $update:function(attrs, opts, cbk, errCbk){
+            if(!this._isInstance)
+                throw new Error(&#x27;No model loaded. Use getInstance() instead.&#x27;).stack;
+            
             switch(config.adapter){
                 case &#x27;sequelize&#x27;:
+                    this._ormModel.isNewRecord = false;
+                    delete attrs.id
                     this._ormModel.updateAttributes(attrs).success(function(model){
-                        cbk(model);
-                    }).error(function(err){
+                        cbk(db().getLocalModelFromORM(model));
+                    }).error(typeof errCbk !== &#x27;undefined&#x27;?errCbk:function(err){
                         throw err;
                     });
                     break;
             }
         },
-        $create:function(attrs, cbk){
+        $create:function(attrs, cbk, errCbk){
+            if(this._isInstance)
+                throw new Error(&#x27;A model instantiated via getInstance() cannot execute $create.&#x27;)
+            
             switch(config.adapter){
                 case &#x27;sequelize&#x27;:
                     _ormModel.create(attrs).success(function(model){
-                        cbk(model.values);
-                    }).error(function(err){
+                        cbk(db().getLocalModelFromORM(model));
+                    }).error(typeof errCbk !== &#x27;undefined&#x27;?errCbk:function(err){
                         throw err;
                     });
                     break;
@@ -231,16 +282,23 @@ module.exports = function(ormModel){
         $validate:function(){
 
         },
-        $getFields : function(){
+        $getFields : function(onlyFields){
             switch(config.adapter){
                 case &#x27;sequelize&#x27;:
-                    return Object.keys(_ormModel.rawAttributes);
+                    if(typeof onlyFields !== &#x27;undefined&#x27; &amp;&amp; onlyFields instanceof Array){
+                        var t = []
+                        _ormModel._dbFields.forEach(function(f){
+                            if(onlyFields.indexOf(f.name)!== -1)
+                                t.push(f)
+                        })
+                        return t;
+                    }else
+                        return _ormModel._dbFields;
                     break;
             }
         }
     }
-    
-    return model;
+    return Object.create(model);
 }
     </pre>
 </div>

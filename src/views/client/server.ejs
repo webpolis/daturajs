@@ -1,6 +1,6 @@
 <form ng-controller="clientController" ng-submit="updateSettings()" ng-init="client = <%= JSON.stringify(client) %>; getAccountingSystemTypes(); accountingServerTypes = <%= JSON.stringify(client.getServerTypes()) %>">
     <div class="alert alert-block">
-        <strong><%= 'Important' %></strong> <%= 'Use this form to set up a connection between the accounting system and '+settings.params.appName+' Portal.' %>
+        <strong><%= 'Important' %></strong> <%= 'Use this form to set up a connection between the accounting system and '+settings.vars.appName+' Portal.' %>
     </div>
     <div class="alert alert-error" ng-show="settingsFail">
         <strong><%= 'Error' %></strong> <%= 'Settings were not saved. Please contact the administrator.' %>
