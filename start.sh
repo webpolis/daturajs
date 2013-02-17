@@ -4,8 +4,9 @@ PORT_REST=$2
 
 if [ $PORT_WWW ]
     then export APP_UNCOMMON_WWW_PORT=$PORT_WWW;
-elif [ $PORT_REST ]
-    then export APP_UNCOMMON_REST_PORT = $PORT_REST;
+fi
+if [ $PORT_REST ]
+    then export APP_UNCOMMON_REST_PORT=$PORT_REST;
 fi
 
 if [ -z "${APP_UNCOMMON_WWW_PORT}" ]; then export APP_UNCOMMON_WWW_PORT=80; fi

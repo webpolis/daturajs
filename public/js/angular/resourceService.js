@@ -1,5 +1,8 @@
 var charter = charter || {};
 
+// @todo get variables from server
+const REST_PORT = 8081;
+
 charter.factory('resourceService', function($resource, $window) {
     /**
      * Setup your resources parameters.
@@ -25,7 +28,7 @@ charter.factory('resourceService', function($resource, $window) {
                     parent:'rest',
                     controller:'user',
                     action:'register',
-                    port:3339
+                    port:REST_PORT
                 }
             },
             updateSettings:{
@@ -34,7 +37,7 @@ charter.factory('resourceService', function($resource, $window) {
                     parent:'rest',
                     controller:'user',
                     action:'updateSettings',
-                    port:3339
+                    port:REST_PORT
                 }
             },
             getUsers:{
@@ -43,7 +46,7 @@ charter.factory('resourceService', function($resource, $window) {
                     parent:'rest',
                     controller:'user',
                     action:'getUsers',
-                    port:3339
+                    port:REST_PORT
                 }
             },
             userSave:{
@@ -52,7 +55,7 @@ charter.factory('resourceService', function($resource, $window) {
                     parent:'rest',
                     controller:'user',
                     action:'userSave',
-                    port:3339
+                    port:REST_PORT
                 }
             },
             getUserRoles:{
@@ -61,7 +64,7 @@ charter.factory('resourceService', function($resource, $window) {
                     parent:'rest',
                     controller:'user',
                     action:'getUserRoles',
-                    port:3339
+                    port:REST_PORT
                 }
             },
             getSubscriptions:{
@@ -70,7 +73,7 @@ charter.factory('resourceService', function($resource, $window) {
                     parent:'rest',
                     controller:'subscription',
                     action:'getSubscriptions',
-                    port:3339
+                    port:REST_PORT
                 }
             }
         },
@@ -82,7 +85,7 @@ charter.factory('resourceService', function($resource, $window) {
                     parent:'rest',
                     controller:'client',
                     action:'updateSettings',
-                    port:3339
+                    port:REST_PORT
                 }
             },
             testServerConnection:{
@@ -102,7 +105,7 @@ charter.factory('resourceService', function($resource, $window) {
                     parent:'rest',
                     controller:'department',
                     action:'getDepartments',
-                    port:3339
+                    port:REST_PORT
                 }
             },
             departmentSave:{
@@ -111,7 +114,7 @@ charter.factory('resourceService', function($resource, $window) {
                     parent:'rest',
                     controller:'department',
                     action:'departmentSave',
-                    port:3339
+                    port:REST_PORT
                 }
             }
         },
@@ -123,7 +126,7 @@ charter.factory('resourceService', function($resource, $window) {
                     parent:'rest',
                     controller:'vendor',
                     action:'getVendors',
-                    port:3339
+                    port:REST_PORT
                 }
             },
             vendorSave:{
@@ -132,7 +135,7 @@ charter.factory('resourceService', function($resource, $window) {
                     parent:'rest',
                     controller:'vendor',
                     action:'vendorSave',
-                    port:3339
+                    port:REST_PORT
                 }
             }
         },
@@ -144,7 +147,7 @@ charter.factory('resourceService', function($resource, $window) {
                     parent:'rest',
                     controller:'accountingSystemType',
                     action:'getAccountingSystemTypes',
-                    port:3339
+                    port:REST_PORT
                 }
             }
         },
@@ -156,7 +159,7 @@ charter.factory('resourceService', function($resource, $window) {
                     parent:'rest',
                     controller:'location',
                     action:'getStates',
-                    port:3339
+                    port:REST_PORT
                 }
             }
         }

@@ -5,11 +5,6 @@
  */
 
 module.exports = {
-
-
-
-
-
     environment_name: 'Default',
 
     // params are publicly accessible from a controller via this.vars
