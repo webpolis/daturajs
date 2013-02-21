@@ -61,7 +61,7 @@ More features will be added in the future - generate full app skeleton -.
 >
 >>**assets**  Assets that require some processing before being made public.
 >
->>**less**  Lesscss file that will be compiled into /public/css.
+>>>**less**  Lesscss file that will be compiled into /public/css.
 >
 >>**config**  main.js is the setup file for your application. 
 routes.js contains specification for URL paths and actions taken when receiving specific requests.
