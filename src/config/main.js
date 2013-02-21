@@ -1,15 +1,12 @@
 /**
- * These are the default configs. Environment specific
- * config files may override or add to this object
- * @type {Object}
+ * Main application's configuration file.
+ * 
+ * @author Nicolas Iglesias <nico@webpolis.com.ar>
  */
-
-module.exports = {
-    environment_name: 'Default',
-
+var _dev = {
     // params are publicly accessible from a controller via this.vars
     params:{
-        appName : 'charterAP'
+        appName : 'test app'
     },
     
     // secret key, for session id generator
@@ -24,12 +21,12 @@ module.exports = {
         database:'resteasy',
         port:5432
     },
-    
     // auth component configuration
     auth:{
         loginUrl : '/auth/login',
         logoutUrl : '/auth/logout',
         model : 'user'
     }
+}
 
-};
+exports.main = _dev || _prod || null;

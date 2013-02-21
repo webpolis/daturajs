@@ -1,7 +1,10 @@
 {
     "name": "daturajs",
     "version": "0.0.1",
-    "private": true,
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/webpolis/daturajs.git"
+    },
     "scripts": {
         "start": "node app"
     },
@@ -21,9 +24,23 @@
         "name": "Nicolas Iglesias",
         "email": "nico@webpolis.com.ar"
     },
-    "description": "",
+    "description": "Easy-to-ride & powerful MVC framework for node.",
     "keywords": [
-    ""
+    "express",
+    "framework",
+    "orm",
+    "datura",
+    "mvc",
+    "sinatra",
+    "web",
+    "rest",
+    "restful",
+    "router",
+    "app",
+    "api"
     ],
-    "main": "app.js"
+    "main": "app.js",
+    "engines": {
+        "node": "*"
+    },
 }
