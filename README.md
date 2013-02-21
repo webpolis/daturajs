@@ -1,9 +1,9 @@
 nodejs application framework (aka daturajs)
 ===========================================
 
-
 Introduction
 ----------
+<img width="150" align="left" src="https://github.com/webpolis/daturajs/blob/master/lib/doc/daturajs.png?raw=true" />
 
 This framework is somehow inspired in the **MVC** pattern, followed by some PHP frameworks - CakePHP, Yii -.
 The base concept is to provide an easy to mantain and extensible application framework 
