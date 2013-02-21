@@ -1,14 +1,17 @@
-##  nodejs application framework (aka daturajs)
+nodejs application framework (aka daturajs)
+===========================================
 
-## Introduction
 
-This framework is somehow inspired in the MVC pattern, followed by some PHP frameworks - CakePHP, Yii -.
+Introduction
+------------
+
+This framework is somehow inspired in the **MVC** pattern, followed by some PHP frameworks - CakePHP, Yii -.
 The base concept is to provide an easy to mantain and extensible application framework 
 purely based on the Javascript language - and its father ECMAScript (http://www.ecmascript.org/) -.
 Due to the different natures of PHP and JS, some developers might find the js OOP patterns 
 hard to follow, so some good knowledge of this subject is required in order to use daturajs.
 
-By default, daturajs includes REST support so it's good for applications offering 
+By default, daturajs includes **REST** support so it's good for applications offering 
 a REST API endpoint, providing you the opportunity to separate business logic from 
 the presentation layer, and also serving your API to other clients such a mobile app 
 or PHP application.
@@ -18,39 +21,43 @@ or PHP application.
 Not being that far from its PHP counterparts, daturajs provides an understandable 
 tree, containing most common folders for a web framework - althought this framework 
 it is not only intended to be used in websites -.
-The current state of the project reflects the following structure:
+The current status of the project reflects the following structure:
 
-.
-|-- doc                     <=== Recommended place for storing db dumps or own relevant information.
-|   `-- db
-|-- lib                     <=== Core libraries and modules for custom framework implementation.
-                            No modifications may be needed to be done by the developer.
-|   |-- adapters            <=== ORM adapters, etc. Many will be added in the future.
-|   |-- components          <=== Core components widely used, including authentication.
-|   |-- console             <=== Scripts that will generate models, controllers and views.
-                            More features will be added in the future - generate full app skeleton -.
-|   |-- controllers         <=== Basic setup of application's controllers
-|   |   `-- rest
-|   `-- models              <=== Basic setup of application's models.
-|-- node_modules            <=== All nodejs libraries and dependencies are stored here.
-|-- public                  <=== This folder is publicly accessed via GET /
-|   |-- css
-|   |-- img
-|   `-- js
-`-- src                     <=== Most of your custom development tasks occur here.
-    |-- assets              <=== Assets that require some processing before being made public.
-    |   `-- less            <=== Lesscss file that will be compiled into /public/css.
-    |-- config              <=== main.js is the setup file for your application.
-                            routes.js contains specification for URL paths and actions taken 
-                            when receiving specific requests.
-    |-- controllers         <=== Your controllers will reside here.
-    |   `-- rest            <=== If you need a REST API, this is the place to go.
-    |-- models              <=== ORM specific models. 
-    `-- views               <=== This framework use the 'ejs' template system.
-                            Support for new engines is planned for the future.
-        |-- elements        <=== Atomic elements to be included in your views.
-        |-- layouts         <=== The templates for your views.
-        |-- static          <=== Static pages should reside here.
+>|-- lib                     <=== Core libraries and modules for custom framework implementation. 
+No modifications may be needed to be done by the developer.
+>>|-- doc            <=== Framework's documentation.
+>>|-- adapters            <=== ORM adapters, etc. Many will be added in the future.
+>>|-- components          <=== Core components widely used, including authentication.
+>>|-- console             <=== Scripts that will generate models, controllers and views. 
+More features will be added in the future - generate full app skeleton -.
+>>|-- helpers          <=== Useful libraries (html, menu, etc).
+>>|-- controllers         <=== Basic setup of application's controllers
+>>>|-- rest
+>
+>>|-- models              <=== Basic setup of application's models.
+>
+>|-- node_modules            <=== All nodejs libraries and dependencies are stored here.
+>|-- public                  <=== This folder is publicly accessed via GET /
+>>|-- css
+>>|-- img
+>>|-- js
+>
+>|-- src                     <=== Most of your custom development tasks occur here.
+>>|-- assets              <=== Assets that require some processing before being made public.
+>>|-- less            <=== Lesscss file that will be compiled into /public/css.
+>>|-- config              <=== main.js is the setup file for your application. 
+routes.js contains specification for URL paths and actions taken when receiving specific requests.
+>>
+>|-- controllers         <=== Your controllers will reside here.
+>>>|-- rest            <=== If you need a REST API, this is the place to go.
+>
+>>|-- models              <=== ORM specific models.
+>
+>>|-- views               <=== This framework use the 'ejs' template system. 
+Support for new engines is planned for the future.
+>>>|-- elements        <=== Atomic elements to be included in your views.
+>        |-- layouts         <=== The templates for your views.
+>        |-- static          <=== Static pages should reside here.
 
 ## Installation / Setup
 
