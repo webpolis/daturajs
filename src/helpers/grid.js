@@ -2,7 +2,7 @@
  * Contains utilities to be used together with ngGrid.
  *
  * @class   grid
- * @author  Nicolas Iglesias <nicolas@clevertech.biz>
+ * @author  Nicolas Iglesias <nico@webpolis.com.ar>
  */
 module.exports = function(config){
 

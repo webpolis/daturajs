@@ -89,7 +89,7 @@ issuing the following command:
 Make sure this file is executable first, if it's not yet:
 
 ```
-chmod +x ./start
+chmod +x ./start.sh
 ```
 The arguments, which are both optional, are as follow:
 

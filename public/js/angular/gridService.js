@@ -1,7 +1,7 @@
 /**
  * Several additions and fixes made to the ngGrid module.
  * 
- * @author  Nicolas Iglesias <nicolas@clevertech.biz>
+ * @author  Nicolas Iglesias <nico@webpolis.com.ar>
  * @class   gridService
  */
 var charter = charter || {};

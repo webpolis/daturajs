@@ -1,7 +1,7 @@
 /**
  * Main application's configuration file.
  *
- * @author Nicolas Iglesias <nicolas@clevertech.biz>
+ * @author Nicolas Iglesias <nico@webpolis.com.ar>
  * @modified Mason Houtz <mason@clevertech.biz>
  */
 

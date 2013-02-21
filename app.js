@@ -3,7 +3,7 @@
  * 
  * You will not likely need to modify this file.
  * 
- * @author Nicolas Iglesias <nicolas@clevertech.biz>
+ * @author Nicolas Iglesias <nico@webpolis.com.ar>
  */
 var express = require('express')
 , http = require('http')
@@ -11,11 +11,12 @@ var express = require('express')
 , restify = require('restify');
 
 var app = express();
+var isRest = process.argv[process.argv.length-1] == '1';
 
 /**
  * The restify instance processes all REST in/out traffic.
  */
-var rest = restify.createServer();
+var rest = isRest? restify.createServer() : null;
 
 /**
  * General initialization. Must be run between rest & http initialization.

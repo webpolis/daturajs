@@ -43,6 +43,8 @@
             
                 <li><a href="..&#x2F;classes/auth.html">auth</a></li>
             
+                <li><a href="..&#x2F;classes/baseModel.html">baseModel</a></li>
+            
                 <li><a href="..&#x2F;classes/core.html">core</a></li>
             
                 <li><a href="..&#x2F;classes/db.html">db</a></li>
@@ -109,7 +111,7 @@
  * 
  * You will not likely need to modify this file.
  * 
- * @author Nicolas Iglesias &lt;nicolas@clevertech.biz&gt;
+ * @author Nicolas Iglesias &lt;nico@webpolis.com.ar&gt;
  *&#x2F;
 
 var lib = require(&#x27;.&#x2F;&#x27;)
@@ -149,20 +151,22 @@ exports.init = function(app, express, rest){
         app.use(express.session());
         app.use(app.router);
 
-        &#x2F;&#x2F; configure restify
-        rest.use(require(&#x27;restify&#x27;).bodyParser({
-            mapParams: false
-        }));
-        rest.use(require(&#x27;restify&#x27;).gzipResponse());
-        rest.use(require(&#x27;restify&#x27;).acceptParser(rest.acceptable));
-        rest.opts(&#x2F;\.*&#x2F;, function (req, res, next) {
-            res.header(&quot;Access-Control-Allow-Origin&quot;, &quot;*&quot;);
-            res.header(&quot;Access-Control-Allow-Headers&quot;, &quot;X-Requested-With, Content-type&quot;);
-            res.header(&#x27;Access-Control-Allow-Methods&#x27;,&#x27;POST,GET,PUT&#x27;);
-            res.send(200);
-            next();
-        });
-        rest.use(require(&#x27;restify&#x27;).fullResponse());
+        if(rest &amp;&amp; rest !==null){
+            &#x2F;&#x2F; configure restify
+            rest.use(require(&#x27;restify&#x27;).bodyParser({
+                mapParams: false
+            }));
+            rest.use(require(&#x27;restify&#x27;).gzipResponse());
+            rest.use(require(&#x27;restify&#x27;).acceptParser(rest.acceptable));
+            rest.opts(&#x2F;\.*&#x2F;, function (req, res, next) {
+                res.header(&quot;Access-Control-Allow-Origin&quot;, &quot;*&quot;);
+                res.header(&quot;Access-Control-Allow-Headers&quot;, &quot;X-Requested-With, Content-type&quot;);
+                res.header(&#x27;Access-Control-Allow-Methods&#x27;,&#x27;POST,GET,PUT&#x27;);
+                res.send(200);
+                next();
+            });
+            rest.use(require(&#x27;restify&#x27;).fullResponse());
+        }
 
         &#x2F;&#x2F; load less-middleware
         app.use(require(&#x27;less-middleware&#x27;)({
@@ -185,89 +189,88 @@ exports.init = function(app, express, rest){
     var restControllers = require(&#x27;.&#x2F;controllers&#x2F;rest&#x27;);
     var controllers = require(&#x27;.&#x2F;controllers&#x27;);
     
-    restControllers.init(function(){
-        controllers.init(function(){
-            &#x2F;&#x2F; initialize routes and prepare for listening requests
-            routes.main.forEach(function(route){
-                if(typeof route.url !== &#x27;undefined&#x27; &amp;&amp; typeof route.action !== &#x27;undefined&#x27;){
-                    var target = route.url instanceof Array ? route.url:[route.url];
-                    var defAction = &#x27;index&#x27;;
+    var _runCbk = function(){
+        &#x2F;&#x2F; initialize routes and prepare for listening requests
+        routes.main.forEach(function(route){
+            if(typeof route.url !== &#x27;undefined&#x27; &amp;&amp; typeof route.action !== &#x27;undefined&#x27;){
+                var target = route.url instanceof Array ? route.url:[route.url];
+                var defAction = &#x27;index&#x27;;
             
-                    route.method = route.method || &#x27;get&#x27;;
-                    var c = route.action.split(&#x27;&#x2F;&#x27;)[0] || null;
-                    var a = route.action.split(&#x27;&#x2F;&#x27;)[1] || defAction;
-                    var isRest = route.isRest || false;
+                route.method = route.method || &#x27;get&#x27;;
+                var c = route.action.split(&#x27;&#x2F;&#x27;)[0] || null;
+                var a = route.action.split(&#x27;&#x2F;&#x27;)[1] || defAction;
+                var isRest = route.isRest || false;
             
-                    if(c!==null){
-                        var cc = !isRest?
-                        lib.core.controllers.main[c+&#x27;Controller&#x27;]
-                        :lib.core.controllers.rest[c+&#x27;Controller&#x27;];
+                if(c!==null){
+                    var cc = !isRest?
+                    lib.core.controllers.main[c+&#x27;Controller&#x27;]
+                    :lib.core.controllers.rest[c+&#x27;Controller&#x27;];
 
-                        &#x2F;&#x2F; set default action if none is given
-                        if(typeof cc === &#x27;undefined&#x27;)
-                            cc = {}
-                        if(typeof cc[defAction] === &#x27;undefined&#x27;){
-                            cc[defAction] = function(req,res){}
-                        }
+                    &#x2F;&#x2F; set default action if none is given
+                    if(typeof cc === &#x27;undefined&#x27;)
+                        cc = {}
+                    if(typeof cc[defAction] === &#x27;undefined&#x27;){
+                        cc[defAction] = function(req,res){}
+                    }
 
-                        switch(route.method){
-                            case &#x27;get&#x27;:
-                            case &#x27;post&#x27;:
-                                target.forEach(function(url){
-                                    try{
-                                        if(!isRest){
-                                            app[route.method](url, function(req, res){
-                                                &#x2F;&#x2F; setup method for render
-                                                cc.render = function(view,data,cbk){
-                                                    data = data || {};
-                                                    var viewFile = null;
+                    switch(route.method){
+                        case &#x27;get&#x27;:
+                        case &#x27;post&#x27;:
+                            target.forEach(function(url){
+                                try{
+                                    if(!isRest){
+                                        app[route.method](url, function(req, res){
+                                            &#x2F;&#x2F; setup method for render
+                                            cc.render = function(view,data,cbk){
+                                                data = data || {};
+                                                var viewFile = null;
 
-                                                    &#x2F;&#x2F; make component accesible to views
-                                                    res.locals[&#x27;auth&#x27;] = cc.auth !== null ? cc.auth : auth.getInstance();
+                                                &#x2F;&#x2F; make component accesible to views
+                                                res.locals[&#x27;auth&#x27;] = cc.auth !== null ? cc.auth : auth.getInstance();
                                                     
-                                                    &#x2F;&#x2F; inject helpers
-                                                    res.locals.html = require(&#x27;.&#x2F;helpers&#x2F;html&#x27;);
-                                                    res.locals.menu = require(&#x27;.&#x2F;helpers&#x2F;menu&#x27;);
+                                                &#x2F;&#x2F; inject helpers
+                                                res.locals = Object.merge(require(&#x27;.&#x2F;helpers&#x27;), res.locals);
                                                     
-                                                    if(typeof view.layout !== &#x27;undefined&#x27;){
-                                                        viewFile = path.resolve(__dirname+&#x27;&#x2F;..&#x2F;src&#x2F;views&#x2F;&#x27;+c+&#x27;&#x2F;&#x27;+view.view);
-                                                        layoutFile = path.resolve(__dirname+&#x27;&#x2F;..&#x2F;src&#x2F;views&#x2F;layouts&#x2F;&#x27;+view.layout);
-                                                        data.layout = layoutFile;
-                                                        res.render(viewFile,data);
-                                                    }else{
-                                                        viewFile = path.resolve(&#x27;.&#x2F;src&#x2F;views&#x2F;&#x27;+c+&#x27;&#x2F;&#x27;+view);
-                                                        res.render(viewFile,data,cbk);
-                                                    }
+                                                if(typeof view.layout !== &#x27;undefined&#x27;){
+                                                    viewFile = path.resolve(__dirname+&#x27;&#x2F;..&#x2F;src&#x2F;views&#x2F;&#x27;+c+&#x27;&#x2F;&#x27;+view.view);
+                                                    layoutFile = path.resolve(__dirname+&#x27;&#x2F;..&#x2F;src&#x2F;views&#x2F;layouts&#x2F;&#x27;+view.layout);
+                                                    data.layout = layoutFile;
+                                                    res.render(viewFile,data);
+                                                }else{
+                                                    viewFile = path.resolve(&#x27;.&#x2F;src&#x2F;views&#x2F;&#x27;+c+&#x27;&#x2F;&#x27;+view);
+                                                    res.render(viewFile,data,cbk);
                                                 }
-                                                cc.app = app;
+                                            }
+                                            cc.app = app;
                                                 
-                                                &#x2F;&#x2F; make components available to controller
-                                                cc.auth = auth.getInstance();
+                                            &#x2F;&#x2F; make components available to controller
+                                            cc.auth = auth.getInstance();
 
-                                                &#x2F;&#x2F; set req body to be accessed via data
-                                                cc.data = req.body ? req.body : null;
-                                                cc.params = req.params ? req.params : null;
-                                                cc[a](req, res);
-                                            });
-                                        }else{
-                                            var cbk = function(req, res, nxt){
-                                                &#x2F;&#x2F; setup method for output
-                                                cc.send = function(status, data){
-                                                    res.send(status, data);
-                                                }
-                                                &#x2F;&#x2F; set req body to be accessed via data
-                                                cc.data = req.body ? req.body : null;
-                                                cc.params = req.params ? req.params : null;
-                                                cc[a](req, res, nxt);
-                                            };
-                                            rest[route.method](url, cbk);
-                                        }
-                                    }catch(e){
-                                        console.trace(e)
+                                            &#x2F;&#x2F; set req body to be accessed via data
+                                            cc.data = req.body ? req.body : null;
+                                            cc.params = req.params ? req.params : null;
+                                            cc[a](req, res);
+                                        });
+                                    }else if(rest &amp;&amp; rest !== null){
+                                        var cbk = function(req, res, nxt){
+                                            &#x2F;&#x2F; setup method for output
+                                            cc.send = function(status, data){
+                                                res.send(status, data);
+                                            }
+                                            &#x2F;&#x2F; set req body to be accessed via data
+                                            cc.data = req.body ? req.body : null;
+                                            cc.params = req.params ? req.params : null;
+                                            cc[a](req, res, nxt);
+                                        };
+                                        rest[route.method](url, cbk);
                                     }
-                                });
-                                break;
-                            case &#x27;put&#x27;:
+                                }catch(e){
+                                    console.trace(e)
+                                }
+                            });
+                            break;
+                        case &#x27;put&#x27;:
+                            if(rest &amp;&amp; rest !== null){
                                 target.forEach(function(url){
                                     rest.put(url, function(req, res, nxt){
                                         &#x2F;&#x2F; setup method for output
@@ -281,17 +284,26 @@ exports.init = function(app, express, rest){
                                         cc[a](req, res, nxt);
                                     });
                                 });
-                                break;
-                        }
+                            }
+                            break;
                     }
                 }
-            });
+            }
+        });
             
+        if(rest &amp;&amp; rest !== null)
             &#x2F;&#x2F; rest instance startup
             rest.listen(app.get(&#x27;portRest&#x27;));
-        });
-    });
-
+    };
+    
+    &#x2F;&#x2F; init
+    if(rest &amp;&amp; rest !== null){
+        restControllers.init(function(){
+            controllers.init(_runCbk);
+        })
+    }else{
+        controllers.init(_runCbk);
+    }
 }
 
     </pre>

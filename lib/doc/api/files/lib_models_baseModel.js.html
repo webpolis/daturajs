@@ -43,6 +43,8 @@
             
                 <li><a href="..&#x2F;classes/auth.html">auth</a></li>
             
+                <li><a href="..&#x2F;classes/baseModel.html">baseModel</a></li>
+            
                 <li><a href="..&#x2F;classes/core.html">core</a></li>
             
                 <li><a href="..&#x2F;classes/db.html">db</a></li>
@@ -106,6 +108,9 @@ var seq = require(&#x27;sequelize&#x27;)
 ,db = require(path.resolve(__dirname+&#x27;&#x2F;..&#x2F;adapters&#x2F;db&#x27;))
 ,lib = require(path.resolve(__dirname+&#x27;&#x2F;..&#x2F;&#x27;));
 
+&#x2F;**
+ * @class   baseModel
+ *&#x2F;
 module.exports = function(ormModel){
     var _ormModel = typeof ormModel.__options !== &#x27;undefined&#x27; ? ormModel:ormModel;
     var _buildQuery = function(ccAnd, ccOr){
@@ -119,7 +124,7 @@ module.exports = function(ormModel){
         return cc;
     }
     
-    var model =  {
+    var model =  Object.create({
         &#x2F;**
          * Gets a new instance of the current model.
          * Optionally define its default attributes.
@@ -140,6 +145,52 @@ module.exports = function(ormModel){
             return _this;
         },
         &#x2F;**
+         * Run before saving a model.
+         * You can pre-process the attributes here.
+         *
+         * @method  $beforeSave
+         * @param   {Object}    Attributes and its values.
+         * @param   {Function}  Execute this callback when you&#x27;re done processing the attributes.
+         *                      Pass the modified attributes as the 1st argument.
+         *&#x2F;
+        $beforeSave : function(attrs, cbk){
+            cbk(attrs);
+        },
+        &#x2F;**
+         * Run after a model has been saved.
+         *
+         * @method  $afterSave
+         * @param   {Function}  Execute this callback when you&#x27;re done doing additional processing.
+         *&#x2F;
+        $afterSave : function(cbk){
+            cbk();
+        },
+        &#x2F;**
+         * Run before a finder query is executed.
+         * You can pre-process the conditions and options here.
+         *
+         * @method  $beforeFind
+         * @param   {String}    Find method. Can be &#x27;all&#x27;,&#x27;one&#x27;,&#x27;min&#x27;,&#x27;max&#x27; or &#x27;count&#x27;.
+         * @param   {Object}    Options to be applied to the final query.
+         * @param   {Function}  Execute this callback when you&#x27;re done processing the options.
+         *&#x2F;
+        $beforeFind : function(findType, options, cbk){
+            cbk();
+        },
+        &#x2F;**
+         * Run after a finder query is executed.
+         * You can pre-process the resulting data here.
+         *
+         * @method  $afterFind
+         * @param   {Mixed}     Can be array or one object containing results, depending on the find method chosen.
+         * @param   {Function}  Execute this callback when you&#x27;re done processing the results.
+         *                      Pass the processed results as unique argument.
+         *&#x2F;
+        $afterFind : function(results, cbk){
+            cbk(results);
+        },
+        &#x2F;**
+         * @method  $find
          * @param   {String}    Can be &#x27;all&#x27;, &#x27;one&#x27;, &#x27;min&#x27;, &#x27;max&#x27; or &#x27;count&#x27;
          * @param   {Object}    Additional options. Includes &#x27;with&#x27; (array of related models 
          *                      to be included in returning results), &#x27;conditions&#x27;, &#x27;limit&#x27; and &#x27;offset&#x27;.
@@ -152,7 +203,7 @@ module.exports = function(ormModel){
             &#x2F;&#x2F; map conditions with params
             var _mapConditions = function(c){
                 if(&#x2F;\:[\w]+&#x2F;g.test(c) &amp;&amp; (typeof params === &#x27;undefined&#x27; || params.length === 0))
-                    throw new Error(&#x27;params were not set&#x27;);
+                    throw new Error(&#x27;params were not set&#x27;).stack;
                             
                 for(var p in params){
                     c = c.replace(&#x27;:&#x27;+p,typeof params[p]!==&#x27;string&#x27;?
@@ -162,110 +213,126 @@ module.exports = function(ormModel){
                 return c;
             }
             
-            &#x2F;&#x2F; @todo execute beforeFind here. pass type &amp; opts and enclose following in cbk
-            
-            &#x2F;&#x2F; initialize options
-            if(typeof opts !== &#x27;undefined&#x27; &amp;&amp; opts!==null){
-                conds = opts.conditions ? opts.conditions : conds;
-                params = opts.params ? opts.params : params;
-                limit = opts.limit ? opts.limit : limit;
-                offset = opts.offset ? opts.offset : offset;
-                order = opts.order ? opts.order : order;
-                fields = opts.fields ? opts.fields : fields;
-                _with = opts[&#x27;with&#x27;] ? opts[&#x27;with&#x27;] : null;
+            &#x2F;&#x2F; execute beforeFind here. pass type &amp; opts and enclose following in cbk
+            this.$beforeFind(type.toLowerCase(), opts, function(){
+                &#x2F;&#x2F; initialize options
+                if(typeof opts !== &#x27;undefined&#x27; &amp;&amp; opts!==null){
+                    conds = opts.conditions ? opts.conditions : conds;
+                    params = opts.params ? opts.params : params;
+                    limit = opts.limit ? opts.limit : limit;
+                    offset = opts.offset ? opts.offset : offset;
+                    order = opts.order ? opts.order : order;
+                    fields = opts.fields ? opts.fields : fields;
+                    _with = opts[&#x27;with&#x27;] ? opts[&#x27;with&#x27;] : null;
                 
-                &#x2F;&#x2F; construct query
-                if(typeof conds !== &#x27;undefined&#x27;){
-                    var ccAnd = (conds.and || conds instanceof Array ? conds.map(_mapConditions):
-                        (conds.and?conds.and.map(_mapConditions):[]));
-                    var ccOr = conds.or ? conds.or.map(_mapConditions) : [];
-                    cc = _buildQuery(ccAnd, ccOr);
+                    &#x2F;&#x2F; construct query
+                    if(typeof conds !== &#x27;undefined&#x27;){
+                        var ccAnd = (conds.and || conds instanceof Array ? conds.map(_mapConditions):
+                            (conds.and?conds.and.map(_mapConditions):[]));
+                        var ccOr = conds.or ? conds.or.map(_mapConditions) : [];
+                        cc = _buildQuery(ccAnd, ccOr);
+                    }
                 }
-            }
-            if(type === &#x27;one&#x27;) limit = 1
+                if(type === &#x27;one&#x27;) limit = 1
             
-            switch(config.adapter){
-                case &#x27;sequelize&#x27;:
-                    var o = {
-                        where:cc?cc:&#x27;1=1&#x27;,
-                        order:order?order:null,
-                        attributes:fields?fields:null
-                    };
+                switch(config.adapter){
+                    case &#x27;sequelize&#x27;:
+                        var o = {
+                            where:cc?cc:&#x27;1=1&#x27;,
+                            order:order?order:null,
+                            attributes:fields?fields:null
+                        };
                         
-                    findAll = function(t){
-                        if(t===&#x27;one&#x27;) o.limit = limit
-                        if(_with!==null) o.include = _with
+                        findAll = function(t){
+                            if(t===&#x27;one&#x27;) o.limit = limit
+                            if(_with!==null) o.include = _with
                         
-                        &#x2F;&#x2F; refreshes relations
-                        _this._ormModel = db().setupRelationships(_this._ormModel);
+                            &#x2F;&#x2F; refreshes relations
+                            _this._ormModel = db().setupRelationships(_this._ormModel);
                         
-                        return _this._ormModel.findAll(o).success(function(models){
-                            var mm = [];
-                            models.forEach(function(m){
-                                if(typeof m.name === &#x27;undefined&#x27;)
-                                    m.name = _this._ormModel.name
+                            return _this._ormModel.findAll(o).success(function(models){
+                                var mm = [];
+                                models.forEach(function(m){
+                                    if(typeof m.name === &#x27;undefined&#x27;)
+                                        m.name = _this._ormModel.name
                                 
-                                var model = db().getLocalModelFromORM(m, _this, _with, fields)
-                                mm.push(model);
+                                    var model = db().getLocalModelFromORM(m, _this, _with, fields)
+                                    mm.push(model);
+                                });
+                            
+                                var ret = t===&#x27;one&#x27; &amp;&amp; mm.length&gt;0?mm[0]:mm;
+                            
+                                &#x2F;&#x2F; execute afterFind here. pass mm and enclose following in cbk
+                                _this.$afterFind(ret, cbk)
                             });
-                            
-                            &#x2F;&#x2F; @todo execute afterFind here. pass mm and enclose following in cbk
-                            
-                            cbk(t===&#x27;one&#x27; &amp;&amp; mm.length&gt;0?mm[0]:mm)
-                        });
-                    }
+                        }
                     
-                    findCustom = function(t){
-                        &#x2F;&#x2F; refreshes relations
-                        _this._ormModel = db().setupRelationships(_this._ormModel);
+                        findCustom = function(t){
+                            &#x2F;&#x2F; refreshes relations
+                            _this._ormModel = db().setupRelationships(_this._ormModel);
                         
-                        return _this._ormModel[t](o).success(function(v){
-                            &#x2F;&#x2F; @todo execute afterFind here. pass v
-                            
-                            cbk(v);
-                        });
-                    }
-                    break;
-            }
+                            return _this._ormModel[t](o).success(function(v){
+                                &#x2F;&#x2F; execute afterFind here. pass v and enclose following in cbk
+                                _this.$afterFind(v, cbk);
+                            });
+                        }
+                        break;
+                }
             
-            switch(type){
-                case &#x27;one&#x27;:
-                case &#x27;all&#x27;:
-                    return findAll(type);
-                    break;
-                case &#x27;min&#x27;:
-                case &#x27;max&#x27;:
-                case &#x27;count&#x27;:
-                    return findCustom(type);
-                    break;
-            }
+                switch(type){
+                    case &#x27;one&#x27;:
+                    case &#x27;all&#x27;:
+                        return findAll(type);
+                        break;
+                    case &#x27;min&#x27;:
+                    case &#x27;max&#x27;:
+                    case &#x27;count&#x27;:
+                        return findCustom(type);
+                        break;
+                }
+            });
         },
         $update:function(attrs, opts, cbk, errCbk){
-            if(!this._isInstance)
+            if(this.$$isNewRecord)
                 throw new Error(&#x27;No model loaded. Use getInstance() instead.&#x27;).stack;
             
+            var _this = this;
             switch(config.adapter){
                 case &#x27;sequelize&#x27;:
                     this._ormModel.isNewRecord = false;
                     delete attrs.id
-                    this._ormModel.updateAttributes(attrs).success(function(model){
-                        cbk(db().getLocalModelFromORM(model));
-                    }).error(typeof errCbk !== &#x27;undefined&#x27;?errCbk:function(err){
-                        throw err;
+                    
+                    &#x2F;&#x2F; execute beforeSave here. 
+                    this.$beforeSave(attrs,function(_attrs){
+                        _this._ormModel.updateAttributes(_attrs).success(function(_model){
+                            &#x2F;&#x2F; execute afterSave here.
+                            _this.$afterSave(function(){
+                                cbk(db().getLocalModelFromORM(_model));
+                            });
+                        }).error(typeof errCbk !== &#x27;undefined&#x27;?errCbk:function(err){
+                            throw new Error(err).stack;
+                        });
                     });
                     break;
             }
         },
         $create:function(attrs, cbk, errCbk){
-            if(this._isInstance)
-                throw new Error(&#x27;A model instantiated via getInstance() cannot execute $create.&#x27;)
+            if(!this.$$isNewRecord)
+                throw new Error(&#x27;A model instantiated via getInstance() cannot execute $create.&#x27;).stack
             
+            var _this = this;
             switch(config.adapter){
                 case &#x27;sequelize&#x27;:
-                    _ormModel.create(attrs).success(function(model){
-                        cbk(db().getLocalModelFromORM(model));
-                    }).error(typeof errCbk !== &#x27;undefined&#x27;?errCbk:function(err){
-                        throw err;
+                    &#x2F;&#x2F; execute beforeSave here. 
+                    this.$beforeSave(attrs,function(_attrs){
+                        _this._ormModel.create(_attrs).success(function(_model){
+                            &#x2F;&#x2F; execute afterSave here.
+                            _this.$afterSave(function(){
+                                cbk(db().getLocalModelFromORM(_model));
+                            });
+                        }).error(typeof errCbk !== &#x27;undefined&#x27;?errCbk:function(err){
+                            throw new Error(err).stack;
+                        });
                     });
                     break;
             }
@@ -274,7 +341,7 @@ module.exports = function(ormModel){
             switch(config.adapter){
                 case &#x27;sequelize&#x27;:
                     _ormModel.destroy().success(cbk).error(function(err){
-                        throw err;
+                        throw new Error(err).stack;
                     });
                     break;
             }   
@@ -297,8 +364,9 @@ module.exports = function(ormModel){
                     break;
             }
         }
-    }
-    return Object.create(model);
+    });
+    
+    return model;
 }
     </pre>
 </div>

@@ -43,6 +43,8 @@
             
                 <li><a href="..&#x2F;classes/auth.html">auth</a></li>
             
+                <li><a href="..&#x2F;classes/baseModel.html">baseModel</a></li>
+            
                 <li><a href="..&#x2F;classes/core.html">core</a></li>
             
                 <li><a href="..&#x2F;classes/db.html">db</a></li>
@@ -110,7 +112,7 @@
  * Supported adapters&#x27; strings: sequelize
  * 
  * @module  db
- * @author Nicolas Iglesias &lt;nicolas@clevertech.biz&gt;
+ * @author Nicolas Iglesias &lt;nico@webpolis.com.ar&gt;
  *&#x2F;
 var seq = require(&#x27;sequelize&#x27;)
 ,path = require(&#x27;path&#x27;)
@@ -205,7 +207,7 @@ module.exports = function(){
          *&#x2F;
         loadORMModel : function(modelName){
             if(!config.adapter &amp;&amp; typeof _instance !== &#x27;object&#x27;)
-                throw new Error(&#x27;db adapter not properly set.&#x27;);
+                throw new Error(&#x27;db adapter not properly set.&#x27;).stack;
             
             var model = null;
             
@@ -344,11 +346,11 @@ module.exports = function(){
                         delete model[k]
                     }
                 });
-                Object.defineProperty(model,&#x27;_isInstance&#x27;,{
-                    value: true,
+                Object.defineProperty(model,&#x27;$$isNewRecord&#x27;,{
+                    value: false,
                     writable: false,
                     configurable: false,
-                    enumerable: false
+                    enumerable: true
                 });
             }
 

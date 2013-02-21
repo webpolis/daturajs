@@ -43,6 +43,8 @@
             
                 <li><a href="..&#x2F;classes/auth.html">auth</a></li>
             
+                <li><a href="..&#x2F;classes/baseModel.html">baseModel</a></li>
+            
                 <li><a href="..&#x2F;classes/core.html">core</a></li>
             
                 <li><a href="..&#x2F;classes/db.html">db</a></li>
@@ -105,7 +107,7 @@
  * 
  * You will not likely need to modify this file.
  * 
- * @author Nicolas Iglesias &lt;nicolas@clevertech.biz&gt;
+ * @author Nicolas Iglesias &lt;nico@webpolis.com.ar&gt;
  *&#x2F;
 var fs = require(&#x27;fs&#x27;)
 ,path = require(&#x27;path&#x27;)
@@ -134,13 +136,13 @@ fs.readdir(path.resolve(__dirname+&#x27;&#x2F;..&#x2F;..&#x2F;src&#x2F;models&#x
     &#x2F;&#x2F; setup relationships (must be done here so we can access all models instances).
     db().setupRelationships();
     
-    &#x2F;&#x2F; inherit baseModel
+    &#x2F;&#x2F; inherit custom baseModel
     if(lib.core.models.length &gt; 0){
-        var baseModel = require(&#x27;.&#x2F;baseModel&#x27;);
+        var baseModel = require(path.resolve(__dirname+&#x27;&#x2F;..&#x2F;..&#x2F;src&#x2F;models&#x2F;baseModel&#x27;));
         
         lib.core.models.forEach(function(m){
-            &#x2F;&#x2F;m = Object.merge(baseModel(), m());
-        })
+            m = Object.merge(baseModel(), m());
+        });
     }
 });
 
