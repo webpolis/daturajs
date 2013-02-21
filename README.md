@@ -2,8 +2,13 @@ nodejs application framework (aka daturajs)
 ===========================================
 
 
+
+**Author**: _Nicolas Iglesias_ <<nico@webpolis.com.ar>>
+
+
 Introduction
-**----------**
+----------
+<img width="150" align="left" src="https://github.com/webpolis/daturajs/blob/master/lib/doc/daturajs.png?raw=true" />
 
 This framework is somehow inspired in the **MVC** pattern, followed by some PHP frameworks - CakePHP, Yii -.
 The base concept is to provide an easy to mantain and extensible application framework 
@@ -23,28 +28,28 @@ tree, containing most common folders for a web framework - althought this framew
 it is not only intended to be used in websites -.
 The current status of the project reflects the following structure:
 
->**lib**                     <=== Core libraries and modules for custom framework implementation. 
+>**lib**  Core libraries and modules for custom framework implementation. 
 No modifications may be needed to be done by the developer.
->>**doc**            <=== Framework's documentation.
-
->>**adapters**            <=== ORM adapters, etc. Many will be added in the future.
-
->>**components**          <=== Core components widely used, including authentication.
-
->>**console**             <=== Scripts that will generate models, controllers and views. 
+>>**doc**  Framework's documentation.
+>
+>>**adapters**  ORM adapters, etc. Many will be added in the future.
+>
+>>**components**  Core components widely used, including authentication.
+>
+>>**console**  Scripts that will generate models, controllers and views. 
 More features will be added in the future - generate full app skeleton -.
-
->>**helpers**          <=== Useful libraries (html, menu, etc).
-
->>**controllers**         <=== Basic setup of application's controllers
-
+>
+>>**helpers**  Useful libraries (html, menu, etc).
+>
+>>**controllers**  Basic setup of application's controllers
+>
 >>>**rest**
 >
->>**models**              <=== Basic setup of application's models.
+>>**models**  Basic setup of application's models.
 >
->**node_modules**            <=== All nodejs libraries and dependencies are stored here.
+>**node_modules**  All nodejs libraries and dependencies are stored here.
 >
->**public**                  <=== This folder is publicly accessed via GET /
+>**public**  This folder is publicly accessed via GET /
 >
 >>**css**
 >
@@ -52,27 +57,27 @@ More features will be added in the future - generate full app skeleton -.
 >
 >>**js**
 >
->**src**                     <=== Most of your custom development tasks occur here.
+>**src**  Most of your custom development tasks occur here.
 >
->>**assets**              <=== Assets that require some processing before being made public.
+>>**assets**  Assets that require some processing before being made public.
 >
->>**less**            <=== Lesscss file that will be compiled into /public/css.
+>>**less**  Lesscss file that will be compiled into /public/css.
 >
->>**config**              <=== main.js is the setup file for your application. 
+>>**config**  main.js is the setup file for your application. 
 routes.js contains specification for URL paths and actions taken when receiving specific requests.
 >
->>**controllers**         <=== Your controllers will reside here.
->>>**rest**            <=== If you need a REST API, this is the place to go.
+>>**controllers**  Your controllers will reside here.
+>>>**rest**  If you need a REST API, this is the place to go.
 >
->>**models**              <=== ORM specific models.
+>>**models**  ORM specific models.
 >
->>**views**               <=== This framework use the 'ejs' template system. 
+>>**views**  This framework use the 'ejs' template system. 
 Support for new engines is planned for the future.
->>>**elements**        <=== Atomic elements to be included in your views.
+>>>**elements**  Atomic elements to be included in your views.
 >
->>>**layouts**         <=== The templates for your views.
+>>>**layouts**  The templates for your views.
 >
->>>**static**          <=== Static pages should reside here.
+>>>**static**  Static pages should reside here.
 
 ## Installation / Setup
 
