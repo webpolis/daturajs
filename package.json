@@ -15,7 +15,6 @@
         "inflector": "*",
         "cheerio": "*",
         "i18n": "*",
-        "tedious": "*",
         "pg":"*"
     },
     "author": {

@@ -54,11 +54,12 @@ The current state of the project reflects the following structure:
 
 ## Installation / Setup
 
+After you checkout or decompress the daturajs package, you must resolve all dependencies by 
+issuing the following command:
+
 ```
 npm install
 ```
-
-The command above will install required dependencies.
 
 ## Application Skeleton generator
 
@@ -97,4 +98,5 @@ The arguments, which are both optional, are as follow:
 ./start.sh [WWW_PORT] [REST_PORT]
 ```
 
-
+You should explicitly define REST_PORT if you want your application to listen to 
+REST API requests.
