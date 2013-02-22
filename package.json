@@ -19,7 +19,8 @@
         "cheerio": "*",
         "i18n": "*",
         "pg":"*",
-        "mysql":"*"
+        "mysql":"*",
+	"optimist":"*"
     },
     "author": {
         "name": "Nicolas Iglesias",

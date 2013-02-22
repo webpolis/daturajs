@@ -1,9 +1,9 @@
-var charter = charter || {};
+var bootstrap = bootstrap || {};
 
 // @todo get variables from server
 const REST_PORT = 8081;
 
-charter.factory('resourceService', function($resource, $window) {
+bootstrap.factory('resourceService', function($resource, $window) {
     /**
      * Setup your resources parameters.
      * 
@@ -12,157 +12,158 @@ charter.factory('resourceService', function($resource, $window) {
      * @private
      */
     var _resourcesParams = {
-        'user' :{
-            // user related
-            userLogin:{
-                method:'POST',
-                params:{
-                    controller:'auth',
-                    action:'login',
-                    port:$window.location.port
-                }
-            },
-            userRegister:{
-                method:'POST',
-                params:{
-                    parent:'rest',
-                    controller:'user',
-                    action:'register',
-                    port:REST_PORT
-                }
-            },
-            updateSettings:{
-                method:'POST',
-                params:{
-                    parent:'rest',
-                    controller:'user',
-                    action:'updateSettings',
-                    port:REST_PORT
-                }
-            },
-            getUsers:{
-                method:'GET',
-                params:{
-                    parent:'rest',
-                    controller:'user',
-                    action:'getUsers',
-                    port:REST_PORT
-                }
-            },
-            userSave:{
-                method:'POST',
-                params:{
-                    parent:'rest',
-                    controller:'user',
-                    action:'userSave',
-                    port:REST_PORT
-                }
-            },
-            getUserRoles:{
-                method:'GET',
-                params:{
-                    parent:'rest',
-                    controller:'user',
-                    action:'getUserRoles',
-                    port:REST_PORT
-                }
-            },
-            getSubscriptions:{
-                method:'GET',
-                params:{
-                    parent:'rest',
-                    controller:'subscription',
-                    action:'getSubscriptions',
-                    port:REST_PORT
-                }
-            }
+        
+        
+        'attribute' : {
+            list : {method : 'GET', params : {parent:'rest', controller:'attribute', action:'list', port:REST_PORT} },
+            save : {method : 'POST', params : {parent:'rest', controller:'attribute', action:'save', port:REST_PORT} },
+            remove : {method : 'POST', params : {parent:'rest', controller:'attribute', action:'remove', port:REST_PORT} },
+            
         },
-        'client' : {
-            // client related
-            updateSettings:{
-                method:'POST',
-                params:{
-                    parent:'rest',
-                    controller:'client',
-                    action:'updateSettings',
-                    port:REST_PORT
-                }
-            },
-            testServerConnection:{
-                method:'POST',
-                params:{
-                    controller:'client',
-                    action:'testServerConnection',
-                    port:$window.location.port
-                }
-            }
+        
+        'city' : {
+            list : {method : 'GET', params : {parent:'rest', controller:'city', action:'list', port:REST_PORT} },
+            save : {method : 'POST', params : {parent:'rest', controller:'city', action:'save', port:REST_PORT} },
+            remove : {method : 'POST', params : {parent:'rest', controller:'city', action:'remove', port:REST_PORT} },
+            
         },
-        'department':{
-            // department related
-            getDepartments:{
-                method:'GET',
-                params:{
-                    parent:'rest',
-                    controller:'department',
-                    action:'getDepartments',
-                    port:REST_PORT
-                }
-            },
-            departmentSave:{
-                method:'POST',
-                params:{
-                    parent:'rest',
-                    controller:'department',
-                    action:'departmentSave',
-                    port:REST_PORT
-                }
-            }
+        
+        'comment' : {
+            list : {method : 'GET', params : {parent:'rest', controller:'comment', action:'list', port:REST_PORT} },
+            save : {method : 'POST', params : {parent:'rest', controller:'comment', action:'save', port:REST_PORT} },
+            remove : {method : 'POST', params : {parent:'rest', controller:'comment', action:'remove', port:REST_PORT} },
+            
         },
-        'vendor':{
-            // vendor related
-            getVendors:{
-                method:'GET',
-                params:{
-                    parent:'rest',
-                    controller:'vendor',
-                    action:'getVendors',
-                    port:REST_PORT
-                }
-            },
-            vendorSave:{
-                method:'POST',
-                params:{
-                    parent:'rest',
-                    controller:'vendor',
-                    action:'vendorSave',
-                    port:REST_PORT
-                }
-            }
+        
+        'commentDocument' : {
+            list : {method : 'GET', params : {parent:'rest', controller:'commentDocument', action:'list', port:REST_PORT} },
+            save : {method : 'POST', params : {parent:'rest', controller:'commentDocument', action:'save', port:REST_PORT} },
+            remove : {method : 'POST', params : {parent:'rest', controller:'commentDocument', action:'remove', port:REST_PORT} },
+            
         },
-        'accounting_system_type':{
-            // accounting system type related
-            getAccountingSystemTypes:{
-                method:'GET',
-                params:{
-                    parent:'rest',
-                    controller:'accountingSystemType',
-                    action:'getAccountingSystemTypes',
-                    port:REST_PORT
-                }
-            }
+        
+        'company' : {
+            list : {method : 'GET', params : {parent:'rest', controller:'company', action:'list', port:REST_PORT} },
+            save : {method : 'POST', params : {parent:'rest', controller:'company', action:'save', port:REST_PORT} },
+            remove : {method : 'POST', params : {parent:'rest', controller:'company', action:'remove', port:REST_PORT} },
+            
         },
-        'location':{
-            // location related
-            getStates:{
-                method:'GET',
-                params:{
-                    parent:'rest',
-                    controller:'location',
-                    action:'getStates',
-                    port:REST_PORT
-                }
-            }
-        }
+        
+        'contact' : {
+            list : {method : 'GET', params : {parent:'rest', controller:'contact', action:'list', port:REST_PORT} },
+            save : {method : 'POST', params : {parent:'rest', controller:'contact', action:'save', port:REST_PORT} },
+            remove : {method : 'POST', params : {parent:'rest', controller:'contact', action:'remove', port:REST_PORT} },
+            
+        },
+        
+        'contactDeal' : {
+            list : {method : 'GET', params : {parent:'rest', controller:'contactDeal', action:'list', port:REST_PORT} },
+            save : {method : 'POST', params : {parent:'rest', controller:'contactDeal', action:'save', port:REST_PORT} },
+            remove : {method : 'POST', params : {parent:'rest', controller:'contactDeal', action:'remove', port:REST_PORT} },
+            
+        },
+        
+        'contactProject' : {
+            list : {method : 'GET', params : {parent:'rest', controller:'contactProject', action:'list', port:REST_PORT} },
+            save : {method : 'POST', params : {parent:'rest', controller:'contactProject', action:'save', port:REST_PORT} },
+            remove : {method : 'POST', params : {parent:'rest', controller:'contactProject', action:'remove', port:REST_PORT} },
+            
+        },
+        
+        'contactTracker' : {
+            list : {method : 'GET', params : {parent:'rest', controller:'contactTracker', action:'list', port:REST_PORT} },
+            save : {method : 'POST', params : {parent:'rest', controller:'contactTracker', action:'save', port:REST_PORT} },
+            remove : {method : 'POST', params : {parent:'rest', controller:'contactTracker', action:'remove', port:REST_PORT} },
+            
+        },
+        
+        'deal' : {
+            list : {method : 'GET', params : {parent:'rest', controller:'deal', action:'list', port:REST_PORT} },
+            save : {method : 'POST', params : {parent:'rest', controller:'deal', action:'save', port:REST_PORT} },
+            remove : {method : 'POST', params : {parent:'rest', controller:'deal', action:'remove', port:REST_PORT} },
+            
+        },
+        
+        'document' : {
+            list : {method : 'GET', params : {parent:'rest', controller:'document', action:'list', port:REST_PORT} },
+            save : {method : 'POST', params : {parent:'rest', controller:'document', action:'save', port:REST_PORT} },
+            remove : {method : 'POST', params : {parent:'rest', controller:'document', action:'remove', port:REST_PORT} },
+            
+        },
+        
+        'location' : {
+            list : {method : 'GET', params : {parent:'rest', controller:'location', action:'list', port:REST_PORT} },
+            save : {method : 'POST', params : {parent:'rest', controller:'location', action:'save', port:REST_PORT} },
+            remove : {method : 'POST', params : {parent:'rest', controller:'location', action:'remove', port:REST_PORT} },
+            
+        },
+        
+        'phone' : {
+            list : {method : 'GET', params : {parent:'rest', controller:'phone', action:'list', port:REST_PORT} },
+            save : {method : 'POST', params : {parent:'rest', controller:'phone', action:'save', port:REST_PORT} },
+            remove : {method : 'POST', params : {parent:'rest', controller:'phone', action:'remove', port:REST_PORT} },
+            
+        },
+        
+        'project' : {
+            list : {method : 'GET', params : {parent:'rest', controller:'project', action:'list', port:REST_PORT} },
+            save : {method : 'POST', params : {parent:'rest', controller:'project', action:'save', port:REST_PORT} },
+            remove : {method : 'POST', params : {parent:'rest', controller:'project', action:'remove', port:REST_PORT} },
+            
+        },
+        
+        'session' : {
+            list : {method : 'GET', params : {parent:'rest', controller:'session', action:'list', port:REST_PORT} },
+            save : {method : 'POST', params : {parent:'rest', controller:'session', action:'save', port:REST_PORT} },
+            remove : {method : 'POST', params : {parent:'rest', controller:'session', action:'remove', port:REST_PORT} },
+            
+        },
+        
+        'state' : {
+            list : {method : 'GET', params : {parent:'rest', controller:'state', action:'list', port:REST_PORT} },
+            save : {method : 'POST', params : {parent:'rest', controller:'state', action:'save', port:REST_PORT} },
+            remove : {method : 'POST', params : {parent:'rest', controller:'state', action:'remove', port:REST_PORT} },
+            
+        },
+        
+        'tracker' : {
+            list : {method : 'GET', params : {parent:'rest', controller:'tracker', action:'list', port:REST_PORT} },
+            save : {method : 'POST', params : {parent:'rest', controller:'tracker', action:'save', port:REST_PORT} },
+            remove : {method : 'POST', params : {parent:'rest', controller:'tracker', action:'remove', port:REST_PORT} },
+            
+        },
+        
+        'trackerProject' : {
+            list : {method : 'GET', params : {parent:'rest', controller:'trackerProject', action:'list', port:REST_PORT} },
+            save : {method : 'POST', params : {parent:'rest', controller:'trackerProject', action:'save', port:REST_PORT} },
+            remove : {method : 'POST', params : {parent:'rest', controller:'trackerProject', action:'remove', port:REST_PORT} },
+            
+        },
+        
+        'user' : {
+            list : {method : 'GET', params : {parent:'rest', controller:'user', action:'list', port:REST_PORT} },
+            save : {method : 'POST', params : {parent:'rest', controller:'user', action:'save', port:REST_PORT} },
+            remove : {method : 'POST', params : {parent:'rest', controller:'user', action:'remove', port:REST_PORT} },
+            
+            login : {method:'POST', params : {controller:'auth', action:'login', port:$window.location.port} },
+            
+        },
+        
+        'userContact' : {
+            list : {method : 'GET', params : {parent:'rest', controller:'userContact', action:'list', port:REST_PORT} },
+            save : {method : 'POST', params : {parent:'rest', controller:'userContact', action:'save', port:REST_PORT} },
+            remove : {method : 'POST', params : {parent:'rest', controller:'userContact', action:'remove', port:REST_PORT} },
+            
+        },
+        
+        'userProject' : {
+            list : {method : 'GET', params : {parent:'rest', controller:'userProject', action:'list', port:REST_PORT} },
+            save : {method : 'POST', params : {parent:'rest', controller:'userProject', action:'save', port:REST_PORT} },
+            remove : {method : 'POST', params : {parent:'rest', controller:'userProject', action:'remove', port:REST_PORT} },
+            
+        },
+        
+        
     }
     
     return function(modelName){
