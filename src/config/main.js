@@ -14,12 +14,12 @@ var _dev = {
     
     // db configuration
     db:{
-        driver:'postgres',
+        driver:'mysql',
         host:'localhost',
-        username:'resteasy',
-        password:'resteasy',
-        database:'resteasy',
-        port:5432
+        username:'tracker',
+        password:'tracker',
+        database:'tracker',
+        port:'/var/run/mysqld/mysqld.sock'
     },
     // auth component configuration
     auth:{
