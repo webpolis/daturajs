@@ -103,7 +103,7 @@ a fast & powerful AJAX-based CRUD interface... without writting a piece of code!
 Run this command without arguments to see how you can customize your new app.
 
 ```
-node ./console/generator.js
+node ./lib/console/generator.js
 ```
 
 ## Run / Execution
