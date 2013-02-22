@@ -20,7 +20,8 @@
         "i18n": "*",
         "pg":"*",
         "mysql":"*",
-	"optimist":"*"
+	"optimist":"*",
+	"shelljs":"*"
     },
     "author": {
         "name": "Nicolas Iglesias",
