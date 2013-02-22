@@ -1,8 +1,9 @@
 .nbrun
 npm-debug.log
 .netbeans.xml
-public/css/main.css
 node_modules/*
-src/config/main/local.js
-src/config/main/test.js
+src/config/main.js
+src/config/routes.js
+src/**
+public/**
 !.gitignore
