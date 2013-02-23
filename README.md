@@ -92,7 +92,7 @@ After you checkout or decompress the daturajs package, you must resolve all depe
 issuing the following command:
 
 ```
-npm install
+npm install -d
 ```
 
 ## Application Skeleton generator
