@@ -2,6 +2,7 @@
 nbproject
 npm-debug.log
 .netbeans.xml
+start.sh
 node_modules/
 src/config/main.js
 src/config/routes.js
