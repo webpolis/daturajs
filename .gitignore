@@ -1,4 +1,5 @@
 .nbrun
+nbproject
 npm-debug.log
 .netbeans.xml
 node_modules/*
