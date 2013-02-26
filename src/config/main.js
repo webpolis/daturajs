@@ -2,7 +2,7 @@
  * Main application's configuration file.
  * 
  * @author  Nicolas Iglesias <nico@webpolis.com.ar> for daturajs - https://github.com/webpolis/daturajs -
- * @date    Sun Feb 24 2013 19:55:50 GMT-0300 (ART)
+ * @date    Tue Feb 26 2013 02:16:17 GMT-0300 (ART)
  */
 var _dev = {
     // params are publicly accessible from a controller via this.vars
@@ -11,7 +11,7 @@ var _dev = {
     },
 
     // secret key, for session id generator
-    secretKey:'57027157199518940',
+    secretKey:'70245141122349280',
     
     // db configuration
     db:{

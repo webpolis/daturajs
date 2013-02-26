@@ -16,6 +16,7 @@
         "sequelize": "*",
         "restify": "*",
         "inflector": "*",
+        "validator":"*",
         "cheerio": "*",
         "i18n": "*",
         "pg":"*",
