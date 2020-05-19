@@ -1,4 +1,6 @@
-| This is outdated. It has more than 7 years. But it still works as it is. I'm obviously not doing anything else here since | technology has changed a lot since then. It may be useful for someone who's willing to try something else.
+| This is outdated. It has more than 7 years. But it still works as it is.
+| I'm obviously not doing anything else here since technology has changed a lot.
+| It may be useful for someone who's willing to try something else.
 
 nodejs application framework (aka daturajs)
 ===========================================
